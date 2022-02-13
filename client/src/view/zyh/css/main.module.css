@@ -1,0 +1,218 @@
+
+.zytp {
+    width: 100vw;
+    height: 355px;
+}
+
+.bx {
+    width: 1050px;
+    margin: 0 auto;
+}
+
+.mrcp {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    color: #333333;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mrcp>span:nth-of-type(2)>a{
+    font-size: 14px;
+    font-weight: normal;
+    color: #006FC6;
+}
+
+.cpbox {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1050px;
+}
+
+.cpbox>div{
+    width: 220px;
+    height: 220px;
+    margin-right: 40px;
+}
+
+.cpbox>div>div>img{
+    height:140px;
+    border-radius: 3%;
+}
+
+.cpbox>div>div>img:hover{
+   cursor: pointer;
+}
+
+.cpbox>div>div:nth-of-type(2){
+    cursor: pointer;
+}
+.cpbox>div>div:nth-of-type(2):hover{
+    color: #FFA600;
+}
+
+
+.notbox {
+    display: flex;
+    width: 1050px;
+    margin-bottom: 30px;
+}
+
+.notbox>div{
+    width: 220px;
+    height: 220px;
+    margin-right: 45px;
+   
+
+}
+
+.notbox>div>div:nth-of-type(1){
+    overflow: hidden;
+    /* width: 220px; */
+    height: 160px;
+}
+
+.notbox>div>div:nth-of-type(1)>img{
+    width: 220px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    /* height:180px; */
+}
+
+.notbox>div>div:nth-of-type(2){
+    border-radius: 3%;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: 1px 1px 4px rgb(124 131 140 / 4%),
+    1px 1px 4px rgb(124 131 140 / 4%), 
+    -1px 1px 4px rgb(124 131 140 / 4%), 
+    -1px 1px 4px rgb(124 131 140 / 4%);
+    width: 220px;
+    padding: 0 10px;
+    border: 1px;
+}
+
+
+
+.notyh{
+    border-radius: 50% 50%;
+    width: 30px;
+}
+
+.djdzs{
+    width: 800px;
+}
+
+.djdzs>div:nth-of-type(1){
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.sslz{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+
+
+.sslz>div{
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 5px 15px;
+    margin: 20px;
+    white-space: nowrap;
+}
+
+.sslz>div:hover{
+    cursor: pointer;
+    color:#FFA600;
+    border-color: black;
+}
+
+.scjx {
+    width: 800px;
+    margin-bottom: 30px;
+}
+
+.scjx>div:nth-of-type(1){
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.scjx>div>.xxxxx>a {
+    font-size: 14px;
+    font-weight: normal;
+    color: #006FC6;
+}
+
+.scjx>div:nth-of-type(1){
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.scbox{
+    display: flex;
+}
+
+.scbox>div{
+    width: 215px;
+    margin:0 30px;
+}
+
+.scbox>div>div:nth-of-type(1)>img{
+    width: 215px;
+}
+
+.scbox>div>div:nth-of-type(2)>div:nth-of-type(2){
+    color: #999999;
+}
+
+.syny{
+    margin-left: 20px;
+}
+
+.syny>div{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.syny>ul>li{
+    margin-left: 20px;
+    font-size: 14px;
+    color: #333333;
+    margin-top: 15px;
+}
+
+.ulhover>li:hover{
+    cursor: pointer;
+    color: #FFA600;
+}
+
+.bjtp:hover{
+    cursor: pointer;
+}
+
+.bjbt:hover {
+    cursor: pointer;
+    color: #FFA600;
+}
+
+.sptp:hover{
+    cursor: pointer;
+}
+
+.spbt:hover{
+    cursor: pointer;
+    color: #FFA600;
+}
+
+div {
+    background-size: contain;
+}

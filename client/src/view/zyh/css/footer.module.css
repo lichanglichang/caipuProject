@@ -1,0 +1,22 @@
+
+.f1 {
+    background-color: #F2F2F2;
+    width: 100vw;
+}
+
+.fbx {
+    width: 1050px;
+    margin:0 auto;
+    padding: 40px 0;
+    display: flex;
+}
+
+.wzsm {
+    color: #999999;
+    margin-top: 20px;
+}
+
+.sp {
+    
+    color: chartreuse;
+}

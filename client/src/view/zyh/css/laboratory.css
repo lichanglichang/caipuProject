@@ -1,0 +1,32 @@
+
+
+.bt {
+    display: flex;
+}
+
+.bx {
+    width: 1050px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+h3 {
+    font-weight: 600;
+    color: #333333;
+    margin-right: 20px;
+}
+
+.tp {
+    margin-top: 20px;
+}
+
+.tp>img{
+    margin-left: 20px;
+}
+
+.zw {
+    margin-top: 20px;
+    font-size: 30px;
+    text-indent: 1em;
+}

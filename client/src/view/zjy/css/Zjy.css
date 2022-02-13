@@ -1,0 +1,98 @@
+.commen {
+    width: 1000px;
+    height: 640px;
+}
+.comm {
+    width: 648px;
+}
+.comm-txt {
+    width: 648px;
+    height: 112px;
+    resize: none;
+    padding: 12px;
+    border: 1px solid #E5E3DF;
+    border-radius: 4px;
+}
+.comm-btn {
+    color: #FFB31A;
+    right: 0;
+    margin-top: 10px;
+    border-radius: 4px;
+    height: 34px;
+    width: 104px;
+    text-align: center;
+    line-height: 34px;
+    font-size: 15px;
+    border: 1px solid #FFB31A;
+    background-color: white;
+    float: right;
+}
+textarea {
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    flex-direction: column;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    column-count: initial !important;
+    margin: 0px;
+    font: 400 13.3333px Arial;
+    outline: none;
+}
+.follow button {
+    background-color: white;
+    margin-left: 10px;
+    width: 72px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+}
+button:hover {
+    cursor: pointer;
+}
+.have div {
+    margin-left: 15px;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid orange;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    color: orange;
+}
+.have div span {
+    margin-left: 4px;
+}
+.like div {
+    margin-left: 15px;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid orange;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    color: orange;
+}
+.like div span {
+    margin-left: 4px;
+}
+.have div {
+    background-color: orange;
+    color: #fff;
+}
+span:hover {
+    cursor: pointer;
+}
