@@ -1,0 +1,39 @@
+.header {
+  padding: 0;
+  background-color: #1d232b;
+}
+
+.ant-menu .ant-menu-item {
+  margin-top: 0;
+}
+
+.header .logo {
+  color: #fff;
+  font-size: large;
+  margin-top: 0;
+  margin-right: 0;
+  width: 200px;
+  padding-left: 24px;
+}
+
+.trigger {
+  color: #fff;
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  padding-left: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.menueItem .ant-menu-title-content {
+  display: none;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.header {
+  width: 100%;
+}
