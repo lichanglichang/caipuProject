@@ -1,12 +1,19 @@
 import {Button, Space, Table} from "antd";
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ManageMainComponent from "../components/main-layout";
+import BaseCard from "../components/base-card";
+import Filter from "./components/filter";
+
+export interface Params {
+  num: number;
+  kw: string;
+}
 
 const ManagementUser: React.FC = () => {
   //获取用户信息
   const [userList, setuserList] = useState<any>([]);
-  function getAllUser() {
+  useEffect(() => {
     axios
       .get("/getAllUser", {
         params: {
@@ -17,20 +24,24 @@ const ManagementUser: React.FC = () => {
       .then((res: any) => {
         setuserList(res.data.data);
       });
+  }, []);
+
+  function getAllUser(params: Params) {
+    axios
+      .get("/getAllUser", {
+        params,
+      })
+      .then((res: any) => {
+        setuserList(res.data.data);
+      });
   }
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  //   getAllUser();
-  console.log(userList);
 
-  //   React.useEffect(getAllUser, [userNum, userKw]);
-
-  //   表格row数据
-  const dataSource = userList.slice(currentPage * 0, (currentPage + 1) * 2);
+  console.log(userList, "kkkk");
 
   //   表格标题数据
   const columns = [
     {
-      title: "用户名",
+      title: "账号",
       dataIndex: "username",
     },
     {
@@ -38,8 +49,8 @@ const ManagementUser: React.FC = () => {
       dataIndex: "password",
     },
     {
-      title: "性别",
-      dataIndex: "sex",
+      title: "昵称",
+      dataIndex: "nickname",
     },
     {
       title: "头像",
@@ -70,18 +81,20 @@ const ManagementUser: React.FC = () => {
 
   return (
     <ManageMainComponent>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={{
-          pageSize: 2,
-          total: 5,
-          onChange: (page, tow) => {
-            setCurrentPage(page);
-          },
-        }}
-      />
-      ;<button onClick={getAllUser}>发起请求</button>
+      <BaseCard marginBottom={"16px"}>
+        <Filter handleSearch={getAllUser} />
+      </BaseCard>
+      <BaseCard>
+        <Table
+          dataSource={userList}
+          columns={columns}
+          pagination={{
+            pageSize: 3,
+            total: 5,
+          }}
+          bordered={true}
+        />
+      </BaseCard>
     </ManageMainComponent>
   );
 };

@@ -40,6 +40,7 @@ import ManagementCommodity from "../../Management/management-commodity";
 import ManagementMenu from "../../Management/management-menu";
 import ManagementNode from "../../Management/management-node";
 import ManagementRecipe from "../../Management/management-recipe";
+import ManageMain from "../../Management/ManageMain";
 
 export default function Rte() {
   const [state3, setstate3] = react.useState<any>();
@@ -82,6 +83,7 @@ export default function Rte() {
 
             {/* 管理员界面*/}
             <Route path="/Management/user" element={<ManagementUser />}></Route>
+            <Route path="/Management" element={<ManageMain />}></Route>
             <Route
               path="/Management/commodity"
               element={<ManagementCommodity />}

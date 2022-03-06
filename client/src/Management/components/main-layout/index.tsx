@@ -12,6 +12,7 @@ import React, {useState} from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import {Link, useLocation} from "react-router-dom";
+
 interface IProps {
   children?: React.ReactNode;
 }
@@ -39,19 +40,43 @@ const MainLayout: React.FC<IProps> = ({children}) => {
             theme="dark"
             mode="inline"
             selectedKeys={[`${location.pathname}`]}
+            // openKeys={["user"]}
             style={{marginTop: "0"}}
           >
+            {/* <Menu.SubMenu icon={<UserOutlined />} title="用户管理" key="user">
+              <Menu.Item
+                key="/Management/user"
+                className={collapsedState ? "menueItem" : ""}
+                style={{paddingLeft: collapsedState ? "34px" : ""}}
+                onClick={() => {
+                  console.log("user");
+                }}
+              >
+                <Link to="/Management/user">基础信息管理</Link>
+              </Menu.Item>
+              <Menu.Item
+                key="/Management/menu"
+                className={collapsedState ? "menueItem" : ""}
+                style={{paddingLeft: collapsedState ? "34px" : ""}}
+                onClick={() => {
+                  console.log("user");
+                }}
+              >
+                <Link to="/Management/menu">关注粉丝管理</Link>
+              </Menu.Item>
+            </Menu.SubMenu> */}
             <Menu.Item
               key="/Management/user"
-              icon={<UserOutlined />}
+              icon={<VideoCameraOutlined />}
               className={collapsedState ? "menueItem" : ""}
               style={{paddingLeft: collapsedState ? "34px" : ""}}
               onClick={() => {
-                console.log("user");
+                console.log("caidan");
               }}
             >
               <Link to="/Management/user">用户管理</Link>
             </Menu.Item>
+
             <Menu.Item
               key="/Management/menu"
               icon={<VideoCameraOutlined />}
@@ -91,16 +116,14 @@ const MainLayout: React.FC<IProps> = ({children}) => {
         </Sider>
         <Layout style={{padding: "0 24px 24px"}}>
           <Breadcrumb style={{margin: "16px 0"}}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>用户管理</Breadcrumb.Item>
           </Breadcrumb>
           <Content
             className="site-layout-background"
             style={{
-              padding: 24,
               margin: 0,
               minHeight: 280,
+              overflow: "auto",
             }}
           >
             {children}
