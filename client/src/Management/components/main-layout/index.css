@@ -1,6 +1,13 @@
 .header {
   padding: 0;
   background-color: #1d232b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+.title {
+  display: flex;
 }
 
 .ant-menu .ant-menu-item {
@@ -12,8 +19,8 @@
   font-size: large;
   margin-top: 0;
   margin-right: 0;
-  width: 200px;
-  padding-left: 24px;
+  width: 176px;
+
 }
 
 .trigger {
@@ -26,7 +33,7 @@
   transition: color 0.3s;
 }
 
-.menueItem .ant-menu-title-content {
+.menuItem .ant-menu-title-content {
   display: none;
 }
 

@@ -57,7 +57,7 @@ function CollectDemo() {
       .catch(function (error: any) {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
 // 获取关注用户信息
   function huoquGZ(){

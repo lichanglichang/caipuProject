@@ -71,7 +71,6 @@ function LoginDome() {
         }
         // 判断密码格式是否正确
         let reg2 = /^(?=.*[a-zA-Z].*)(?=.*\W.*)(?=.*\d.*).{6,15}$/;
-        console.log(reg2.test(password));
         if (reg2.test(password) === false) {
             setpassword("");
             pwd.current.placeholder = "输入6~15位并包含字母、数字、特殊字符";
@@ -110,7 +109,14 @@ function LoginDome() {
                         pwd.current.setAttribute('class', "tel_input change")
                     }else if(res.data.code===4){
                         // code等于4代表用户为管理员！
-                        navigate({pathname:"/Management/ManageMain"});
+                        console.log(res.data);
+                        
+                        let d = new Date();
+                        d.setTime(d.getTime()+(5*60*60*1000));
+                        let t = d.toUTCString();
+                        document.cookie = `msg=${res.data.msg};expires=${t}`;
+                        document.cookie = `code=${res.data.code};expires=${t}`;
+                        navigate({pathname:"/Management/user"});
                    }
                 })
                

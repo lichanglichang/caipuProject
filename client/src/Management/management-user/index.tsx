@@ -1,9 +1,11 @@
-import {Button, Space, Table} from "antd";
+import { Button, Space, Table } from "antd";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ManageMainComponent from "../components/main-layout";
 import BaseCard from "../components/base-card";
 import Filter from "./components/filter";
+import { useNavigate } from "react-router-dom";
+import getCookieByKey from "../../view/getCookie";
 
 export interface Params {
   num: number;
@@ -11,9 +13,16 @@ export interface Params {
 }
 
 const ManagementUser: React.FC = () => {
+  let navigate = useNavigate();
   //获取用户信息
-  const [userList, setuserList] = useState<any>([]);
+  const [userList, setUserList] = useState<any>([]);
+
+
+
+
+
   useEffect(() => {
+
     axios
       .get("/getAllUser", {
         params: {
@@ -22,9 +31,9 @@ const ManagementUser: React.FC = () => {
         },
       })
       .then((res: any) => {
-        setuserList(res.data.data);
+        setUserList(res.data.data);
       });
-  }, []);
+  }, [ navigate]);
 
   function getAllUser(params: Params) {
     axios
@@ -32,11 +41,22 @@ const ManagementUser: React.FC = () => {
         params,
       })
       .then((res: any) => {
-        setuserList(res.data.data);
+        setUserList(res.data.data);
       });
   }
 
+  // 获取指定名称的cookie的值
+  function getCookie(objName: string) {
+    let arrStr = document.cookie.split("; ");
+
+    for (let i = 0; i < arrStr.length; i++) {
+      let temp = arrStr[i].split("=");
+      if (temp[0] === objName) return unescape(temp[1]);
+    }
+  }
+
   console.log(userList, "kkkk");
+  console.log(getCookie("msg"));
 
   //   表格标题数据
   const columns = [
@@ -60,7 +80,7 @@ const ManagementUser: React.FC = () => {
           <img
             src={record.url}
             alt=""
-            style={{width: "50px", height: "50px"}}
+            style={{ width: "50px", height: "50px" }}
           />
         );
       },
