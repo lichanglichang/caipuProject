@@ -1,4 +1,4 @@
-import {Space, Button, Table} from "antd";
+import {Space, Button, Table, Divider} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Params} from "react-router-dom";
@@ -68,9 +68,9 @@ const ManagementNode: React.FC = () => {
       dataIndex: "url",
       render: (_: any, record: any) => {
         return (
-          <Space>
-            <Button type="primary">编辑</Button>
-            <Button>删除</Button>
+          <Space split={<Divider type="vertical" />}>
+            <Button type="link" style={{padding:"0"}}>编辑</Button>
+            <Button type="link" style={{padding:"0"}}>删除</Button>
           </Space>
         );
       },
@@ -83,6 +83,7 @@ const ManagementNode: React.FC = () => {
         <Filter />
       </BaseCard>
       <BaseCard>
+      <Button type="primary" style={{marginBottom:"20px"}}>新增</Button>
         <Table
           dataSource={userList}
           columns={columns}

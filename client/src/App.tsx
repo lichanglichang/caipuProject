@@ -1,6 +1,6 @@
 import React from 'react';
 import "antd/dist/antd.css";
-import Rte from './view/zyh/router';
+import Rte from './router';
 // import ManageMain from './Management/ManageMain';
 import axios from "axios";
 axios.defaults.baseURL="http://localhost:8200";

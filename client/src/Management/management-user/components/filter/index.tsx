@@ -15,7 +15,7 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{username:"",userStatus:""}}
       onFinish={() => {
         form.validateFields().then(res => {
           handleSearch(res);
@@ -24,17 +24,17 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
     >
       <SearchFormRow>
         <SearchFormCol>
-          <Form.Item label="昵称" name="kw">
+          <Form.Item label="昵称" name="nickname">
             <Input placeholder="请输入查询昵称" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="账号">
+          <Form.Item label="账号" name="username">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="状态">
+          <Form.Item label="状态" name="userStatus">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
@@ -48,8 +48,8 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
-                  handleSearch({num: 1, kw: ""});
+                  form.resetFields();
+                  handleSearch({username:"",nickname:"",userStatus:""});
                 }}
               >
                 重置

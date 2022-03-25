@@ -1,4 +1,4 @@
-import {Space, Button, Table} from "antd";
+import {Space, Button, Table, Divider, Modal} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Params} from "react-router-dom";
@@ -18,8 +18,6 @@ const ManagementCommodity: React.FC = () => {
         },
       })
       .then((res: any) => {
-        console.log(res.data.data);
-
         setuserList(res.data.data);
       });
   }, []);
@@ -34,7 +32,21 @@ const ManagementCommodity: React.FC = () => {
       });
   }
 
-  console.log(userList, "kkkk");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+
 
   //   表格标题数据
   const columns = [
@@ -59,9 +71,9 @@ const ManagementCommodity: React.FC = () => {
       dataIndex: "_",
       render: (_: any, record: any) => {
         return (
-          <Space>
-            <Button type="primary">编辑</Button>
-            <Button>删除</Button>
+          <Space split={<Divider type="vertical" />}>
+            <Button type="link" style={{padding:"0"}}>编辑</Button>
+            <Button type="link" style={{padding:"0"}}>删除</Button>
           </Space>
         );
       },
@@ -74,6 +86,7 @@ const ManagementCommodity: React.FC = () => {
         <Filter />
       </BaseCard>
       <BaseCard>
+      <Button type="primary" style={{marginBottom:"20px"}} onClick={showModal}>新增</Button>
         <Table
           dataSource={userList}
           columns={columns}
@@ -84,6 +97,11 @@ const ManagementCommodity: React.FC = () => {
           bordered={true}
         />
       </BaseCard>
+      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </ManageMainComponent>
   );
 };

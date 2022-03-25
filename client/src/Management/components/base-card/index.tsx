@@ -1,6 +1,6 @@
 import {Card} from "antd";
 import React from "react";
-import "./index.css";
+import styles from "./index.module.less";
 interface IProps {
   marginBottom?: string;
 }
@@ -11,7 +11,7 @@ const BaseCard: React.FC<IProps> = ({children, marginBottom}) => {
       style={{
         marginBottom: marginBottom ? marginBottom : "0",
       }}
-      className="cardWrap"
+      className={styles.cardWrap}
     >
       {children}
     </Card>

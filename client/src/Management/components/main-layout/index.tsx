@@ -1,8 +1,12 @@
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
+  ShopOutlined,
+  ProjectOutlined,
+  ScheduleOutlined,
+  ProfileOutlined,
+  UserOutlined
+
 } from "@ant-design/icons";
 import { Layout, Menu, Breadcrumb, Button } from "antd";
 import { Header, Content } from "antd/lib/layout/layout";
@@ -80,7 +84,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
           >
             <Menu.Item
               key="/Management/user"
-              icon={<VideoCameraOutlined />}
+              icon={  <UserOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
               onClick={() => {
@@ -91,7 +95,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
             <Menu.Item
               key="/Management/menu"
-              icon={<VideoCameraOutlined />}
+              icon={<ProfileOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
@@ -99,7 +103,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
             <Menu.Item
               key="/Management/recipe"
-              icon={<UploadOutlined />}
+              icon={<ProjectOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
@@ -107,7 +111,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
             <Menu.Item
               key="/Management/node"
-              icon={<UploadOutlined />}
+              icon={<ScheduleOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
@@ -115,7 +119,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
             <Menu.Item
               key="/Management/commodity"
-              icon={<UploadOutlined />}
+              icon={<ShopOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
