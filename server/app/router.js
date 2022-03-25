@@ -22,7 +22,7 @@ module.exports = app => {
 
 
   // 登陆接口
-  router.post('/login', controller.home.login);
+  router.post('/login', controller.administrator.login);
   // 注册接口
   router.post('/regist', controller.home.regist);
   // 上传头像
@@ -41,7 +41,7 @@ module.exports = app => {
 
   //管理员 
   //用户
-  router.get('/getAllUser', controller.administrator.getAllUser);//获取全部用户
+  router.get('/getUser', controller.administrator.getUser);//获取全部用户
   router.get('/delUser', controller.administrator.delUser);//删除用户
   router.post('/addUser', controller.administrator.addUser);//添加用户
   router.post('/updateUser', controller.administrator.updateUser);//修改用户

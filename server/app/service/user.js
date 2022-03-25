@@ -7,7 +7,6 @@ class UserService extends Service {
 
     async showmenu() {
 		let img1 = await this.app.mysql.query(`select * from recipe `);
-        // console.log(img1,11111111);
         return {
             code: 0,
             data: img1
@@ -69,7 +68,8 @@ class UserService extends Service {
             }else if(message[0].status==1){
                 let result = {
                     code: 4,
-                    msg: "跳转管理员页面"
+                    msg: "管理员登陆成功",
+                    message:message[0]
                 }
                 return result;
             }else {
@@ -82,7 +82,7 @@ class UserService extends Service {
                 } else {
                     let result = {
                         code: 2,
-                        msg: "登录成功",
+                        msg: "用户登录成功",
                         message
                     }
                     return result;
@@ -99,7 +99,8 @@ class UserService extends Service {
 
     // 注册
     async regist(username, password) {
-        let user = await this.app.mysql.query(`SELECT * FROM user WHERE username = "${username}"`);
+        let user = await this.app.mysql.
+        query(`SELECT * FROM user WHERE username = "${username}"`);
        
         if (user.length != 0) {
             return {
@@ -107,7 +108,9 @@ class UserService extends Service {
                 msg: "用户已存在,请重新输入！",
             }
         } else{
-            await this.app.mysql.query(`INSERT INTO user(username,password) VALUES("${username}","${password}")`);
+            await this.app.mysql.
+            query(`INSERT INTO user(username,password) 
+            VALUES("${username}","${password}")`);
             return {
                 code: 1,
                 msg: "注册成功！快去登陆吧！",
