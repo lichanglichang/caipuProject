@@ -6,9 +6,10 @@ class UserController extends Controller {
     async uploadimg() {
     const { ctx } = this;
     const username=ctx.request.body.username1;
-    console.log(ctx.request.body.nickname1);
+    // console.log(ctx.request.body,"上传对象");
+    let resoult = await this.ctx.service.user.uploadimg(username,ctx.request.body.nickname1,ctx.request.body.sex1,ctx.request.body.introduce_myself1,ctx.request.body.birthday1,ctx.request.body.address1,ctx.request.body.taste1 );
         
-        let resoult = await this.ctx.service.user.uploadimg(username,ctx.request.body.nickname1,ctx.request.body.sex1,ctx.request.body.introduce_myself1,ctx.request.body.birthday1,ctx.request.body.address1,ctx.request.body.taste1 );
+        // let resoult = await this.ctx.service.user.uploadimg(ctx.request.body.name);
         this.ctx.response.body = resoult;
     }
     // 获取用户信息

@@ -66,7 +66,7 @@ module.exports = appInfo => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
-    credentials: true //携带凭证时,orgin 设置不能为通配符
+    // credentials: true //携带凭证时,orgin 设置不能为通配符
   };
   
   //获取上传文件，启用file模式

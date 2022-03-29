@@ -9,79 +9,61 @@ class UserController extends Controller {
     let username = this.ctx.request.body.username;
     let password = this.ctx.request.body.password;
     let list = await this.ctx.service.user.login(username, password);
-    // if(list.message.id){
-    //     ctx.session.userId = list.message.id
-    // }
     this.ctx.response.body = list;
   }
 
   //获取用户
   async getUser() {
     const { ctx } = this;
-    var arr = Object.keys(ctx.request.query)
-   console.log(ctx.request.query,arr.length,arr,"ctx.request.query");
-
-    //测试使用
     let result = await this.ctx.service.administrator.getUser(
-        ctx.request.query
+      ctx.request.query
     );
     ctx.response.body = {
       code: 0,
       data: result,
     };
-
-    // if (ctx.session.userId) {
-    //     let result =
-    //     await this.ctx.service.administrator.getUser(
-    //         ctx.request.query.num, ctx.request.query.kw)
-    //     ctx.response.body = {
-    //         code: 0,
-    //         data: result
-    //     };
-    // } else {
-    //     ctx.response.body = {
-    //         code: 1,
-    //         data: "未登录，请先登录!"
-    //     }
-    // }
   }
 
   //添加用户
   async addUser() {
     const { ctx } = this;
-    this.ctx.session.userId = 1;
-    if (this.ctx.session.userId) {
-      let result = await this.ctx.service.administrator.addUser(
-        ctx.request.body.username,
-        ctx.request.body.password,
-        ctx.request.body.nickname,
-        ctx.request.body.sex
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    let result = await this.ctx.service.administrator.addUser(
+      ctx.request.body.username,
+      ctx.request.body.password,
+      ctx.request.body.nickname,
+      ctx.request.body.url
+    );
+    ctx.response.body = result;
   }
 
   // 删除用户
   async delUser() {
     const { ctx } = this;
-    this.ctx.session.userId = 1;
-    if (this.ctx.session.userId) {
-      let result = await this.ctx.service.administrator.delUser(
-        ctx.request.query.id
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    let result = await this.ctx.service.administrator.delUser(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
   }
+
+  // 修改用户状态
+  async updateUserStatus() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.updateUserStatus(
+      ctx.request.body.id,ctx.request.body.userStatus
+    );
+    ctx.response.body = result;
+  }
+
+  
+  //获取某个用户信息
+  async queryUserInfo() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryUserInfo(
+      ctx.request.query.id
+    );
+    ctx.response.body = result
+  }
+
 
   //修改用户
   async updateUser() {

@@ -20,16 +20,15 @@ class UserService extends Service {
   }
 
   //管理员添加用户
-  async addUser(username, password, nickname, sex) {
-    console.log(username, password, nickname, sex);
-    if (username && password && nickname && sex) {
+  async addUser(username, password, nickname, url) {
+    if (username && password && nickname && url) {
       let userResult = await this.app.mysql.query(
         `SELECT * FROM user WHere username='${username}'`
       );
       if (userResult.length == 0) {
-        let addResult = await this.app.mysql
-          .query(`insert into user(username,password,nickname,sex)
-                     values('${username}','${password}','${nickname}','${sex}')`);
+        await this.app.mysql
+          .query(`insert into user(username,password,nickname,url)
+                     values('${username}','${password}','${nickname}','${url}')`);
         return {
           code: 0,
           message: "添加用户成功！",
@@ -40,30 +39,34 @@ class UserService extends Service {
           message: "用户已存在",
         };
       }
-    } else {
-      return {
-        code: 2,
-        message: "请输入完整的资料",
-      };
     }
   }
 
   //管理员删除用户
   async delUser(id) {
-    if (id.length !== 0) {
-      await this.app.mysql.query(
-        `delete from user where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
-      };
-    } else {
-      return {
-        code: 1,
-        message: "请先选中要删除的数据",
-      };
-    }
+    await this.app.mysql.query(`delete from user where id in(${id})`);
+    return {
+      code: 0,
+      message: "删除成功",
+    };
+  }
+
+  // 修改管理员状态
+  async updateUserStatus(id, userStatus) {
+    await this.app.mysql.query(
+      `update user set userStatus='${userStatus}' where id=${id}`
+    );
+    return {
+      msg: "修改用户状态成功",
+    };
+  }
+
+  // 获取某个用户信息
+  async queryUserInfo(id) {
+    const result = await this.app.mysql.query(
+      `SELECT * FROM user WHere id='${id}'`
+    );
+    return result
   }
 
   //管理员修改用户

@@ -119,11 +119,15 @@ class UserService extends Service {
 
     }
 
-// 上传信息
-async uploadimg(username,nickname1,sex1,intro1,birthday,address,taste) {
+    // 上传信息
+    async uploadimg(username,nickname1,sex1,intro1,birthday,address,taste) {
+        // async uploadimg(name) {
     const file = this.ctx.request.files[0];
-    const toFileName = '/public/upload/'+Date.now();
+    // console.log(file,"this.ctx.request.files[0]");
+    // const toFileName = '/public/upload/'+Date.now();
+    const toFileName = '/public/upload/'+file.filename;
     let to = path.dirname(__dirname)+toFileName;
+
     await fs.copyFileSync(file.filepath, to);
     fs.unlinkSync(file.filepath);
     const url = "http://localhost:8200"+toFileName;
@@ -131,7 +135,7 @@ async uploadimg(username,nickname1,sex1,intro1,birthday,address,taste) {
     // await this.ctx.app.mysql.query(`UPDATE user SET  url="${url}",nickname="${nickname}",sex="${sex}",introduce_myself="${introduce_myself}",birthday="${birthday}",address="${address}",taste="${taste}" WHERE username="${username}"`);
     await this.ctx.app.mysql.query(`UPDATE user SET url="${url}",nickname="${nickname1}",sex="${sex1}",introduce_myself="${intro1}",birthday="${birthday}",address="${address}",taste="${taste}" WHERE username="${username}"`);
     //返回1则成功insert
-    return url;
+    return url
 }
 
 // 获取用户信息
