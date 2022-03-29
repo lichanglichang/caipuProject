@@ -85,6 +85,7 @@ function LoginDome() {
                 axios.post("login",{
                     username,password
                 }).then(res=>{
+                    // ,{ withCredentials: true }
                     // code等于2代表登陆成功！
                     if(res.data.code===2){
                         setUserName("");

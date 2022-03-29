@@ -5,16 +5,15 @@ import {
   ProjectOutlined,
   ScheduleOutlined,
   ProfileOutlined,
-  UserOutlined
-
+  UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Breadcrumb, Button } from "antd";
 import { Header, Content } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import getCookieByKey from "../../../view/getCookie";
 
 interface IProps {
@@ -26,6 +25,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
   const navigate = useNavigate();
   //  获取路由
   const location = useLocation();
+
   // 展开收起状态
   const [collapsedState, setCollapsedState] = useState(false);
 
@@ -49,11 +49,32 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
     navigate({ pathname: "/Login" });
   }, [navigate]);
 
+  const listType = useMemo(() => {
+    if (
+      location.pathname.indexOf("/Management/user") !== -1 &&
+      location.pathname.indexOf("userUpdate") !== -1
+    ) {
+      return ["用户管理", "/Management/user", "编辑"];
+    } else if (location.pathname.indexOf("/Management/user") !== -1) {
+      return ["用户管理", "/Management/user"];
+    } else if (location.pathname.indexOf("/Management/node") !== -1) {
+      return ["笔记管理", "/Management/node"];
+    } else if (location.pathname.indexOf("/Management/commodity") !== -1) {
+      return ["商品管理", "/Management/commodity"];
+    } else if (location.pathname.indexOf("/Management/recipe") !== -1) {
+      return ["菜谱管理", "/Management/recipe"];
+    } else if (location.pathname.indexOf("/Management/menu") !== -1) {
+      return ["菜单管理", "/Management/menu"];
+    } else {
+      return [];
+    }
+  }, [location]);
+
   return (
     <Layout style={{ height: "100vh" }}>
       <Header className="header">
         <div className="title">
-          <div className="logo">豆果美食管理系统</div>
+          <div className="logo">好滋味美食管理系统</div>
           {React.createElement(
             collapsedState ? MenuUnfoldOutlined : MenuFoldOutlined,
             {
@@ -79,17 +100,17 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             theme="dark"
             mode="inline"
             selectedKeys={[`${location.pathname}`]}
-            // openKeys={["user"]}
             style={{ marginTop: "0" }}
           >
             <Menu.Item
-              key="/Management/user"
-              icon={  <UserOutlined />}
+              key={
+                location.pathname.indexOf("/Management/user") !== -1
+                  ? location.pathname
+                  : "/Management/user"
+              }
+              icon={<UserOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
-              onClick={() => {
-                console.log("caidan");
-              }}
             >
               <Link to="/Management/user">用户管理</Link>
             </Menu.Item>
@@ -127,9 +148,20 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: "0 24px 24px",position:"relative"}}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>用户管理</Breadcrumb.Item>
+            {listType.length < 3 ? (
+              <Breadcrumb.Item>
+                <Link to={listType[1]}>{listType[0]}</Link>
+              </Breadcrumb.Item>
+            ) : (
+              <>
+                <Breadcrumb.Item>
+                  <Link to={listType[1]}>{listType[0]}</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>{listType[2]}</Breadcrumb.Item>
+              </>
+            )}
           </Breadcrumb>
           <Content
             className="site-layout-background"
@@ -139,7 +171,8 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
               overflow: "auto",
             }}
           >
-            {children}
+            
+      <Outlet />
           </Content>
         </Layout>
       </Layout>

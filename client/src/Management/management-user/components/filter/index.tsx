@@ -1,4 +1,4 @@
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, Select} from "antd";
 import React from "react";
 import {
   SearchFormRow,
@@ -15,7 +15,7 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{username:"",userStatus:""}}
+      initialValues={{nickname:"",username:"",userStatus:""}}
       onFinish={() => {
         form.validateFields().then(res => {
           handleSearch(res);
@@ -35,7 +35,11 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
         </SearchFormCol>
         <SearchFormCol>
           <Form.Item label="状态" name="userStatus">
-            <Input placeholder="请输入查询账号" />
+          <Select  >
+      <Select.Option value="">全部</Select.Option>
+      <Select.Option value="0">禁用</Select.Option>
+      <Select.Option value="1">启用</Select.Option>
+    </Select>
           </Form.Item>
         </SearchFormCol>
 
@@ -58,7 +62,6 @@ const Filter: React.FC<IProps> = ({handleSearch}) => {
           </Form.Item>
         </SearchFormCol>
       </SearchFormRow>
-      <Form.Item name="num" hidden></Form.Item>
     </Form>
   );
 };

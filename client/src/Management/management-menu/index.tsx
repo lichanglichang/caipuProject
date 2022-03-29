@@ -76,7 +76,7 @@ const ManagementMenu: React.FC = () => {
   ];
 
   return (
-    <ManageMainComponent>
+    <>
       <BaseCard marginBottom={"16px"}>
         <Filter />
       </BaseCard>
@@ -92,7 +92,7 @@ const ManagementMenu: React.FC = () => {
           bordered={true}
         />
       </BaseCard>
-    </ManageMainComponent>
+    </>
   );
 };
 

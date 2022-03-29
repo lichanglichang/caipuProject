@@ -78,7 +78,7 @@ const ManagementNode: React.FC = () => {
   ];
 
   return (
-    <ManageMainComponent>
+    <>
       <BaseCard marginBottom={"16px"}>
         <Filter />
       </BaseCard>
@@ -94,7 +94,7 @@ const ManagementNode: React.FC = () => {
           bordered={true}
         />
       </BaseCard>
-    </ManageMainComponent>
+    </>
   );
 };
 export default ManagementNode;

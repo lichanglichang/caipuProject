@@ -11,13 +11,17 @@ import {
   Table,
   Upload,
 } from "antd";
+import { HashRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ManageMainComponent from "../components/main-layout";
 import BaseCard from "../components/base-card";
 import Filter from "./components/filter";
 import { useNavigate } from "react-router-dom";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
+import { useForm } from "antd/lib/form/Form";
+import UpdateUser from "./update-user";
+import MainLayout from "../components/main-layout";
 
 export interface Params {
   username: string;
@@ -25,60 +29,51 @@ export interface Params {
   userStatus: string;
 }
 
-function getBase64(img: any, callback: any) {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
-
-function beforeUpload(file: any) {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-}
-
 const ManagementUser: React.FC = () => {
-  // upload
+  const [form] = useForm();
 
-  const [state, setState] = useState({ loading: false });
-  const { loading } = state;
+  const [state, setState] = useState([]);
+
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
 
-  //  const handleChange = (info:any) => {
-  //     if (info.file.status === 'uploading') {
-  //       setState({ loading: true });
-  //       return;
-  //     }
-  //     if (info.file.status === 'done') {
-  //       // Get this url from response in real world.
-  //       getBase64(info.file.originFileObj, imageUrl =>
-  //         setState({
-  //           imageUrl,
-  //           loading: false,
-  //         }),
-  //       );
-  //     }
-  //   };
+  // 保存上传图片得到图片地址
+  const handleChange = ({ fileList, file }: any) => {
+    form.setFields([
+      {
+        name: "url",
+        value: file.response,
+      },
+    ]);
+    setState(fileList);
+  };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  // modal
+
   const showModal = () => {
+    form.resetFields();
     setIsModalVisible(true);
   };
 
+  // 确认新增
   const handleOk = () => {
-    setIsModalVisible(false);
+    form.validateFields().then((res) => {
+      axios.post("/addUser", res).then((res) => {
+        if (res.data.code === 0) {
+          axios.get("/getUser").then((res: any) => {
+            setUserList(res.data.data);
+          });
+          setIsModalVisible(false);
+          message.info("新增成功！");
+        } else {
+          message.error("用户已存在！");
+        }
+      });
+    });
   };
 
   const handleCancel = () => {
@@ -86,16 +81,18 @@ const ManagementUser: React.FC = () => {
   };
 
   let navigate = useNavigate();
-  //获取用户信息
-  const [userList, setUserList] = useState<any>([]);
-  // withCredenticial:true
 
+  //保存用户信息
+  const [userList, setUserList] = useState<any>([]);
+
+  //获取用户信息
   useEffect(() => {
     axios.get("/getUser").then((res: any) => {
       setUserList(res.data.data);
     });
   }, [navigate]);
 
+  // 模糊查询用户
   function handleSearchUser(params: Params) {
     axios
       .get("/getUser", {
@@ -105,6 +102,19 @@ const ManagementUser: React.FC = () => {
         setUserList(res.data.data);
       });
   }
+
+  // 删除用户
+  const handelDelete = (record: any) => {
+    axios.get("/delUser", { params: { id: record.id } }).then((res: any) => {
+      axios.get("/getUser").then((res: any) => {
+        setUserList(res.data.data);
+      });
+
+      if (res.data.code === 0) {
+        message.info("删除成功!");
+      }
+    });
+  };
 
   //   表格标题数据
   const columns = [
@@ -138,11 +148,28 @@ const ManagementUser: React.FC = () => {
       dataIndex: "userStatus",
       render: (_: any, record: any) => {
         return (
-          <Switch
-            checkedChildren="启用"
-            unCheckedChildren="禁用"
-            defaultChecked={!!record.userStatus}
-          />
+          <Popconfirm
+            title="是否确认修改该用户状态"
+            okText="确认"
+            cancelText="取消"
+            onConfirm={() => {
+              const userStatus = record.userStatus === 0 ? "1" : "0";
+              axios
+                .post("updateUserStatus", { id: record.id, userStatus })
+                .then(() => {
+                  axios.get("/getUser").then((res: any) => {
+                    setUserList(res.data.data);
+                    message.info("修改用户状态成功！");
+                  });
+                });
+            }}
+          >
+            <Switch
+              checkedChildren="启用"
+              unCheckedChildren="禁用"
+              checked={!!record.userStatus}
+            />
+          </Popconfirm>
         );
       },
     },
@@ -152,20 +179,21 @@ const ManagementUser: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/userUpdate/${record.id}`)}}>
               编辑
             </Button>
             <Popconfirm
               title="是否确认删除该用户"
               okText="确认"
               cancelText="取消"
+              onConfirm={() => {
+                handelDelete(record);
+              }}
             >
-               <Button type="link" style={{ padding: "0" }}>
-              删除
-            </Button>
+              <Button type="link" style={{ padding: "0" }}>
+                删除
+              </Button>
             </Popconfirm>
-            ,
-           
           </Space>
         );
       },
@@ -173,81 +201,87 @@ const ManagementUser: React.FC = () => {
   ];
 
   return (
-    <ManageMainComponent>
-      <BaseCard marginBottom="16px">
-        <Filter handleSearch={handleSearchUser} />
-      </BaseCard>
-      <BaseCard>
-        <Button
-          type="primary"
-          style={{ marginBottom: "20px" }}
-          onClick={showModal}
-        >
-          新增
-        </Button>
-        <Table
-          dataSource={userList}
-          columns={columns}
-          pagination={{
-            pageSize: 3,
-            total: userList.length,
-          }}
-          bordered={true}
-        />
-      </BaseCard>
-      <Modal
-        title="新增用户"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="确认"
-        cancelText="取消"
+    <>   <BaseCard marginBottom="16px">
+    <Filter handleSearch={handleSearchUser} />
+  </BaseCard>
+  <BaseCard>
+    <Button
+      type="primary"
+      style={{ marginBottom: "20px" }}
+      onClick={showModal}
+    >
+      新增
+    </Button>
+    <Table
+      dataSource={userList}
+      columns={columns}
+      pagination={{
+        pageSize: 5,
+        total: userList.length,
+      }}
+      bordered={true}
+      rowKey={(record) => record.id}
+    />
+  </BaseCard>
+  <Modal
+    title="新增用户"
+    visible={isModalVisible}
+    onOk={handleOk}
+    onCancel={handleCancel}
+    okText="确认"
+    cancelText="取消"
+  >
+    <Form
+      name="basic"
+      initialValues={{ remember: true }}
+      autoComplete="off"
+      form={form}
+    >
+      <Form.Item name="id" hidden />
+      <Form.Item
+        label="用户名"
+        name="username"
+        rules={[{ required: true, message: "请输入用户名" }]}
       >
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          autoComplete="off"
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="密码"
+        name="password"
+        rules={[{ required: true, message: "请输入密码" }]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item
+        label="昵称"
+        name="nickname"
+        rules={[{ required: true, message: "请输入昵称" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="头像"
+        name="url"
+        rules={[{ required: true, message: "请上传头像" }]}
+      >
+        <Upload
+          action="http://localhost:8200/uploadimg"
+          listType="picture-card"
+          fileList={state}
+          // onPreview={this.handlePreview}
+          onChange={handleChange}
+          maxCount={1}
         >
-          <Form.Item
-            label="用户名"
-            name="username"
-            rules={[{ required: true, message: "请输入用户名" }]}
-          >
-            <Input />
-          </Form.Item>
+          {state.length ? null : uploadButton}
+        </Upload>
+      </Form.Item>
+    </Form>
+  </Modal></>
+ 
 
-          <Form.Item
-            label="密码"
-            name="password"
-            rules={[{ required: true, message: "请输入密码" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            label="昵称"
-            name="nickname"
-            rules={[{ required: true, message: "请输入用户名" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            beforeUpload={beforeUpload}
-            // onChange={this.handleChange}
-          >
-            <div>
-              {loading ? <LoadingOutlined /> : <PlusOutlined />}
-              <div style={{ marginTop: 8 }}>上传头像</div>
-            </div>
-          </Upload>
-        </Form>
-      </Modal>
-    </ManageMainComponent>
+ 
   );
 };
 export default ManagementUser;

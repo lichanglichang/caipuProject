@@ -1,15 +1,12 @@
-import React from 'react';
+import React from "react";
 import "antd/dist/antd.css";
-import Rte from './router';
-// import ManageMain from './Management/ManageMain';
+import Rte from "./route/router";
 import axios from "axios";
-axios.defaults.baseURL="http://localhost:8200";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import ManagementRoutes from "./route/management-routes";
+import routes from "./route/manager-routes";
+axios.defaults.baseURL = "http://localhost:8200";
 function App() {
-  return (
-    <div className="App"> 
-      <Rte></Rte>
-    </div>
-  );
+  return useRoutes(routes);
 }
 export default App;
- 

@@ -81,7 +81,7 @@ const ManagementCommodity: React.FC = () => {
   ];
 
   return (
-    <ManageMainComponent>
+    <>
       <BaseCard marginBottom={"16px"}>
         <Filter />
       </BaseCard>
@@ -102,7 +102,7 @@ const ManagementCommodity: React.FC = () => {
         <p>Some contents...</p>
         <p>Some contents...</p>
       </Modal>
-    </ManageMainComponent>
+    </>
   );
 };
 export default ManagementCommodity;
