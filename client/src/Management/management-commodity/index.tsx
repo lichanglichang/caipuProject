@@ -3,8 +3,7 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Params} from "react-router-dom";
 import BaseCard from "../components/base-card";
-import ManageMainComponent from "../components/main-layout";
-import Filter from "../management-menu/filter";
+import Filter from "./filter";
 
 const ManagementCommodity: React.FC = () => {
   //获取用户信息
@@ -53,6 +52,19 @@ const ManagementCommodity: React.FC = () => {
     {
       title: "菜单名",
       dataIndex: "goodsname",
+    },
+    {
+      title: "商品图",
+      dataIndex: "picture",
+      render: (_: any, record: any) => {
+        return (
+          <img
+            src={record.picture}
+            alt=""
+            style={{ width: "50px", height: "50px" }}
+          />
+        );
+      },
     },
     {
       title: "发货地",

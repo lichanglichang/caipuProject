@@ -55,7 +55,13 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
       location.pathname.indexOf("userUpdate") !== -1
     ) {
       return ["用户管理", "/Management/user", "编辑"];
-    } else if (location.pathname.indexOf("/Management/user") !== -1) {
+    }else if(
+      location.pathname.indexOf("/Management/user") !== -1 &&
+      location.pathname.indexOf("interest") !== -1
+    ) {
+      return ["用户管理", "/Management/user", "关联关注"];
+    }
+     else if (location.pathname.indexOf("/Management/user") !== -1) {
       return ["用户管理", "/Management/user"];
     } else if (location.pathname.indexOf("/Management/node") !== -1) {
       return ["笔记管理", "/Management/node"];
@@ -74,7 +80,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
     <Layout style={{ height: "100vh" }}>
       <Header className="header">
         <div className="title">
-          <div className="logo">好滋味美食管理系统</div>
+          <div className="logo">有滋味美食管理系统</div>
           {React.createElement(
             collapsedState ? MenuUnfoldOutlined : MenuFoldOutlined,
             {

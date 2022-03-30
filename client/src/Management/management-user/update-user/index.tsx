@@ -5,14 +5,16 @@ import {
   Cascader as Cascaded,
   Form,
   Input,
+  message,
   Select,
   Tag,
   Upload,
 } from "antd";
+
 import { useForm } from "antd/lib/form/Form";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./index.module.less";
 import BaseCard from "../../components/base-card";
 import {
@@ -20,15 +22,17 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid";
 import { PlusOutlined } from "@ant-design/icons";
+import { options, tasteOption } from "./data";
 
-const UpdateUser = () => {
-  const { id } = useParams();
+const UpdateUser:React.FC = () => {
+  const { id }:any = useParams();
   const [form] = useForm();
   const [fileList, setFileList] = useState<any>([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get("queryUserInfo", { params: { id } }).then((res) => {
-      form.setFieldsValue(res.data[0]);
+      form.setFieldsValue({...res.data[0],addressOther:JSON.parse(res.data[0].addressOther),tasteOther:JSON.parse(res.data[0].tasteOther,id)});
       setFileList([
         {
           uid: id,
@@ -42,7 +46,6 @@ const UpdateUser = () => {
 
   // 改变日历
   function onPanelChange(value: any) {
-    console.log(Date.parse(value._d), new Date(1646312927000));
     const year = new Date(value._d).getFullYear();
     const month = new Date(value._d).getMonth();
     const day = new Date(value._d).getDate();
@@ -50,10 +53,6 @@ const UpdateUser = () => {
       {
         name: "birthday",
         value: `${year}-${month}-${day}`,
-      },
-      {
-        name: "date",
-        value: value._d,
       },
     ]);
   }
@@ -77,59 +76,12 @@ const UpdateUser = () => {
     setFileList(fileList);
   };
 
-  // 地址选择框
-  const options = [
-    {
-      value: "zhejiang",
-      label: "重庆市",
-      children: [
-        {
-          value: "hangzhou",
-          label: "渝北区",
-        },
-        {
-          value: "jiuLongPo",
-          label: "九龙坡",
-        },
-        {
-          value: "shaPingBa",
-          label: "沙坪坝",
-        },
-        {
-          value: "wanZou",
-          label: "万州区",
-        },
-      ],
-    },
-    {
-      value: "jiangsu",
-      label: "Jiangsu",
-      children: [
-        {
-          value: "nanjing",
-          label: "Nanjing",
-          children: [
-            {
-              value: "zhonghuamen",
-              label: "Zhong Hua Men",
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
+//  地址改变
   function onChange(value: any) {
     console.log(value);
   }
 
-  const optionsTow = [
-    { value: "green", label: "酸",},
-    { value: "pink" , label: "甜",},
-    { value: "blue" , label: "苦",},
-    { value: "red" , label: "辣",},
-  ];
-
+// 多选自定义tag标签
   function tagRender(props: any) {
     const { label, value, closable, onClose } = props;
     const onPreventMouseDown = (event: any) => {
@@ -138,7 +90,7 @@ const UpdateUser = () => {
     };
     return (
       <Tag
-        color={value}
+        color={"blue"}
         onMouseDown={onPreventMouseDown}
         closable={closable}
         onClose={onClose}
@@ -149,6 +101,17 @@ const UpdateUser = () => {
     );
   }
 
+  // 保存修改
+  const handleSave=()=>{
+    form.validateFields().then((res)=>{
+      axios.post("updateUserInfo",{...res,addressOther:JSON.stringify(res.addressOther),
+        tasteOther:JSON.stringify(res.tasteOther)}).then(()=>{
+        message.success("修改成功！")
+        navigate("/Management/user")
+      }) 
+    })
+  }
+
   return (
     <>
       <Form
@@ -156,11 +119,12 @@ const UpdateUser = () => {
         autoComplete="off"
         layout="vertical"
         onFinish={() => {
-          console.log("提交信息");
+          handleSave()
         }}
         {...formSingleLayoutProps}
       >
         <BaseCard paddingBottom="60px">
+          <Form.Item name="id" hidden/>
           <Form.Item label="昵称" name="nickname">
             <Input placeholder="请输入查询昵称" />
           </Form.Item>
@@ -189,17 +153,19 @@ const UpdateUser = () => {
           <Form.Item label="生日" name="birthday">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
+          <Form.Item>
           <div style={{ width: "300px" }}>
             <Calendar fullscreen={false} onChange={onPanelChange} />
           </div>
+          </Form.Item>
+         
 
           <Form.Item label="个性签名" name="introduce_myself">
             <Input.TextArea rows={4}  placeholder="请输入查询账号" />
           </Form.Item>
           <Form.Item
             label="地址"
-            name="addres"
-            initialValue={["zhejiang", "hangzhou"]}
+            name="addressOther"
           >
             <Cascaded
               options={options}
@@ -208,19 +174,19 @@ const UpdateUser = () => {
             />
           </Form.Item>
 
-          <Form.Item label="口味" name="tastes" initialValue={["green", "red"]}>
+          <Form.Item label="口味" name="tasteOther">
           <Select
             mode="multiple"
             showArrow
             tagRender={tagRender}
-            options={optionsTow}
+            options={tasteOption}
           />
           </Form.Item>
          
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>
-            <Button type="primary">返回</Button>
+            <Button type="primary" onClick={()=>{navigate("/Management/user")}}>返回</Button>
             <Button type="primary" htmlType="submit">
               保存
             </Button>

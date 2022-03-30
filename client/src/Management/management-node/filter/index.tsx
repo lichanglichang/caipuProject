@@ -20,19 +20,19 @@ const Filter: React.FC = () => {
       }}
     >
       <SearchFormRow>
-        <SearchFormCol>
-          <Form.Item label="昵称" name="kw">
-            <Input placeholder="请输入查询昵称" />
+      <SearchFormCol>
+          <Form.Item label="作者" name="nickname">
+            <Input placeholder="请输入查询作者" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="账号">
+          <Form.Item label="账号" name="username">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="状态">
-            <Input placeholder="请输入查询账号" />
+          <Form.Item label="笔记名"  name="menuname">
+            <Input placeholder="请输入查询笔记名" />
           </Form.Item>
         </SearchFormCol>
 

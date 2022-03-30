@@ -25,14 +25,9 @@ import Updatainfo from "../view/LC/Updatainfo";
 import CollectDemo from "../view/LC/collect";
 
 // 管理员路由
-import ManagementUser from "../Management/management-user/index";
+
 import PersonalNote from "../view/bx/PersonalNote";
-import ManagementCommodity from "../Management/management-commodity";
-import ManagementMenu from "../Management/management-menu";
-import ManagementNode from "../Management/management-node";
-import ManagementRecipe from "../Management/management-recipe";
-import ManageMain from "../Management/ManageMain";
-import UpdateUser from "../Management/management-user/update-user";
+
 
 export default function Rte() {
   return (

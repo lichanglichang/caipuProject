@@ -4,6 +4,7 @@ import ManagementMenu from "../Management/management-menu";
 import ManagementNode from "../Management/management-node";
 import ManagementRecipe from "../Management/management-recipe";
 import ManagementUser from "../Management/management-user";
+import Interest from "../Management/management-user/interest";
 import UpdateUser from "../Management/management-user/update-user";
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     children: [
       { index: true, element: <ManagementUser /> },
       { path: "userUpdate/:id", element: <UpdateUser /> },
+      { path: "interest/:id", element: <Interest /> },
     ],
   },
   {

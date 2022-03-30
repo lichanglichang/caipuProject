@@ -1,41 +1,45 @@
 import {Button, Form, Input} from "antd";
 import React from "react";
+import { Params } from "..";
 import {
   SearchFormRow,
   SearchFormCol,
   SearchFormSpace,
 } from "../../components/search-form-grid/index";
 
-const Filter: React.FC = () => {
+// interface IProps {
+//   getAllMenu: (params: Params) => void;
+// }
+
+const Filter: React.FC<any> = ({getAllMenu}) => {
   const [form] = Form.useForm();
   return (
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{username:"",menuname:"",nickname:""}}
       onFinish={() => {
         form.validateFields().then(res => {
-          console.log(res);
+          getAllMenu(res)
         });
       }}
     >
       <SearchFormRow>
         <SearchFormCol>
-          <Form.Item label="昵称" name="kw">
-            <Input placeholder="请输入查询昵称" />
+          <Form.Item label="作者" name="nickname">
+            <Input placeholder="请输入查询作者" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="账号">
+          <Form.Item label="账号" name="username">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="状态">
-            <Input placeholder="请输入查询账号" />
+          <Form.Item label="菜单名"  name="menuname">
+            <Input placeholder="请输入查询菜单名" />
           </Form.Item>
         </SearchFormCol>
-
         <SearchFormCol>
           <Form.Item>
             <SearchFormSpace>
@@ -45,7 +49,8 @@ const Filter: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
+                  form.setFieldsValue({username: "",menuname:"",nickname:""});
+                  getAllMenu({username: "",menuname:"",nickname:""})
                 }}
               >
                 重置
@@ -54,7 +59,6 @@ const Filter: React.FC = () => {
           </Form.Item>
         </SearchFormCol>
       </SearchFormRow>
-      <Form.Item name="num" hidden></Form.Item>
     </Form>
   );
 };

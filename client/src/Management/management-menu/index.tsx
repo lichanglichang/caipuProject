@@ -1,10 +1,15 @@
 import {Space, Button, Table, Divider} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {Params} from "react-router-dom";
+
 import BaseCard from "../components/base-card";
 import ManageMainComponent from "../components/main-layout";
 import Filter from "./filter/index";
+
+export interface Params{
+  username:string,
+  menuname:string
+}
 
 const ManagementMenu: React.FC = () => {
   //获取用户信息
@@ -13,8 +18,9 @@ const ManagementMenu: React.FC = () => {
     axios
       .get("/getAllMenu", {
         params: {
-          num: 1,
-          kw: "",
+          username: "",
+          menuname: "",
+          nickname:""
         },
       })
       .then((res: any) => {
@@ -22,17 +28,16 @@ const ManagementMenu: React.FC = () => {
       });
   }, []);
 
-  function getAllUser(params: Params) {
+  function getAllMenu(params: Params) {
     axios
-      .get("/getAllUser", {
-        params,
-      })
-      .then((res: any) => {
-        setuserList(res.data.data);
-      });
+    .get("/getAllMenu", {
+      params
+    })
+    .then((res: any) => {
+      setuserList(res.data.data);
+    });
   }
 
-  console.log(userList, "kkkk");
 
   //   表格标题数据
   const columns = [
@@ -42,6 +47,10 @@ const ManagementMenu: React.FC = () => {
     },
     {
       title: "作者",
+      dataIndex: "nickname",
+    },
+    {
+      title: "账号",
       dataIndex: "username",
     },
     {
@@ -78,7 +87,7 @@ const ManagementMenu: React.FC = () => {
   return (
     <>
       <BaseCard marginBottom={"16px"}>
-        <Filter />
+        <Filter getAllMenu={getAllMenu}/>
       </BaseCard>
       <BaseCard>
       <Button type="primary" style={{marginBottom:"20px"}}>新增</Button>
@@ -86,10 +95,11 @@ const ManagementMenu: React.FC = () => {
           dataSource={userList}
           columns={columns}
           pagination={{
-            pageSize: 3,
+            pageSize: 5,
             total: userList.length,
           }}
           bordered={true}
+          rowKey={(record) => record.id}
         />
       </BaseCard>
     </>

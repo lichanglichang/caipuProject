@@ -68,7 +68,7 @@ const ManagementUser: React.FC = () => {
             setUserList(res.data.data);
           });
           setIsModalVisible(false);
-          message.info("新增成功！");
+          message.success("新增成功！");
         } else {
           message.error("用户已存在！");
         }
@@ -111,7 +111,7 @@ const ManagementUser: React.FC = () => {
       });
 
       if (res.data.code === 0) {
-        message.info("删除成功!");
+        message.success("删除成功!");
       }
     });
   };
@@ -159,7 +159,7 @@ const ManagementUser: React.FC = () => {
                 .then(() => {
                   axios.get("/getUser").then((res: any) => {
                     setUserList(res.data.data);
-                    message.info("修改用户状态成功！");
+                    message.success("修改用户状态成功！");
                   });
                 });
             }}
@@ -182,7 +182,17 @@ const ManagementUser: React.FC = () => {
             <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/userUpdate/${record.id}`)}}>
               编辑
             </Button>
-            <Popconfirm
+           
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/interest/${record.id}`)}}>
+                关注
+              </Button>
+              {/* <Button type="link" style={{ padding: "0" }}>
+                收藏
+              </Button>
+              <Button type="link" style={{ padding: "0" }}>
+                购物车
+              </Button> */}
+              <Popconfirm
               title="是否确认删除该用户"
               okText="确认"
               cancelText="取消"
