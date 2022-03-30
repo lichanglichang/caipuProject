@@ -1,7 +1,9 @@
+const { jsonp } = require("../../config/plugin");
+
 const Service = require("egg").Service;
 
 class UserService extends Service {
-  //管理获取用户信息
+  //1、管理获取用户信息
   async getUser(value) {
     var arr = Object.keys(value);
     // 判断是否为空数据，为空，则查询所有数据
@@ -19,7 +21,7 @@ class UserService extends Service {
     }
   }
 
-  //管理员添加用户
+  //2、管理员添加用户
   async addUser(username, password, nickname, url) {
     if (username && password && nickname && url) {
       let userResult = await this.app.mysql.query(
@@ -42,7 +44,7 @@ class UserService extends Service {
     }
   }
 
-  //管理员删除用户
+  //3、管理员删除用户
   async delUser(id) {
     await this.app.mysql.query(`delete from user where id in(${id})`);
     return {
@@ -51,7 +53,7 @@ class UserService extends Service {
     };
   }
 
-  // 修改管理员状态
+  // 4、修改管理员状态
   async updateUserStatus(id, userStatus) {
     await this.app.mysql.query(
       `update user set userStatus='${userStatus}' where id=${id}`
@@ -61,86 +63,64 @@ class UserService extends Service {
     };
   }
 
-  // 获取某个用户信息
+  // 5、获取某个用户信息
   async queryUserInfo(id) {
     const result = await this.app.mysql.query(
       `SELECT * FROM user WHere id='${id}'`
     );
-    return result
+    return result;
   }
 
-  //管理员修改用户
-  async updateUser(username, password, nickname, id) {
-    if (username || password || nickname) {
-      if (username && !email && !admin) {
-        let updateResult = await this.app.mysql.query(
-          `update user set username='${username}' where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (password && !username && !admin) {
-        let updateResult = await this.app.mysql.query(
-          `update user set password='${password}' where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (nickname && !password && !username) {
-        let updateResult = await this.app.mysql.query(
-          `update user set nickname=${nickname} where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (username && password && !nickname) {
-        let updateResult = await this.app.mysql.query(
-          `update user set username='${username}',password='${password}' where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (nickname && password && !username) {
-        let updateResult = await this.app.mysql.query(
-          `update user set password='${password}',nickname=${nickname} where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (username && nickname && !password) {
-        let updateResult = await this.app.mysql.query(
-          `update user set username='${username}',nickname=${nickname} where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-      if (username && password && nickname) {
-        let updateResult = await this.app.mysql.query(
-          `update user set username='${username}',password='${password}',nickname=${nickname} where id=${id.toString()}`
-        );
-        return {
-          code: 0,
-          message: "修改成功",
-        };
-      }
-    } else {
-      return {
-        code: 1,
-        message: "请至少输入一项数据",
-      };
+  //6、管理员修改用户
+  async updateUserInfo(
+    password,
+    nickname,
+    id,
+    addressOther,
+    birthday,
+    introduce_myself,
+    tasteOther,
+    url
+  ) {
+    await this.app.mysql.query(
+      `update user set nickname='${nickname}',password='${password}',addressOther='${addressOther}',tasteOther='${tasteOther}',birthday='${birthday}',introduce_myself='${introduce_myself}',url='${url}'  where id=${id}`
+    );
+    return {
+      msg: "修改成功！",
+    };
+  }
+
+  // 7、获取关注的用户
+  async queryUserInterest(id) {
+    const result = await this.app.mysql.query(
+      `SELECT guanzu FROM user WHERE id = "${id}"`
+    );
+    let interestArr = [];
+    for (let i = 0; i < result[0].guanzu.length; i++) {
+      let user = await this.app.mysql.query(
+        `SELECT * FROM user WHERE id = "${result[0].guanzu[i]}"`
+      );
+      interestArr = interestArr.concat(user);
     }
+    return interestArr;
+  }
+
+  // 8、取消关注
+  async cancelFollow(id, cancelId) {
+    const userInfo = await this.app.mysql.query(
+      `SELECT guanzu FROM user WHERE id = "${id}"`
+    );
+    let Arr = JSON.parse(userInfo[0].guanzu);
+    const value = Arr.indexOf(cancelId);
+    if (value > -1) {
+      Arr.splice(value, 1);
+      await this.app.mysql.query(
+        `update user set guanzu='${JSON.stringify(Arr)}' where id=${id}`
+      );
+    } else {
+      return { msg: "未查询到相关用户" };
+    }
+    return { msg: "取消关注成功！" };
   }
 
   //管理员删除商品
@@ -207,20 +187,15 @@ class UserService extends Service {
 
   //菜单
   //得到菜单
-  async getAllMenu(num, kw) {
-    if (kw) {
-      let userResult1 = await this.app.mysql.query(
-        ` SELECT * FROM menu where menuname  like '%${kw}%'`
-      );
-      return userResult1;
-    } else {
-      let local = (num - 1) * 5;
-      let userResult1 = await this.app.mysql.query(
-        ` select * from menu limit ${local},8 `
-      );
-      return userResult1;
-    }
+  async getAllMenu(username,nickname, menuname) {
+
+    console.log(username, menuname,nickname);
+    let userResult = await this.app.mysql
+      .query(`SELECT * FROM menu WHere  username like '%${username}%' 
+        and menuname like '%${menuname}%' and nickname like '%${nickname}%'`);
+    return userResult;
   }
+
   //删除菜单
   async delMenu(id) {
     if (id.length !== 0) {

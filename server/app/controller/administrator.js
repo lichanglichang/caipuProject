@@ -12,7 +12,7 @@ class UserController extends Controller {
     this.ctx.response.body = list;
   }
 
-  //获取用户
+  //1、获取用户信息
   async getUser() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.getUser(
@@ -24,7 +24,7 @@ class UserController extends Controller {
     };
   }
 
-  //添加用户
+  //2、添加用户
   async addUser() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.addUser(
@@ -36,7 +36,7 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-  // 删除用户
+  //3、 删除用户
   async delUser() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.delUser(
@@ -45,45 +45,69 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-  // 修改用户状态
+  //4、 修改用户状态
   async updateUserStatus() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.updateUserStatus(
-      ctx.request.body.id,ctx.request.body.userStatus
+      ctx.request.body.id,
+      ctx.request.body.userStatus
     );
     ctx.response.body = result;
   }
 
-  
-  //获取某个用户信息
+  //5、获取某个用户信息
   async queryUserInfo() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.queryUserInfo(
       ctx.request.query.id
     );
-    ctx.response.body = result
+    ctx.response.body = result;
   }
 
-
-  //修改用户
-  async updateUser() {
+  //6、修改用户
+  async updateUserInfo() {
     const { ctx } = this;
-    this.ctx.session.userId = 1;
-    if (this.ctx.session.userId) {
-      let result = await this.ctx.service.administrator.updateUser(
-        ctx.request.body.username,
-        ctx.request.body.password,
-        ctx.request.body.nickname,
-        ctx.request.body.id
+    const {
+      password,
+      nickname,
+      id,
+      addressOther,
+      birthday,
+      introduce_myself,
+      tasteOther,
+      url,
+    } = ctx.request.body;
+    let result = await this.ctx.service.administrator.updateUserInfo(
+      password,
+      nickname,
+      id,
+      addressOther,
+      birthday,
+      introduce_myself,
+      tasteOther,
+      url
+    );
+    ctx.response.body = result;
+  }
+
+  //7、获取关注的用户
+  async queryUserInterest() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryUserInterest(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+    //8、取消关注
+    async cancelFollow() {
+      const { ctx } = this;
+      let result = await this.ctx.service.administrator.cancelFollow(
+        ctx.request.body.id,  ctx.request.body.cancelId
       );
       ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
     }
-  }
+
 
   //查找用户
   async searchUser() {
@@ -186,24 +210,15 @@ class UserController extends Controller {
   //获取所有菜单
   async getAllMenu() {
     const { ctx } = this;
-    //测试使用
-    ctx.session.userId = 1;
-    ctx.session.idcard = 1;
-    if (ctx.session.userId && ctx.session.idcard == 1) {
-      let result = await this.ctx.service.administrator.getAllMenu(
-        ctx.request.query.num,
-        ctx.request.query.kw
-      );
-      ctx.response.body = {
-        code: 0,
-        data: result,
-      };
-    } else {
-      ctx.response.body = {
-        code: 1,
-        data: "未登录，请先登录!",
-      };
-    }
+    let result = await this.ctx.service.administrator.getAllMenu(
+      ctx.request.query?.username,
+      ctx.request.query?.nickname,
+      ctx.request.query?.menuname 
+    );
+    ctx.response.body = {
+      code: 0,
+      data: result,
+    };
   }
   //删除菜单
   async delMenu() {

@@ -156,8 +156,8 @@ for(let i=0;i<guanzuid[0].guanzu.length;i++){
      arr=arr.concat(user);
 }
     return arr;
-
 }
+
 // 获取用户发布的菜单
 async getcaidan(username) {
     let result= await this.app.mysql.query(`select * from menu WHERE username="${username}"`);
