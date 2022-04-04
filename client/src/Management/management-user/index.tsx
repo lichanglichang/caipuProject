@@ -20,7 +20,7 @@ import Filter from "./components/filter";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";
-import UpdateUser from "./update-user";
+import UpdateUser from "./user-update";
 import MainLayout from "../components/main-layout";
 
 export interface Params {

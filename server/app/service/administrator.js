@@ -3,6 +3,8 @@ const { jsonp } = require("../../config/plugin");
 const Service = require("egg").Service;
 
 class UserService extends Service {
+  //*************用户****************
+
   //1、管理获取用户信息
   async getUser(value) {
     var arr = Object.keys(value);
@@ -27,7 +29,7 @@ class UserService extends Service {
       let userResult = await this.app.mysql.query(
         `SELECT * FROM user WHere username='${username}'`
       );
-      if (userResult.length == 0) {
+      if (userResult.length === 0) {
         await this.app.mysql
           .query(`insert into user(username,password,nickname,url)
                      values('${username}','${password}','${nickname}','${url}')`);
@@ -123,6 +125,159 @@ class UserService extends Service {
     return { msg: "取消关注成功！" };
   }
 
+  //*************菜单****************
+
+  //1、获取菜单
+  async getAllMenu(username, nickname, menuname) {
+    let userResult = await this.app.mysql
+      .query(`SELECT * FROM menu WHere  username like '%${username}%' 
+        and menuname like '%${menuname}%' and nickname like '%${nickname}%'`);
+    return userResult;
+  }
+
+  // 2、新增菜单
+  async addMenu(menuname, background, username, introduction, recipeid) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${username}'`
+    );
+    // 判断用户是否存在
+    if (userResult.length !== 0) {
+      const result = await this.app.mysql
+        .query(`insert into menu(menuname, background, username, introduction, recipeid,nickname)
+      values('${menuname}','${background}','${username}','${introduction}','${recipeid}','${userResult[0].nickname}')`);
+      if (result.affectedRows === 1) {
+        return {
+          code: 1,
+          msg: "新增成功！",
+        };
+      }
+    } else {
+      return {
+        code: 0,
+        msg: "用户不存在！",
+      };
+    }
+  }
+
+  // 3、删除菜单
+  async delMenu(id) {
+    await this.app.mysql.query(
+      `delete from menu where menuid in(${id.toString()})`
+    );
+    return {
+      code: 0,
+      message: "删除成功",
+    };
+  }
+
+  // 4、获取某项菜单信息
+  async queryMenu(id) {
+    let result = await this.app.mysql.query(
+      `SELECT * FROM menu WHere  menuid in(${id.toString()})`
+    );
+    return result;
+  }
+
+  // 5、修改菜单信息
+  async updateMenu(
+    menuid,
+    menuname,
+    introduction,
+    username,
+    recipeid,
+    background
+  ) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${username}'`
+    );
+    // 判断用户是否存在
+    if (userResult.length !== 0) {
+      await this.app.mysql.query(
+        `update menu set menuname='${menuname}',introduction='${introduction}',username='${username}',recipeid='${JSON.stringify(
+          recipeid
+        )}',background='${background}',nickname='${
+          userResult[0].nickname
+        }' where menuid=${menuid}`
+      );
+      return { code: 1, msg: "修改成功！" };
+    } else {
+      return {
+        code: 0,
+        msg: "用户不存在！",
+      };
+    }
+  }
+
+  //*************菜谱****************
+
+  //1、获取菜谱
+  async getAllRecipe(value) {
+    if (JSON.stringify(value) === "{}") {
+      const result = await this.app.mysql.query(` SELECT * FROM recipe`);
+      return result;
+    } else {
+      const result = await this.app.mysql.query(
+        ` SELECT * FROM recipe where nickname  like '%${value.nickname}%' and menu_name like '%${value.menu_name}%' and username like '%${value.username}%'`
+      );
+      return result;
+    }
+  }
+
+  //删除菜谱
+  async delRecipe(id) {
+    if (id.length !== 0) {
+      let delResult = await this.app.mysql.query(
+        `delete from recipe where id in(${id.toString()})`
+      );
+      return {
+        code: 0,
+        message: "删除成功",
+      };
+    }
+  }
+
+  //*************笔记****************
+
+  //1、获取笔记
+  async getAllNotes(value) {
+    if (JSON.stringify(value) === "{}") {
+      const result = await this.app.mysql.query(` SELECT * FROM notes`);
+      return result;
+    } else {
+      const result = await this.app.mysql.query(
+        ` SELECT * FROM notes where username  like '%${value.username}%' and account like '%${value.account}%' and title like '%${value.title}%'`
+      );
+      return result;
+    }
+  }
+  //删除笔记
+  async delNotes(id) {
+    if (id.length !== 0) {
+      let delResult = await this.app.mysql.query(
+        `delete from notes where id in(${id.toString()})`
+      );
+      return {
+        code: 0,
+        message: "删除成功",
+      };
+    }
+  }
+
+  //*************笔记****************
+
+  //得到所有商品
+  async getAllGoods(value) {
+    if (JSON.stringify(value) === "{}") {
+      const result = await this.app.mysql.query(`SELECT * FROM goods`);
+      return result;
+    } else {
+      const result = await this.app.mysql.query(
+        ` SELECT * FROM notes where username  like '%${value.username}%' and account like '%${value.account}%' and title like '%${value.title}%'`
+      );
+      return result;
+    }
+  }
+
   //管理员删除商品
   async delGoods(id) {
     if (id.length !== 0) {
@@ -137,103 +292,6 @@ class UserService extends Service {
       return {
         code: 1,
         message: "请先选中要删除的数据",
-      };
-    }
-  }
-  //得到所有商品
-  async getAllGoods(num, kw) {
-    if (kw) {
-      let userResult1 = await this.app.mysql.query(
-        ` SELECT * FROM goods where address  like '%${kw}%'`
-      );
-      return userResult1;
-    } else {
-      let local = (num - 1) * 5;
-      let userResult1 = await this.app.mysql.query(
-        ` select * from goods limit ${local},5 `
-      );
-      return userResult1;
-    }
-  }
-
-  //菜谱
-  //得到菜谱
-  async getAllRecipe(num, kw) {
-    if (kw) {
-      let userResult1 = await this.app.mysql.query(
-        ` SELECT * FROM recipe where nickname  like '%${kw}%'`
-      );
-      return userResult1;
-    } else {
-      let local = (num - 1) * 5;
-      let userResult1 = await this.app.mysql.query(
-        ` select * from recipe limit ${local},8 `
-      );
-      return userResult1;
-    }
-  }
-  //删除菜谱
-  async delRecipe(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from recipe where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
-      };
-    }
-  }
-
-  //菜单
-  //得到菜单
-  async getAllMenu(username,nickname, menuname) {
-
-    console.log(username, menuname,nickname);
-    let userResult = await this.app.mysql
-      .query(`SELECT * FROM menu WHere  username like '%${username}%' 
-        and menuname like '%${menuname}%' and nickname like '%${nickname}%'`);
-    return userResult;
-  }
-
-  //删除菜单
-  async delMenu(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from menu where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
-      };
-    }
-  }
-
-  //笔记
-  //得到笔记
-  async getAllNotes(num, kw) {
-    if (kw) {
-      let userResult1 = await this.app.mysql.query(
-        ` SELECT * FROM notes where title  like '%${kw}%'`
-      );
-      return userResult1;
-    } else {
-      let local = (num - 1) * 5;
-      let userResult1 = await this.app.mysql.query(
-        ` select * from notes limit ${local},8 `
-      );
-      return userResult1;
-    }
-  }
-  //删除笔记
-  async delNotes(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from notes where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
       };
     }
   }

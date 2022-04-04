@@ -55,13 +55,22 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
       location.pathname.indexOf("userUpdate") !== -1
     ) {
       return ["用户管理", "/Management/user", "编辑"];
-    }else if(
+    } else if (
       location.pathname.indexOf("/Management/user") !== -1 &&
       location.pathname.indexOf("interest") !== -1
     ) {
       return ["用户管理", "/Management/user", "关联关注"];
-    }
-     else if (location.pathname.indexOf("/Management/user") !== -1) {
+    } else if (
+      location.pathname.indexOf("/Management/menu") !== -1 &&
+      location.pathname.indexOf("menuAdd") !== -1
+    ) {
+      return ["菜单管理", "/Management/menu", "新增"];
+    } else if (
+      location.pathname.indexOf("/Management/menu") !== -1 &&
+      location.pathname.indexOf("menuUpdate") !== -1
+    ) {
+      return ["菜单管理", "/Management/menu", "编辑"];
+    } else if (location.pathname.indexOf("/Management/user") !== -1) {
       return ["用户管理", "/Management/user"];
     } else if (location.pathname.indexOf("/Management/node") !== -1) {
       return ["笔记管理", "/Management/node"];
@@ -154,7 +163,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ padding: "0 24px 24px",position:"relative"}}>
+        <Layout style={{ padding: "0 24px 24px", position: "relative" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             {listType.length < 3 ? (
               <Breadcrumb.Item>
@@ -177,8 +186,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
               overflow: "auto",
             }}
           >
-            
-      <Outlet />
+            <Outlet />
           </Content>
         </Layout>
       </Layout>

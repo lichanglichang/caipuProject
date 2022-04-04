@@ -6,32 +6,42 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid/index";
 
-const Filter: React.FC = () => {
+
+export type notesType={
+  username:string,
+  account:string,
+  title:string,
+}
+interface IProps{
+  getNotes:(value:notesType)=>void
+}
+
+const Filter: React.FC<IProps> = ({getNotes}) => {
   const [form] = Form.useForm();
   return (
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{username: "",account:"",title:""}}
       onFinish={() => {
         form.validateFields().then(res => {
-          console.log(res);
+          getNotes(res)
         });
       }}
     >
       <SearchFormRow>
       <SearchFormCol>
-          <Form.Item label="作者" name="nickname">
+          <Form.Item label="作者" name="username">
             <Input placeholder="请输入查询作者" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="账号" name="username">
+          <Form.Item label="账号" name="account">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="笔记名"  name="menuname">
+          <Form.Item label="笔记名"  name="title">
             <Input placeholder="请输入查询笔记名" />
           </Form.Item>
         </SearchFormCol>
@@ -45,7 +55,8 @@ const Filter: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
+                  form.setFieldsValue({username: "",account:"",title:""});
+                  getNotes({username: "",account:"",title:""})
                 }}
               >
                 重置

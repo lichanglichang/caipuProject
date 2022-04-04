@@ -1,54 +1,56 @@
 import {Space, Button, Table, Divider} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {Params} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BaseCard from "../components/base-card";
-import ManageMainComponent from "../components/main-layout";
-import Filter from "./filter";
+import Filter, { notesType } from "./filter";
 
 const ManagementNode: React.FC = () => {
+  const navigate = useNavigate();
   //获取用户信息
   const [userList, setuserList] = useState<any>([]);
   useEffect(() => {
     axios
-      .get("/getAllNotes", {
-        params: {
-          num: 1,
-          kw: "",
-        },
-      })
+      .get("/getAllNotes")
       .then((res: any) => {
-        console.log(res.data.data);
+        console.log(res.data);
 
-        setuserList(res.data.data);
+        setuserList(res.data);
       });
   }, []);
 
-  function getAllUser(params: Params) {
+  function getNotes(params: notesType) {
     axios
-      .get("/getAllUser", {
+      .get("/getAllNotes", {
         params,
       })
       .then((res: any) => {
-        setuserList(res.data.data);
+        setuserList(res.data);
       });
   }
 
-  console.log(userList, "kkkk");
 
   //   表格标题数据
   const columns = [
     {
-      title: "笔记标题",
+      title: "笔记名",
       dataIndex: "title",
+      ellipsis: true,
     },
     {
       title: "作者",
       dataIndex: "username",
+     
+    },
+    {
+      title: "账号",
+      dataIndex: "account",
+     
     },
     {
       title: "内容",
       dataIndex: "content",
+      ellipsis: true,
     },
     {
       title: "封面图",
@@ -69,7 +71,7 @@ const ManagementNode: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{padding:"0"}}>编辑</Button>
+            <Button type="link" style={{padding:"0"}} onClick={()=>{  navigate(`notesUpdate/${record.id}`);}}>编辑</Button>
             <Button type="link" style={{padding:"0"}}>删除</Button>
           </Space>
         );
@@ -80,15 +82,15 @@ const ManagementNode: React.FC = () => {
   return (
     <>
       <BaseCard marginBottom={"16px"}>
-        <Filter />
+        <Filter getNotes={getNotes} />
       </BaseCard>
       <BaseCard>
-      <Button type="primary" style={{marginBottom:"20px"}}>新增</Button>
+      <Button type="primary" style={{marginBottom:"20px"}} onClick={()=>{  navigate("notesAdd");}}>新增</Button>
         <Table
           dataSource={userList}
           columns={columns}
           pagination={{
-            pageSize: 3,
+            pageSize: 5,
             total: userList.length,
           }}
           bordered={true}

@@ -1,11 +1,17 @@
 import MainLayout from "../Management/components/main-layout";
 import ManagementCommodity from "../Management/management-commodity";
 import ManagementMenu from "../Management/management-menu";
+import MenuAdd from "../Management/management-menu/menu-add";
+import MenuUpdate from "../Management/management-menu/menu-update";
 import ManagementNode from "../Management/management-node";
+import NotesAdd from "../Management/management-node/notes-add";
+import NotesUpdate from "../Management/management-node/notes-update";
 import ManagementRecipe from "../Management/management-recipe";
+import RecipeAdd from "../Management/management-recipe/recipe-add";
+import RecipeUpdate from "../Management/management-recipe/recipe-update";
 import ManagementUser from "../Management/management-user";
 import Interest from "../Management/management-user/interest";
-import UpdateUser from "../Management/management-user/update-user";
+import UpdateUser from "../Management/management-user/user-update";
 
 const routes = [
   {
@@ -29,6 +35,8 @@ const routes = [
     element: <MainLayout />,
     children: [
       { index: true, element: <ManagementMenu /> },
+      { path: "menuAdd", element: <MenuAdd /> },
+      { path: "menuUpdate/:id", element: <MenuUpdate /> },
     ],
   },
   {
@@ -36,6 +44,8 @@ const routes = [
     element: <MainLayout />,
     children: [
       { index: true, element: <ManagementNode /> },
+      { path: "notesAdd", element: <NotesAdd /> },
+      { path: "notesUpdate/:id", element: <NotesUpdate /> },
     ],
   },
   {
@@ -43,6 +53,8 @@ const routes = [
     element: <MainLayout />,
     children: [
       { index: true, element: <ManagementRecipe /> },
+      { path: "recipeAdd", element: <RecipeAdd /> },
+      { path: "recipeUpdate/:id", element: <RecipeUpdate /> },
     ],
   },
 ];

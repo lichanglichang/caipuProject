@@ -1,54 +1,62 @@
 import {Space, Button, Table, Divider} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {Params} from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import BaseCard from "../components/base-card";
-import ManageMainComponent from "../components/main-layout";
-import Filter from "./filter";
+import Filter, { recipeType } from "./filter";
 
 const ManagementRecipe: React.FC = () => {
-  //获取用户信息
-  const [userList, setuserList] = useState<any>([]);
+  const navigate = useNavigate()
+
+  //获取菜谱信息
+  const [recipeList, setRecipeList] = useState<any>([]);
+
   useEffect(() => {
     axios
-      .get("/getAllRecipe", {
-        params: {
-          num: 1,
-          kw: "",
-        },
-      })
+      .get("/getAllRecipe")
       .then((res: any) => {
         console.log(res.data.data);
 
-        setuserList(res.data.data);
+        setRecipeList(res.data.data);
       });
   }, []);
 
-  function getAllUser(params: Params) {
+  function getRecipe(params: recipeType) {
     axios
-      .get("/getAllUser", {
+      .get("/getAllRecipe", {
         params,
       })
       .then((res: any) => {
-        setuserList(res.data.data);
+        setRecipeList(res.data.data);
       });
   }
 
-  console.log(userList, "kkkk");
 
   //   表格标题数据
   const columns = [
     {
-      title: "菜单名",
+      title: "id",
+      dataIndex: "id",
+      width:50,
+    },
+    {
+      title: "菜谱名",
       dataIndex: "menu_name",
+      ellipsis: true,
     },
     {
       title: "作者",
       dataIndex: "nickname",
     },
     {
+      title: "账号",
+      dataIndex: "username",
+    },
+    {
       title: "简介",
       dataIndex: "introduce",
+      ellipsis:true,
+      width:300,
     },
     {
       title: "封面图",
@@ -58,7 +66,7 @@ const ManagementRecipe: React.FC = () => {
           <img
             src={record.img}
             alt=""
-            style={{width: "50px", height: "50px"}}
+            style={{width: "80px", height: "50px"}}
           />
         );
       },
@@ -69,7 +77,7 @@ const ManagementRecipe: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{padding:"0"}}>编辑</Button>
+            <Button type="link" style={{padding:"0"}} onClick={()=>{navigate(`recipeUpdate/${record.id}`);}}>编辑</Button>
             <Button type="link" style={{padding:"0"}}>删除</Button>
           </Space>
         );
@@ -80,16 +88,16 @@ const ManagementRecipe: React.FC = () => {
   return (
     <>
       <BaseCard marginBottom={"16px"}>
-        <Filter />
+        <Filter getRecipe={getRecipe}/>
       </BaseCard>
       <BaseCard>
-      <Button type="primary" style={{marginBottom:"20px"}}>新增</Button>
+      <Button type="primary" style={{marginBottom:"20px"}} onClick={()=>{navigate("recipeAdd")}}>新增</Button>
         <Table
-          dataSource={userList}
+          dataSource={recipeList}
           columns={columns}
           pagination={{
-            pageSize: 3,
-            total: userList.length,
+            pageSize: 5,
+            total: recipeList.length,
           }}
           bordered={true}
         />

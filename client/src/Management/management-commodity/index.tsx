@@ -1,7 +1,7 @@
-import {Space, Button, Table, Divider, Modal} from "antd";
+import { Space, Button, Table, Divider, Modal } from "antd";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {Params} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Params } from "react-router-dom";
 import BaseCard from "../components/base-card";
 import Filter from "./filter";
 
@@ -9,16 +9,9 @@ const ManagementCommodity: React.FC = () => {
   //获取用户信息
   const [userList, setuserList] = useState<any>([]);
   useEffect(() => {
-    axios
-      .get("/getAllGoods", {
-        params: {
-          num: 1,
-          kw: "",
-        },
-      })
-      .then((res: any) => {
-        setuserList(res.data.data);
-      });
+    axios.get("getAllGoods").then((res: any) => {
+      setuserList(res.data);
+    });
   }, []);
 
   function getAllUser(params: Params) {
@@ -27,7 +20,7 @@ const ManagementCommodity: React.FC = () => {
         params,
       })
       .then((res: any) => {
-        setuserList(res.data.data);
+        setuserList(res.data);
       });
   }
 
@@ -45,13 +38,12 @@ const ManagementCommodity: React.FC = () => {
     setIsModalVisible(false);
   };
 
-
-
   //   表格标题数据
   const columns = [
     {
-      title: "菜单名",
+      title: "商品名",
       dataIndex: "goodsname",
+      ellipsis: true,
     },
     {
       title: "商品图",
@@ -59,7 +51,7 @@ const ManagementCommodity: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <img
-            src={record.picture}
+            src={`http://localhost:8200/public/shopping/${record.picture}`}
             alt=""
             style={{ width: "50px", height: "50px" }}
           />
@@ -73,6 +65,7 @@ const ManagementCommodity: React.FC = () => {
     {
       title: "简介",
       dataIndex: "introduction",
+      
     },
     {
       title: "价格",
@@ -84,8 +77,12 @@ const ManagementCommodity: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{padding:"0"}}>编辑</Button>
-            <Button type="link" style={{padding:"0"}}>删除</Button>
+            <Button type="link" style={{ padding: "0" }}>
+              编辑
+            </Button>
+            <Button type="link" style={{ padding: "0" }}>
+              删除
+            </Button>
           </Space>
         );
       },
@@ -98,18 +95,29 @@ const ManagementCommodity: React.FC = () => {
         <Filter />
       </BaseCard>
       <BaseCard>
-      <Button type="primary" style={{marginBottom:"20px"}} onClick={showModal}>新增</Button>
+        <Button
+          type="primary"
+          style={{ marginBottom: "20px" }}
+          onClick={showModal}
+        >
+          新增
+        </Button>
         <Table
           dataSource={userList}
           columns={columns}
           pagination={{
-            pageSize: 3,
+            pageSize: 5,
             total: userList.length,
           }}
           bordered={true}
         />
       </BaseCard>
-      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>

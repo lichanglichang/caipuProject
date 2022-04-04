@@ -6,16 +6,25 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid/index";
 
-const Filter: React.FC = () => {
+export type recipeType={
+  username:string,
+  menu_name:string,
+  nickname:string,
+}
+interface IProps{
+  getRecipe:(value:recipeType)=>void
+}
+
+const Filter: React.FC<IProps> = ({getRecipe}) => {
   const [form] = Form.useForm();
   return (
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{username:"",menu_name:"",nickname:""}}
       onFinish={() => {
         form.validateFields().then(res => {
-          console.log(res);
+          getRecipe(res)
         });
       }}
     >
@@ -31,7 +40,7 @@ const Filter: React.FC = () => {
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="菜谱名"  name="menuname">
+          <Form.Item label="菜谱名"  name="menu_name">
             <Input placeholder="请输入查询菜谱名" />
           </Form.Item>
         </SearchFormCol>
@@ -45,7 +54,8 @@ const Filter: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
+                  form.setFieldsValue({username:"",menu_name:"",nickname:""});
+                  getRecipe({username:"",menu_name:"",nickname:""})
                 }}
               >
                 重置

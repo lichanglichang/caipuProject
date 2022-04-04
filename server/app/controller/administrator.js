@@ -12,6 +12,8 @@ class UserController extends Controller {
     this.ctx.response.body = list;
   }
 
+  //  *************用户****************
+
   //1、获取用户信息
   async getUser() {
     const { ctx } = this;
@@ -99,95 +101,93 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-    //8、取消关注
-    async cancelFollow() {
-      const { ctx } = this;
-      let result = await this.ctx.service.administrator.cancelFollow(
-        ctx.request.body.id,  ctx.request.body.cancelId
-      );
-      ctx.response.body = result;
-    }
-
-
-  //查找用户
-  async searchUser() {
+  //8、取消关注
+  async cancelFollow() {
     const { ctx } = this;
-    ctx.session.userId = 1;
-    if (this.ctx.session.userId) {
-      let result = await this.ctx.service.administrator.searchUser(
-        ctx.request.query.kw
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    let result = await this.ctx.service.administrator.cancelFollow(
+      ctx.request.body.id,
+      ctx.request.body.cancelId
+    );
+    ctx.response.body = result;
   }
 
-  //商品
-  //获取所有商品
-  async getAllGoods() {
+  //*************菜单****************
+
+  //1、获取菜单
+  async getAllMenu() {
     const { ctx } = this;
-    //测试使用
-    ctx.session.userId = 1;
-    ctx.session.idcard = 1;
-    if (ctx.session.userId && ctx.session.idcard == 1) {
-      let result = await this.ctx.service.administrator.getAllGoods(
-        ctx.request.query.num,
-        ctx.request.query.kw
-      );
-      ctx.response.body = {
-        code: 0,
-        data: result,
-      };
-    } else {
-      ctx.response.body = {
-        code: 1,
-        data: "未登录，请先登录!",
-      };
-    }
-  }
-  //删除
-  async delGoods() {
-    const { ctx } = this;
-    ctx.session.userId = 1;
-    if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delGoods(
-        ctx.request.query.id
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    let result = await this.ctx.service.administrator.getAllMenu(
+      ctx.request.query?.username,
+      ctx.request.query?.nickname,
+      ctx.request.query?.menuname
+    );
+    ctx.response.body = {
+      code: 0,
+      data: result,
+    };
   }
 
-  //菜谱
+  // 2、新增菜单
+  async addMenu() {
+    const { ctx } = this;
+    const { menuname, background, username, introduction, recipeid } =
+      ctx.request.body;
+    let result = await this.ctx.service.administrator.addMenu(
+      menuname,
+      background,
+      username,
+      introduction,
+      JSON.stringify(recipeid)
+    );
+    ctx.response.body = result;
+  }
+
+  //3、删除菜单
+  async delMenu() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.delMenu(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  // 4、获取某项菜单信息
+  async queryMenu() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryMenu(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  // 5、修改菜单信息
+  async updateMenu() {
+    const { ctx } = this;
+    const { menuid, menuname, introduction, username, recipeid, background } =
+      ctx.request.body;
+    let result = await this.ctx.service.administrator.updateMenu(
+      menuid,
+      menuname,
+      introduction,
+      username,
+      recipeid,
+      background
+    );
+    ctx.response.body = result;
+  }
+
+  //*************菜谱****************
+
   //获取所有菜谱
   async getAllRecipe() {
     const { ctx } = this;
-    //测试使用
-    ctx.session.userId = 1;
-    ctx.session.idcard = 1;
-    if (ctx.session.userId && ctx.session.idcard == 1) {
-      let result = await this.ctx.service.administrator.getAllRecipe(
-        ctx.request.query.num,
-        ctx.request.query.kw
-      );
-      ctx.response.body = {
-        code: 0,
-        data: result,
-      };
-    } else {
-      ctx.response.body = {
-        code: 1,
-        data: "未登录，请先登录!",
-      };
-    }
+    let result = await this.ctx.service.administrator.getAllRecipe(
+      ctx.request.query
+    );
+    ctx.response.body = {
+      code: 0,
+      data: result,
+    };
   }
   //删除菜谱
   async delRecipe() {
@@ -206,26 +206,23 @@ class UserController extends Controller {
     }
   }
 
-  //菜单
-  //获取所有菜单
-  async getAllMenu() {
+  //*************笔记****************
+
+  //获取所有笔记
+  async getAllNotes() {
     const { ctx } = this;
-    let result = await this.ctx.service.administrator.getAllMenu(
-      ctx.request.query?.username,
-      ctx.request.query?.nickname,
-      ctx.request.query?.menuname 
+    let result = await this.ctx.service.administrator.getAllNotes(
+      ctx.request.query
     );
-    ctx.response.body = {
-      code: 0,
-      data: result,
-    };
+    ctx.response.body = result;
   }
-  //删除菜单
-  async delMenu() {
+
+  //删除笔记
+  async delNotes() {
     const { ctx } = this;
     ctx.session.userId = 1;
     if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delMenu(
+      let result = await this.ctx.service.administrator.delNotes(
         ctx.request.query.id
       );
       ctx.response.body = result;
@@ -237,35 +234,23 @@ class UserController extends Controller {
     }
   }
 
-  //笔记
-  //获取所有笔记
-  async getAllNotes() {
+  //*************商品****************
+
+  //获取所有商品
+  async getAllGoods() {
     const { ctx } = this;
-    //测试使用
-    ctx.session.userId = 1;
-    ctx.session.idcard = 1;
-    if (ctx.session.userId && ctx.session.idcard == 1) {
-      let result = await this.ctx.service.administrator.getAllNotes(
-        ctx.request.query.num,
-        ctx.request.query.kw
-      );
-      ctx.response.body = {
-        code: 0,
-        data: result,
-      };
-    } else {
-      ctx.response.body = {
-        code: 1,
-        data: "未登录，请先登录!",
-      };
-    }
+    let result = await this.ctx.service.administrator.getAllGoods(
+      ctx.request.query
+    );
+
+    ctx.response.body = result;
   }
-  //删除笔记
-  async delNotes() {
+  //删除
+  async delGoods() {
     const { ctx } = this;
     ctx.session.userId = 1;
     if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delNotes(
+      let result = await this.ctx.service.administrator.delGoods(
         ctx.request.query.id
       );
       ctx.response.body = result;
