@@ -50,24 +50,14 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
   }, [navigate]);
 
   const listType = useMemo(() => {
-    if (
-      location.pathname.indexOf("/Management/user") !== -1 &&
-      location.pathname.indexOf("userUpdate") !== -1
-    ) {
+    if (location.pathname.indexOf("/Management/user/userUpdate") !== -1) {
       return ["用户管理", "/Management/user", "编辑"];
-    } else if (
-      location.pathname.indexOf("/Management/user") !== -1 &&
-      location.pathname.indexOf("interest") !== -1
-    ) {
+    } else if (location.pathname.indexOf("/Management/user/interest") !== -1) {
       return ["用户管理", "/Management/user", "关联关注"];
-    } else if (
-      location.pathname.indexOf("/Management/menu") !== -1 &&
-      location.pathname.indexOf("menuAdd") !== -1
-    ) {
+    } else if (location.pathname.indexOf("/Management/menu/menuAdd") !== -1) {
       return ["菜单管理", "/Management/menu", "新增"];
     } else if (
-      location.pathname.indexOf("/Management/menu") !== -1 &&
-      location.pathname.indexOf("menuUpdate") !== -1
+      location.pathname.indexOf("/Management/menu/menuUpdate") !== -1
     ) {
       return ["菜单管理", "/Management/menu", "编辑"];
     } else if (location.pathname.indexOf("/Management/user") !== -1) {

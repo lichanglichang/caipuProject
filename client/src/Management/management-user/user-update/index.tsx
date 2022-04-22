@@ -3,6 +3,7 @@ import {
   Calendar,
   Card,
   Cascader as Cascaded,
+  DatePicker,
   Form,
   Input,
   message,
@@ -23,6 +24,7 @@ import {
 } from "../../components/search-form-grid";
 import { PlusOutlined } from "@ant-design/icons";
 import { options, tasteOption } from "./data";
+import moment from "moment";
 
 const UpdateUser:React.FC = () => {
   const { id }:any = useParams();
@@ -30,9 +32,10 @@ const UpdateUser:React.FC = () => {
   const [fileList, setFileList] = useState<any>([]);
   const navigate = useNavigate()
 
+  // 进入页面加载数据
   useEffect(() => {
     axios.get("queryUserInfo", { params: { id } }).then((res) => {
-      form.setFieldsValue({...res.data[0],addressOther:JSON.parse(res.data[0].addressOther),tasteOther:JSON.parse(res.data[0].tasteOther,id)});
+      form.setFieldsValue({...res.data[0],addressOther:JSON.parse(res.data[0].addressOther),tasteOther:JSON.parse(res.data[0].tasteOther),id,birthday:moment(res.data[0].birthday)});
       setFileList([
         {
           uid: id,
@@ -41,21 +44,9 @@ const UpdateUser:React.FC = () => {
           url: res.data[0].url,
         },
       ]);
-    });
-  }, [id]);
+    });      
+  }, [form, id]);
 
-  // 改变日历
-  function onPanelChange(value: any) {
-    const year = new Date(value._d).getFullYear();
-    const month = new Date(value._d).getMonth();
-    const day = new Date(value._d).getDate();
-    form.setFields([
-      {
-        name: "birthday",
-        value: `${year}-${month}-${day}`,
-      },
-    ]);
-  }
 
   // 上传头像样式
   const uploadButton = (
@@ -83,7 +74,7 @@ const UpdateUser:React.FC = () => {
 
 // 多选自定义tag标签
   function tagRender(props: any) {
-    const { label, value, closable, onClose } = props;
+    const { label,  closable, onClose } = props;
     const onPreventMouseDown = (event: any) => {
       event.preventDefault();
       event.stopPropagation();
@@ -105,12 +96,17 @@ const UpdateUser:React.FC = () => {
   const handleSave=()=>{
     form.validateFields().then((res)=>{
       axios.post("updateUserInfo",{...res,addressOther:JSON.stringify(res.addressOther),
-        tasteOther:JSON.stringify(res.tasteOther)}).then(()=>{
+        tasteOther:JSON.stringify(res.tasteOther),birthday:moment(res.birthday).format("YYYY-MM-DD")}).then(()=>{
         message.success("修改成功！")
         navigate("/Management/user")
       }) 
     })
   }
+
+  
+function handleChangeTime(date:any, dateString:any) {
+  console.log(date, dateString);
+}
 
   return (
     <>
@@ -143,23 +139,15 @@ const UpdateUser:React.FC = () => {
           </Form.Item>
 
           <Form.Item label="账号" name="username">
-            <Input placeholder="请输入查询账号" disabled />
+            <Input disabled />
           </Form.Item>
 
           <Form.Item label="密码" name="password">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
-
           <Form.Item label="生日" name="birthday">
-            <Input placeholder="请输入查询账号" />
-          </Form.Item>
-          <Form.Item>
-          <div style={{ width: "300px" }}>
-            <Calendar fullscreen={false} onChange={onPanelChange} />
-          </div>
-          </Form.Item>
-         
-
+          <DatePicker onChange={handleChangeTime} style={{width:"100%"}}/>
+          </Form.Item>      
           <Form.Item label="个性签名" name="introduce_myself">
             <Input.TextArea rows={4}  placeholder="请输入查询账号" />
           </Form.Item>
