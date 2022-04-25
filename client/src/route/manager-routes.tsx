@@ -9,18 +9,26 @@ import NotesUpdate from "../Management/management-node/notes-update";
 import ManagementRecipe from "../Management/management-recipe";
 import RecipeAdd from "../Management/management-recipe/recipe-add";
 import RecipeUpdate from "../Management/management-recipe/recipe-update";
-import ManagementUser from "../Management/management-user";
-import Interest from "../Management/management-user/interest";
-import UpdateUser from "../Management/management-user/user-update";
+import ManagementUser from "../Management/management-user/base";
+import Interest from "../Management/management-user/base/interest";
+import UpdateUser from "../Management/management-user/base/user-update";
+import UserRelevance from "../Management/management-user/relevance";
 
 const routes = [
   {
-    path: "/Management/user",
+    path: "/Management/user/base",
     element: <MainLayout />,
     children: [
       { index: true, element: <ManagementUser /> },
       { path: "userUpdate/:id", element: <UpdateUser /> },
       { path: "interest/:id", element: <Interest /> },
+    ],
+  },
+  {
+    path: "/Management/user/relevance",
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <UserRelevance /> },
     ],
   },
   {

@@ -117,7 +117,7 @@ function LoginDome() {
                         let t = d.toUTCString();
                         document.cookie = `msg=${res.data.msg};expires=${t}`;
                         document.cookie = `code=${res.data.code};expires=${t}`;
-                        navigate({pathname:"/Management/user"});
+                        navigate({pathname:"/Management/user/base"});
                    }
                 })
                

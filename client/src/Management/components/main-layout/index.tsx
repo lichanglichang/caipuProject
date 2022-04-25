@@ -104,21 +104,34 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
           <Menu
             theme="dark"
             mode="inline"
+            defaultOpenKeys={["user"]}
             selectedKeys={[`${location.pathname}`]}
             style={{ marginTop: "0" }}
           >
+            <Menu.SubMenu title="用户管理"  icon={<UserOutlined />} key="user"
+             className={collapsedState ? "menuArrow" : "menuPadding"}
+              style={{ paddingLeft: collapsedState ? "10px" : "" }}
+              >
             <Menu.Item
               key={
-                location.pathname.indexOf("/Management/user") !== -1
+                location.pathname.indexOf("/Management/user/base") !== -1
                   ? location.pathname
-                  : "/Management/user"
+                  : "/Management/user/base"
               }
-              icon={<UserOutlined />}
-              className={collapsedState ? "menuItem" : ""}
-              style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
-              <Link to="/Management/user">用户管理</Link>
+              <Link to="/Management/user/base">基础信息</Link>
             </Menu.Item>
+            <Menu.Item
+              key={
+                location.pathname.indexOf("/Management/user/relevance") !== -1
+                ? location.pathname
+                : "/Management/user/relevance"
+              }
+            >
+              <Link to="/Management/user/relevance">关联管理</Link>
+            </Menu.Item>
+            </Menu.SubMenu>
+        
             <Menu.Item
               key="/Management/menu"
               icon={<ProfileOutlined />}

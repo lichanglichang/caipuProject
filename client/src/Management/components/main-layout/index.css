@@ -44,3 +44,10 @@
 .header {
   width: 100%;
 }
+
+.menuArrow .ant-menu-submenu-arrow{
+  display: none;
+}
+.menuPadding .ant-menu-submenu-title{
+  padding-left: 18px !important;
+}
