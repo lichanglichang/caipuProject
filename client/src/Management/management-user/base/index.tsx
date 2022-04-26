@@ -204,7 +204,6 @@ const ManagementUser: React.FC = () => {
 
   return (
     <>
-      {" "}
       <BaseCard marginBottom="16px">
         <Filter handleSearch={handleSearchUser} />
       </BaseCard>

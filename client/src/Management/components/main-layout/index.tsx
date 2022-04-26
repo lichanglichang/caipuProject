@@ -10,11 +10,12 @@ import {
 import { Layout, Menu, Breadcrumb, Button } from "antd";
 import { Header, Content } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import getCookieByKey from "../../../view/getCookie";
+import modal from "antd/lib/modal";
 
 interface IProps {
   children?: React.ReactNode;
@@ -30,9 +31,18 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
   const [collapsedState, setCollapsedState] = useState(false);
 
   // 进入界面时，判断是否为登陆转态
-  if (getCookieByKey("msg") === null) {
-    navigate({ pathname: "/Login" });
-  }
+  useEffect(() => {
+    if (getCookieByKey("msg") === null) {
+      modal.confirm({
+        title: "未登录，请前往登录！",
+        okText: "确认",
+        cancelText: "取消",
+        onOk: () => {
+          navigate({ pathname: "/Login" });
+        },
+      });
+    }
+  }, [navigate]);
 
   // 清楚cookie
   function clearAllCookie() {
@@ -64,6 +74,31 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
         { name: "用户管理" },
         { name: "用户关联", route: "/Management/user/relevance" },
         { name: "关注" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/user/relevance/collect") !== -1
+    ) {
+      return [
+        { name: "用户管理" },
+        { name: "用户关联", route: "/Management/user/relevance" },
+        { name: "收藏" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/user/relevance/publish") !== -1
+    ) {
+      return [
+        { name: "用户管理" },
+        { name: "用户关联", route: "/Management/user/relevance" },
+        { name: "发布" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/user/relevance/shoppingCart") !==
+      -1
+    ) {
+      return [
+        { name: "用户管理" },
+        { name: "用户关联", route: "/Management/user/relevance" },
+        { name: "购物车" },
       ];
     } else if (location.pathname.indexOf("/Management/menu/menuAdd") !== -1) {
       return [
@@ -115,13 +150,35 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             }
           )}
         </div>
-        <Button
-          onClick={() => {
-            exitLogin();
-          }}
-        >
-          退出登录
-        </Button>
+        <div className="loginStatus">
+          <UserOutlined style={{ fontSize: "16px", marginRight: "8px" }} />
+          {getCookieByKey("msg") ? "管理员" : "未登录"}
+          {getCookieByKey("msg") ? (
+            <>
+              <div
+                className="exit"
+                onClick={() => {
+                  exitLogin();
+                }}
+              >
+                <span>退出登录</span>
+              </div>
+              <div className="triangle" />
+            </>
+          ) : (
+            <>
+              <div
+                className="exit"
+                onClick={() => {
+                  navigate({ pathname: "/Login" }); 
+                }}
+              >
+                前往登录
+              </div>
+              <div className="triangle" />
+            </>
+          )}
+        </div>
       </Header>
       <Layout style={{ flexDirection: "row" }}>
         <Sider trigger={null} collapsible collapsed={collapsedState}>
@@ -196,8 +253,8 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
         </Sider>
         <Layout style={{ padding: "0 24px 24px", position: "relative" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            {listType.map((item) => (
-              <Breadcrumb.Item>
+            {listType.map((item, index) => (
+              <Breadcrumb.Item key={index}>
                 <Link to={item.route || ""}>{item.name}</Link>
               </Breadcrumb.Item>
             ))}
@@ -210,7 +267,7 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
               overflow: "auto",
             }}
           >
-            <Outlet />
+            {getCookieByKey("msg") ? <Outlet /> : ""}
           </Content>
         </Layout>
       </Layout>

@@ -1,32 +1,10 @@
-import {
-  Button,
-  Calendar,
-  Card,
-  Cascader as Cascaded,
-  Divider,
-  Form,
-  Input,
-  message,
-  Popconfirm,
-  Select,
-  Space,
-  Table,
-  Tag,
-  Upload,
-} from "antd";
-import { useForm } from "antd/lib/form/Form";
+import { Button, Divider, message, Popconfirm, Space, Table } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styles from "./index.module.less";
 import BaseCard from "../../../components/base-card";
-import {
-  formSingleLayoutProps,
-  SearchFormSpace,
-} from "../../../components/search-form-grid";
-import { PlusOutlined } from "@ant-design/icons";
 
-const Interest = () => {
+const Collect = () => {
   const { id } = useParams();
   const [count, setCount] = useState<any>();
 
@@ -96,10 +74,40 @@ const Interest = () => {
 
   return (
     <>
-      <BaseCard marginBottom="12px">
-        <h3 style={{ marginBottom: "24px" }}>已关注（{count?.data.length||0}）</h3>
+      <BaseCard marginBottom="24px">
+        <h3 style={{ marginBottom: "24px" }}>
+          已收藏菜单（{count?.data.length || 0}）
+        </h3>
+        <Table
+          dataSource={count?.data}
+          columns={columns}
+          pagination={{
+            pageSize: 5,
+            total: count?.data.length,
+          }}
+          bordered={true}
+          rowKey={(record) => record.id}
+        />
       </BaseCard>
-      <BaseCard>
+      <BaseCard marginBottom="24px">
+        <h3 style={{ marginBottom: "24px" }}>
+          已收藏菜谱（{count?.data.length || 0}）
+        </h3>
+        <Table
+          dataSource={count?.data}
+          columns={columns}
+          pagination={{
+            pageSize: 5,
+            total: count?.data.length,
+          }}
+          bordered={true}
+          rowKey={(record) => record.id}
+        />
+      </BaseCard>
+      <BaseCard marginBottom="24px">
+        <h3 style={{ marginBottom: "24px" }}>
+          已收藏笔记（{count?.data.length || 0}）
+        </h3>
         <Table
           dataSource={count?.data}
           columns={columns}
@@ -115,4 +123,4 @@ const Interest = () => {
   );
 };
 
-export default Interest;
+export default Collect;

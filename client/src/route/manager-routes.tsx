@@ -10,9 +10,12 @@ import ManagementRecipe from "../Management/management-recipe";
 import RecipeAdd from "../Management/management-recipe/recipe-add";
 import RecipeUpdate from "../Management/management-recipe/recipe-update";
 import ManagementUser from "../Management/management-user/base";
-import Interest from "../Management/management-user/base/interest";
 import UpdateUser from "../Management/management-user/base/user-update";
 import UserRelevance from "../Management/management-user/relevance";
+import Collect from "../Management/management-user/relevance/collect";
+import Interest from "../Management/management-user/relevance/interest";
+import Publish from "../Management/management-user/relevance/publish";
+import ShoppingCart from "../Management/management-user/relevance/shoppingCart";
 
 const routes = [
   {
@@ -29,14 +32,15 @@ const routes = [
     children: [
       { index: true, element: <UserRelevance /> },
       { path: "interest/:id", element: <Interest /> },
+      { path: "collect/:id", element: <Collect /> },
+      { path: "shoppingCart/:id", element: <ShoppingCart /> },
+      { path: "publish/:id", element: <Publish /> },
     ],
   },
   {
     path: "/Management/commodity",
     element: <MainLayout />,
-    children: [
-      { index: true, element: <ManagementCommodity /> },
-    ],
+    children: [{ index: true, element: <ManagementCommodity /> }],
   },
   {
     path: "/Management/menu",

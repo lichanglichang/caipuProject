@@ -1,20 +1,13 @@
 import {
   Button,
   Divider,
-  Form,
-  Input,
-  message,
-  Modal,
   Space,
   Table,
-  Upload,
 } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BaseCard from "../../components/base-card";
 import { useNavigate } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
-import { useForm } from "antd/lib/form/Form";
 import Filter from "./components/filter";
 
 export interface Params {
@@ -66,13 +59,13 @@ const UserRelevance: React.FC = () => {
             <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/interest/${record.id}`)}}>
               关注
             </Button>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/shoppingCart/${record.id}`)}}>
               购物车
             </Button>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/collect/${record.id}`)}}>
               收藏
             </Button>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/publish/${record.id}`)}}>
               发布
             </Button>
           </Space>
