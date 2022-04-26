@@ -55,6 +55,8 @@ module.exports = (app) => {
   router.get("/queryUserInterest", controller.administrator.queryUserInterest);
   // 8、取消关注
   router.post("/cancelFollow", controller.administrator.cancelFollow);
+  // 9、购物车
+  router.get("/queryShoppingCart", controller.administrator.queryShoppingCart);
 
   //管理员接口
   //*************菜单****************

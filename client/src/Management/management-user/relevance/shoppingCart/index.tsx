@@ -5,50 +5,53 @@ import { useParams } from "react-router-dom";
 import BaseCard from "../../../components/base-card";
 
 const ShoppingCart = () => {
-  const { id } = useParams();
+  const { username } = useParams();
   const [count, setCount] = useState<any>();
+  // const location = useLocation();
+  // console.log(useParams(), location, "路由");
 
   useEffect(() => {
-    axios.get("queryUserInterest", { params: { id } }).then((res) => {
+    axios.get("queryShoppingCart", { params: { username } }).then((res) => {
+      console.log(res);
       setCount(res);
     });
-  }, [id]);
+  }, [username]);
 
   // 取消关注
-  const handelCancel = (cancelId: string) => {
-    axios.post("cancelFollow", { id, cancelId }).then((res) => {
-      message.success(res.data.msg);
-      axios.get("queryUserInterest", { params: { id } }).then((res) => {
-        setCount(res);
-      });
-    });
-  };
+  // const handelCancel = (cancelId: string) => {
+  //   axios.post("cancelFollow", { id, cancelId }).then((res) => {
+  //     message.success(res.data.msg);
+  //     axios.get("queryUserInterest", { params: { id } }).then((res) => {
+  //       setCount(res);
+  //     });
+  //   });
+  // };
 
-  //   表格标题数据
+    // 表格标题数据
   const columns = [
     {
       title: "商品名称",
-      dataIndex: "username",
+      dataIndex: "goodsname",
     },
     {
       title: "数量",
-      dataIndex: "nickname",
+      dataIndex: "number",
     },
     {
       title: "单价",
-      dataIndex: "nickname",
+      dataIndex: "total_price",
     },
     {
       title: "总价",
-      dataIndex: "nickname",
+      dataIndex: "unit_price",
     },
     {
       title: "图片",
-      dataIndex: "url",
+      dataIndex: "img",
       render: (_: any, record: any) => {
         return (
           <img
-            src={record.url}
+            src={`http://localhost:8200/public/shopping/${record.img}`}
             alt=""
             style={{ width: "50px", height: "50px" }}
           />
@@ -67,7 +70,7 @@ const ShoppingCart = () => {
               okText="确认"
               cancelText="取消"
               onConfirm={() => {
-                handelCancel(record.id);
+                // handelCancel(record.id);
               }}
             >
               <Button type="link" style={{ padding: "0" }}>

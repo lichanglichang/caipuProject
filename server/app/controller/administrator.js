@@ -111,6 +111,15 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
+    //9、购物车
+    async queryShoppingCart() {
+      const { ctx } = this;
+      let result = await this.ctx.service.administrator.queryShoppingCart(
+        ctx.request.query.username,
+      );
+      ctx.response.body = result;
+    }
+
   //*************菜单****************
 
   //1、获取菜单

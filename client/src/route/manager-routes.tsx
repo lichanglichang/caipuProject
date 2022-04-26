@@ -33,7 +33,7 @@ const routes = [
       { index: true, element: <UserRelevance /> },
       { path: "interest/:id", element: <Interest /> },
       { path: "collect/:id", element: <Collect /> },
-      { path: "shoppingCart/:id", element: <ShoppingCart /> },
+      { path: "shoppingCart/:username", element: <ShoppingCart /> },
       { path: "publish/:id", element: <Publish /> },
     ],
   },

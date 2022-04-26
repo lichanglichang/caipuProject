@@ -59,7 +59,7 @@ const UserRelevance: React.FC = () => {
             <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/interest/${record.id}`)}}>
               关注
             </Button>
-            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/shoppingCart/${record.id}`)}}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/shoppingCart/${record.username}`)}}>
               购物车
             </Button>
             <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/collect/${record.id}`)}}>

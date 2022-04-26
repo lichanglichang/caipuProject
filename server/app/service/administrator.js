@@ -125,6 +125,17 @@ class UserService extends Service {
     return { msg: "取消关注成功！" };
   }
 
+
+    // 9、购物车
+    async queryShoppingCart(username) {
+      const result = await this.app.mysql.query(
+        `SELECT * FROM shoppingcart WHERE username = "${username}"`
+      );
+     
+      return result;
+    }
+
+
   //*************菜单****************
 
   //1、获取菜单
