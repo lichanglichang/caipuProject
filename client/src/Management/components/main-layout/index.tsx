@@ -49,27 +49,52 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
     navigate({ pathname: "/Login" });
   }, [navigate]);
 
+  // 面包屑数据
   const listType = useMemo(() => {
-    if (location.pathname.indexOf("/Management/user/userUpdate") !== -1) {
-      return ["用户管理", "/Management/user", "编辑"];
-    } else if (location.pathname.indexOf("/Management/user/interest") !== -1) {
-      return ["用户管理", "/Management/user", "关联关注"];
+    if (location.pathname.indexOf("/Management/user/base/userUpdate") !== -1) {
+      return [
+        { name: "用户管理" },
+        { name: "基础信息", route: "/Management/user/base" },
+        { name: "编辑" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/user/relevance/interest") !== -1
+    ) {
+      return [
+        { name: "用户管理" },
+        { name: "用户关联", route: "/Management/user/relevance" },
+        { name: "关注" },
+      ];
     } else if (location.pathname.indexOf("/Management/menu/menuAdd") !== -1) {
-      return ["菜单管理", "/Management/menu", "新增"];
+      return [
+        { name: "菜单管理", route: "/Management/menu" },
+        { name: "新增" },
+      ];
     } else if (
       location.pathname.indexOf("/Management/menu/menuUpdate") !== -1
     ) {
-      return ["菜单管理", "/Management/menu", "编辑"];
-    } else if (location.pathname.indexOf("/Management/user") !== -1) {
-      return ["用户管理", "/Management/user"];
+      return [
+        { name: "菜单管理", route: "/Management/menu" },
+        { name: "编辑" },
+      ];
+    } else if (location.pathname.indexOf("/Management/user/base") !== -1) {
+      return [
+        { name: "用户管理" },
+        { name: "基础管理", route: "/Management/user/base" },
+      ];
+    } else if (location.pathname.indexOf("/Management/user/relevance") !== -1) {
+      return [
+        { name: "用户管理" },
+        { name: "用户关联", route: "/Management/user/relevance" },
+      ];
     } else if (location.pathname.indexOf("/Management/node") !== -1) {
-      return ["笔记管理", "/Management/node"];
+      return [{ name: "笔记管理", route: "/Management/node" }];
     } else if (location.pathname.indexOf("/Management/commodity") !== -1) {
-      return ["商品管理", "/Management/commodity"];
+      return [{ name: "商品管理", route: "/Management/commodity" }];
     } else if (location.pathname.indexOf("/Management/recipe") !== -1) {
-      return ["菜谱管理", "/Management/recipe"];
+      return [{ name: "菜谱管理", route: "/Management/recipe" }];
     } else if (location.pathname.indexOf("/Management/menu") !== -1) {
-      return ["菜单管理", "/Management/menu"];
+      return [{ name: "菜单管理", route: "/Management/menu" }];
     } else {
       return [];
     }
@@ -108,30 +133,33 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             selectedKeys={[`${location.pathname}`]}
             style={{ marginTop: "0" }}
           >
-            <Menu.SubMenu title="用户管理"  icon={<UserOutlined />} key="user"
-             className={collapsedState ? "menuArrow" : "menuPadding"}
+            <Menu.SubMenu
+              title="用户管理"
+              icon={<UserOutlined />}
+              key="user"
+              className={collapsedState ? "menuArrow" : "menuPadding"}
               style={{ paddingLeft: collapsedState ? "10px" : "" }}
+            >
+              <Menu.Item
+                key={
+                  location.pathname.indexOf("/Management/user/base") !== -1
+                    ? location.pathname
+                    : "/Management/user/base"
+                }
               >
-            <Menu.Item
-              key={
-                location.pathname.indexOf("/Management/user/base") !== -1
-                  ? location.pathname
-                  : "/Management/user/base"
-              }
-            >
-              <Link to="/Management/user/base">基础信息</Link>
-            </Menu.Item>
-            <Menu.Item
-              key={
-                location.pathname.indexOf("/Management/user/relevance") !== -1
-                ? location.pathname
-                : "/Management/user/relevance"
-              }
-            >
-              <Link to="/Management/user/relevance">关联管理</Link>
-            </Menu.Item>
+                <Link to="/Management/user/base">基础信息</Link>
+              </Menu.Item>
+              <Menu.Item
+                key={
+                  location.pathname.indexOf("/Management/user/relevance") !== -1
+                    ? location.pathname
+                    : "/Management/user/relevance"
+                }
+              >
+                <Link to="/Management/user/relevance">用户关联</Link>
+              </Menu.Item>
             </Menu.SubMenu>
-        
+
             <Menu.Item
               key="/Management/menu"
               icon={<ProfileOutlined />}
@@ -168,18 +196,11 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
         </Sider>
         <Layout style={{ padding: "0 24px 24px", position: "relative" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            {listType.length < 3 ? (
+            {listType.map((item) => (
               <Breadcrumb.Item>
-                <Link to={listType[1]}>{listType[0]}</Link>
+                <Link to={item.route || ""}>{item.name}</Link>
               </Breadcrumb.Item>
-            ) : (
-              <>
-                <Breadcrumb.Item>
-                  <Link to={listType[1]}>{listType[0]}</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>{listType[2]}</Breadcrumb.Item>
-              </>
-            )}
+            ))}
           </Breadcrumb>
           <Content
             className="site-layout-background"

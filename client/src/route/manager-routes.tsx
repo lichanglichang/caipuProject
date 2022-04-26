@@ -21,7 +21,6 @@ const routes = [
     children: [
       { index: true, element: <ManagementUser /> },
       { path: "userUpdate/:id", element: <UpdateUser /> },
-      { path: "interest/:id", element: <Interest /> },
     ],
   },
   {
@@ -29,6 +28,7 @@ const routes = [
     element: <MainLayout />,
     children: [
       { index: true, element: <UserRelevance /> },
+      { path: "interest/:id", element: <Interest /> },
     ],
   },
   {

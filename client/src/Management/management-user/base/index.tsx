@@ -175,20 +175,16 @@ const ManagementUser: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/userUpdate/${record.id}`)}}>
+            <Button
+              type="link"
+              style={{ padding: "0" }}
+              onClick={() => {
+                navigate(`/Management/user/base/userUpdate/${record.id}`);
+              }}
+            >
               编辑
             </Button>
-           
-            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/interest/${record.id}`)}}>
-                关注
-              </Button>
-              {/* <Button type="link" style={{ padding: "0" }}>
-                收藏
-              </Button>
-              <Button type="link" style={{ padding: "0" }}>
-                购物车
-              </Button> */}
-              <Popconfirm
+            <Popconfirm
               title="是否确认删除该用户"
               okText="确认"
               cancelText="取消"
@@ -207,87 +203,87 @@ const ManagementUser: React.FC = () => {
   ];
 
   return (
-    <>   <BaseCard marginBottom="16px">
-    <Filter handleSearch={handleSearchUser} />
-  </BaseCard>
-  <BaseCard>
-    <Button
-      type="primary"
-      style={{ marginBottom: "20px" }}
-      onClick={showModal}
-    >
-      新增
-    </Button>
-    <Table
-      dataSource={userList}
-      columns={columns}
-      pagination={{
-        pageSize: 5,
-        total: userList.length,
-      }}
-      bordered={true}
-      rowKey={(record) => record.id}
-    />
-  </BaseCard>
-  <Modal
-    title="新增用户"
-    visible={isModalVisible}
-    onOk={handleOk}
-    onCancel={handleCancel}
-    okText="确认"
-    cancelText="取消"
-  >
-    <Form
-      name="basic"
-      initialValues={{ remember: true }}
-      autoComplete="off"
-      form={form}
-    >
-      <Form.Item name="id" hidden />
-      <Form.Item
-        label="用户名"
-        name="username"
-        rules={[{ required: true, message: "请输入用户名" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="密码"
-        name="password"
-        rules={[{ required: true, message: "请输入密码" }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        label="昵称"
-        name="nickname"
-        rules={[{ required: true, message: "请输入昵称" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="头像"
-        name="url"
-        rules={[{ required: true, message: "请上传头像" }]}
-      >
-        <Upload
-          action="http://localhost:8200/uploadimg"
-          listType="picture-card"
-          fileList={state}
-          // onPreview={this.handlePreview}
-          onChange={handleChange}
-          maxCount={1}
+    <>
+      {" "}
+      <BaseCard marginBottom="16px">
+        <Filter handleSearch={handleSearchUser} />
+      </BaseCard>
+      <BaseCard>
+        <Button
+          type="primary"
+          style={{ marginBottom: "20px" }}
+          onClick={showModal}
         >
-          {state.length ? null : uploadButton}
-        </Upload>
-      </Form.Item>
-    </Form>
-  </Modal></>
- 
+          新增
+        </Button>
+        <Table
+          dataSource={userList}
+          columns={columns}
+          pagination={{
+            pageSize: 5,
+            total: userList.length,
+          }}
+          bordered={true}
+          rowKey={(record) => record.id}
+        />
+      </BaseCard>
+      <Modal
+        title="新增用户"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="确认"
+        cancelText="取消"
+      >
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          autoComplete="off"
+          form={form}
+        >
+          <Form.Item name="id" hidden />
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[{ required: true, message: "请输入用户名" }]}
+          >
+            <Input />
+          </Form.Item>
 
- 
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入密码" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            label="昵称"
+            name="nickname"
+            rules={[{ required: true, message: "请输入昵称" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="头像"
+            name="url"
+            rules={[{ required: true, message: "请上传头像" }]}
+          >
+            <Upload
+              action="http://localhost:8200/uploadimg"
+              listType="picture-card"
+              fileList={state}
+              // onPreview={this.handlePreview}
+              onChange={handleChange}
+              maxCount={1}
+            >
+              {state.length ? null : uploadButton}
+            </Upload>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
 export default ManagementUser;

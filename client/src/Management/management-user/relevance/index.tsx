@@ -15,7 +15,7 @@ import BaseCard from "../../components/base-card";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";
-import Filter from "../base/components/filter";
+import Filter from "./components/filter";
 
 export interface Params {
   username: string;
@@ -24,56 +24,6 @@ export interface Params {
 }
 
 const UserRelevance: React.FC = () => {
-  const [form] = useForm();
-
-  const [state, setState] = useState([]);
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
-
-  // 保存上传图片得到图片地址
-  const handleChange = ({ fileList, file }: any) => {
-    form.setFields([
-      {
-        name: "url",
-        value: file.response,
-      },
-    ]);
-    setState(fileList);
-  };
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    form.resetFields();
-    setIsModalVisible(true);
-  };
-
-  // 确认新增
-  const handleOk = () => {
-    form.validateFields().then((res) => {
-      axios.post("/addUser", res).then((res) => {
-        if (res.data.code === 0) {
-          axios.get("/getUser").then((res: any) => {
-            setUserList(res.data.data);
-          });
-          setIsModalVisible(false);
-          message.success("新增成功！");
-        } else {
-          message.error("用户已存在！");
-        }
-      });
-    });
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
   let navigate = useNavigate();
 
   //保存用户信息
@@ -97,19 +47,6 @@ const UserRelevance: React.FC = () => {
       });
   }
 
-  // 删除用户
-  const handelDelete = (record: any) => {
-    axios.get("/delUser", { params: { id: record.id } }).then((res: any) => {
-      axios.get("/getUser").then((res: any) => {
-        setUserList(res.data.data);
-      });
-
-      if (res.data.code === 0) {
-        message.success("删除成功!");
-      }
-    });
-  };
-
   //   表格标题数据
   const columns = [
     {
@@ -126,12 +63,18 @@ const UserRelevance: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-              <Button type="link" style={{ padding: "0" }}>
-                关联关注
-              </Button>
-              <Button type="link" style={{ padding: "0" }}>
-                关联管理
-              </Button> 
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/interest/${record.id}`)}}>
+              关注
+            </Button>
+            <Button type="link" style={{ padding: "0" }}>
+              购物车
+            </Button>
+            <Button type="link" style={{ padding: "0" }}>
+              收藏
+            </Button>
+            <Button type="link" style={{ padding: "0" }}>
+              发布
+            </Button>
           </Space>
         );
       },
@@ -139,87 +82,23 @@ const UserRelevance: React.FC = () => {
   ];
 
   return (
-    <>   <BaseCard marginBottom="16px">
-    <Filter handleSearch={handleSearchUser} />
-  </BaseCard>
-  <BaseCard>
-    <Button
-      type="primary"
-      style={{ marginBottom: "20px" }}
-      onClick={showModal}
-    >
-      新增
-    </Button>
-    <Table
-      dataSource={userList}
-      columns={columns}
-      pagination={{
-        pageSize: 5,
-        total: userList.length,
-      }}
-      bordered={true}
-      rowKey={(record) => record.id}
-    />
-  </BaseCard>
-  <Modal
-    title="新增用户"
-    visible={isModalVisible}
-    onOk={handleOk}
-    onCancel={handleCancel}
-    okText="确认"
-    cancelText="取消"
-  >
-    <Form
-      name="basic"
-      initialValues={{ remember: true }}
-      autoComplete="off"
-      form={form}
-    >
-      <Form.Item name="id" hidden />
-      <Form.Item
-        label="用户名"
-        name="username"
-        rules={[{ required: true, message: "请输入用户名" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="密码"
-        name="password"
-        rules={[{ required: true, message: "请输入密码" }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        label="昵称"
-        name="nickname"
-        rules={[{ required: true, message: "请输入昵称" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="头像"
-        name="url"
-        rules={[{ required: true, message: "请上传头像" }]}
-      >
-        <Upload
-          action="http://localhost:8200/uploadimg"
-          listType="picture-card"
-          fileList={state}
-          // onPreview={this.handlePreview}
-          onChange={handleChange}
-          maxCount={1}
-        >
-          {state.length ? null : uploadButton}
-        </Upload>
-      </Form.Item>
-    </Form>
-  </Modal></>
- 
-
- 
+    <>
+      <BaseCard marginBottom="16px">
+        <Filter handleSearch={handleSearchUser} />
+      </BaseCard>
+      <BaseCard>
+        <Table
+          dataSource={userList}
+          columns={columns}
+          pagination={{
+            pageSize: 5,
+            total: userList.length,
+          }}
+          bordered={true}
+          rowKey={(record) => record.id}
+        />
+      </BaseCard>
+    </>
   );
 };
 export default UserRelevance;

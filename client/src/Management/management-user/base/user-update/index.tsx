@@ -97,7 +97,7 @@ const UpdateUser:React.FC = () => {
       axios.post("updateUserInfo",{...res,addressOther:JSON.stringify(res.addressOther),
         tasteOther:JSON.stringify(res.tasteOther),birthday:moment(res.birthday).format("YYYY-MM-DD")}).then(()=>{
         message.success("修改成功！")
-        navigate("/Management/user")
+        navigate("/Management/user/base")
       }) 
     })
   }
@@ -173,7 +173,7 @@ function handleChangeTime(date:any, dateString:any) {
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>
-            <Button type="primary" onClick={()=>{navigate("/Management/user")}}>返回</Button>
+            <Button type="primary" onClick={()=>{navigate("/Management/user/base")}}>返回</Button>
             <Button type="primary" htmlType="submit">
               保存
             </Button>
