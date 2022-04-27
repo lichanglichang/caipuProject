@@ -125,16 +125,89 @@ class UserService extends Service {
     return { msg: "取消关注成功！" };
   }
 
+  // 9、购物车
+  async queryShoppingCart(username) {
+    const result = await this.app.mysql.query(
+      `SELECT * FROM shoppingcart WHERE username = "${username}"`
+    );
 
-    // 9、购物车
-    async queryShoppingCart(username) {
-      const result = await this.app.mysql.query(
-        `SELECT * FROM shoppingcart WHERE username = "${username}"`
-      );
-     
-      return result;
+    return result;
+  }
+
+  // 10、移除购物车
+  async deleteShoppingCart(id) {
+    const result = await this.app.mysql.query(
+      `DELETE FROM shoppingcart WHERE id='${id}'`
+    );
+
+    if (result.affectedRows === 1) {
+      return {
+        msg: "移除成功！",
+      };
+    } else {
+      return {
+        msg: "移除失败！",
+      };
     }
+  }
 
+  //11、修改数量
+  async updateNumber(id, number, total_price) {
+    await this.app.mysql.query(
+      `update shoppingcart set number='${number}',total_price='${total_price}',unit_price=${
+        total_price * number
+      } where id=${id}`
+    );
+    return {
+      msg: "修改成功！",
+    };
+  }
+
+  //12、用户收藏菜单
+  async queryCollectMenu(id) {
+    const result = await this.app.mysql.query(
+      `SELECT collectMenu FROM user WHERE id = "${id}"`
+    );
+    let collectArr = [];
+    for (let i = 0; i < JSON.parse(result[0].collectMenu).length; i++) {
+      let collect = await this.app.mysql.query(
+        `SELECT * FROM menu WHERE menuid = "${JSON.parse(result[0].collectMenu)[i]}"`
+      );
+      collectArr = collectArr.concat(collect);
+    }
+    return collectArr;
+  }
+
+  //13、用户收藏菜谱
+  async queryCollectRecipe(id) {
+    const result = await this.app.mysql.query(
+      `SELECT collectRecipe FROM user WHERE id = "${id}"`
+    );
+    let collectArr = [];
+    for (let i = 0; i < JSON.parse(result[0].collectRecipe).length; i++) {
+      console.log(JSON.parse(result[0].collectRecipe)[i],"结果");
+      let collect = await this.app.mysql.query(
+        `SELECT * FROM recipe WHERE id = "${JSON.parse(result[0].collectRecipe)[i]}"`
+      );
+      collectArr = collectArr.concat(collect);
+    }
+    return collectArr;
+  }
+
+  //14、用户收藏笔记
+  async queryCollectNotes(id) {
+    const result = await this.app.mysql.query(
+      `SELECT collectNotes FROM user WHERE id = "${id}"`
+    );
+    let collectArr = [];
+    for (let i = 0; i < JSON.parse(result[0].collectNotes).length; i++) {
+      let collect = await this.app.mysql.query(
+        `SELECT * FROM notes WHERE id = "${JSON.parse(result[0].collectNotes)[i]}"`
+      );
+      collectArr = collectArr.concat(collect);
+    }
+    return collectArr;
+  }
 
   //*************菜单****************
 

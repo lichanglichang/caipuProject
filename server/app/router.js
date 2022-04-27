@@ -38,7 +38,7 @@ module.exports = (app) => {
   router.post("/showrepicedes", controller.user.showrepicedes);
 
   //管理员接口
-  // *************用户****************
+  // *************用户--基础信息****************
   //1、获取部分或全部用户的信息
   router.get("/getUser", controller.administrator.getUser);
   //2、删除用户
@@ -51,12 +51,27 @@ module.exports = (app) => {
   router.get("/queryUserInfo", controller.administrator.queryUserInfo);
   // 6、修改个人信息
   router.post("/updateUserInfo", controller.administrator.updateUserInfo);
+
+  // *************用户--用户关联****************
   // 7、获取关注的用户
   router.get("/queryUserInterest", controller.administrator.queryUserInterest);
   // 8、取消关注
   router.post("/cancelFollow", controller.administrator.cancelFollow);
   // 9、购物车
   router.get("/queryShoppingCart", controller.administrator.queryShoppingCart);
+  // 10、移除购物车
+  router.post(
+    "/deleteShoppingCart",
+    controller.administrator.deleteShoppingCart
+  );
+  // 11、修改数量
+  router.post("/updateNumber", controller.administrator.updateNumber);
+  // 12、获取收藏菜单
+  router.get("/queryCollectMenu", controller.administrator.queryCollectMenu);
+  // 13、获取收藏菜谱
+  router.get("/queryCollectRecipe", controller.administrator.queryCollectRecipe);
+  // 14、获取收藏笔记
+  router.get("/queryCollectNotes", controller.administrator.queryCollectNotes);
 
   //管理员接口
   //*************菜单****************
@@ -71,7 +86,6 @@ module.exports = (app) => {
   // 5、修改菜单信息
   router.post("/updateMenu", controller.administrator.updateMenu);
 
-
   //管理员接口
   //*************菜谱****************
 
@@ -82,29 +96,21 @@ module.exports = (app) => {
   // 3、删除菜谱
   router.get("/delRecipe", controller.administrator.delRecipe);
 
-
-
   //管理员接口
   //*************商品****************
 
   //1、获取全部商品
   router.get("/getAllGoods", controller.administrator.getAllGoods);
   //2、删除商品
-  router.get("/delGoods", controller.administrator.delGoods); 
-   
-
-
+  router.get("/delGoods", controller.administrator.delGoods);
 
   //管理员接口
   //*************笔记****************
 
   //1、获取笔记
-  router.get("/getAllNotes", controller.administrator.getAllNotes); 
+  router.get("/getAllNotes", controller.administrator.getAllNotes);
   //2、删除笔记
-  router.get("/delNotes", controller.administrator.delNotes); 
-
-
-
+  router.get("/delNotes", controller.administrator.delNotes);
 
   //菜单
   router.get("/showmenu", controller.user.showmenu);

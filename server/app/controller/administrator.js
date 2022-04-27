@@ -111,14 +111,61 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-    //9、购物车
-    async queryShoppingCart() {
-      const { ctx } = this;
-      let result = await this.ctx.service.administrator.queryShoppingCart(
-        ctx.request.query.username,
-      );
-      ctx.response.body = result;
-    }
+  //9、购物车
+  async queryShoppingCart() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryShoppingCart(
+      ctx.request.query.username
+    );
+    ctx.response.body = result;
+  }
+
+  //10、移除购物车
+  async deleteShoppingCart() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.deleteShoppingCart(
+      ctx.request.body.id
+    );
+    ctx.response.body = result;
+  }
+
+  //11、修改数据
+  async updateNumber() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.updateNumber(
+      ctx.request.body.id,
+      ctx.request.body.number,
+      ctx.request.body.total_price
+    );
+    ctx.response.body = result;
+  }
+
+  //12、获取用户收藏菜单
+  async queryCollectMenu() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryCollectMenu(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  //13、获取用户收藏
+  async queryCollectRecipe() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryCollectRecipe(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  //14、获取用户收藏
+  async queryCollectNotes() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryCollectNotes(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
 
   //*************菜单****************
 

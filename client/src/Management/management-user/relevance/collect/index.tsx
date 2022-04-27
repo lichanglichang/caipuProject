@@ -6,66 +6,191 @@ import BaseCard from "../../../components/base-card";
 
 const Collect = () => {
   const { id } = useParams();
-  const [count, setCount] = useState<any>();
+  // 保存收藏菜谱
+  const [recipeList, setRecipeList] = useState<any>([]);
+  // 保存收藏菜单
+  const [menuList, setMenuList] = useState<any>([]);
+  // 保存收藏笔记
+  const [notesList, setNotesList] = useState<any>([]);
 
   useEffect(() => {
-    axios.get("queryUserInterest", { params: { id } }).then((res) => {
-      setCount(res);
+    axios.get("queryCollectRecipe", { params: { id } }).then((res) => {
+      setRecipeList(res.data)
     });
+    axios.get("queryCollectNotes", { params: { id } }).then((res) => {
+      setNotesList(res.data)
+    });
+    axios
+      .get("/queryCollectMenu", {
+        params: {
+          id,
+        },
+      })
+      .then((res: any) => {
+        setMenuList(res.data);
+      });
   }, [id]);
 
   // 取消关注
-  const handelCancel = (cancelId: string) => {
-    axios.post("cancelFollow", { id, cancelId }).then((res) => {
-      message.success(res.data.msg);
-      axios.get("queryUserInterest", { params: { id } }).then((res) => {
-        setCount(res);
-      });
-    });
-  };
+  // const handelCancel = (cancelId: string) => {
+  //   axios.post("cancelFollow", { id, cancelId }).then((res) => {
+  //     message.success(res.data.msg);
+  //     axios.get("queryUserInterest", { params: { id } }).then((res) => {
+  //       setCount(res);
+  //     });
+  //   });
+  // };
 
   //   表格标题数据
-  const columns = [
+  const columnsNotes = [
+    {
+      title: "笔记名",
+      dataIndex: "title",
+      ellipsis: true,
+    },
+    {
+      title: "作者",
+      dataIndex: "username",
+     
+    },
+    {
+      title: "账号",
+      dataIndex: "account",
+     
+    },
+    {
+      title: "内容",
+      dataIndex: "content",
+      ellipsis: true,
+    },
+    {
+      title: "封面图",
+      dataIndex: "userpic",
+      render: (_: any, record: any) => {
+        return (
+          <img
+            src={record.userpic}
+            alt=""
+            style={{width: "50px", height: "50px"}}
+          />
+        );
+      },
+    },
+    {
+      title: "操作",
+      dataIndex: "url",
+      render: (_: any, record: any) => {
+        return (
+          <Space split={<Divider type="vertical" />}>
+            <Button type="link" style={{padding:"0"}}>移除收藏</Button>
+          </Space>
+        );
+      },
+    },
+  ];
+
+  //   表格标题数据
+  const columns2 = [
+    {
+      title: "菜单名",
+      dataIndex: "menuname",
+    },
+    {
+      title: "作者",
+      dataIndex: "nickname",
+    },
     {
       title: "账号",
       dataIndex: "username",
     },
     {
-      title: "昵称",
-      dataIndex: "nickname",
+      title: "简介",
+      dataIndex: "introduction",
+      ellipsis: true,
     },
     {
-      title: "头像",
-      dataIndex: "url",
+      title: "封面图",
+      dataIndex: "background",
+      width: 100,
       render: (_: any, record: any) => {
         return (
           <img
-            src={record.url}
+            src={record.background}
             alt=""
-            style={{ width: "50px", height: "50px" }}
+            style={{ width: "100%", height: "50px" }}
           />
         );
       },
     },
-
     {
       title: "操作",
-      dataIndex: "",
+      dataIndex: "url",
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
             <Popconfirm
-              title="是否取消关注该用户？"
+              title="是否确认删除该菜单"
               okText="确认"
               cancelText="取消"
               onConfirm={() => {
-                handelCancel(record.id);
+                // deleteMenu(record.menuid);
               }}
             >
               <Button type="link" style={{ padding: "0" }}>
-                取消关注
+                移除收藏
               </Button>
             </Popconfirm>
+          </Space>
+        );
+      },
+    },
+  ];
+
+  const columnsRecipe = [
+    {
+      title: "id",
+      dataIndex: "id",
+      width:50,
+    },
+    {
+      title: "菜谱名",
+      dataIndex: "menu_name",
+      ellipsis: true,
+    },
+    {
+      title: "作者",
+      dataIndex: "nickname",
+    },
+    {
+      title: "账号",
+      dataIndex: "username",
+    },
+    {
+      title: "简介",
+      dataIndex: "introduce",
+      ellipsis:true,
+      width:300,
+    },
+    {
+      title: "封面图",
+      dataIndex: "img",
+      render: (_: any, record: any) => {
+        return (
+          <img
+            src={record.img}
+            alt=""
+            style={{width: "80px", height: "50px"}}
+          />
+        );
+      },
+    },
+    {
+      title: "操作",
+      dataIndex: "url",
+      render: (_: any, record: any) => {
+        return (
+          <Space split={<Divider type="vertical" />}>
+            <Button type="link" style={{padding:"0"}}>移除收藏</Button>
           </Space>
         );
       },
@@ -76,14 +201,14 @@ const Collect = () => {
     <>
       <BaseCard marginBottom="24px">
         <h3 style={{ marginBottom: "24px" }}>
-          已收藏菜单（{count?.data.length || 0}）
+          已收藏菜单（{menuList.length || 0}）
         </h3>
         <Table
-          dataSource={count?.data}
-          columns={columns}
+          dataSource={menuList}
+          columns={columns2}
           pagination={{
             pageSize: 5,
-            total: count?.data.length,
+            total: menuList.length,
           }}
           bordered={true}
           rowKey={(record) => record.id}
@@ -91,14 +216,14 @@ const Collect = () => {
       </BaseCard>
       <BaseCard marginBottom="24px">
         <h3 style={{ marginBottom: "24px" }}>
-          已收藏菜谱（{count?.data.length || 0}）
+          已收藏菜谱（{recipeList.length || 0}）
         </h3>
         <Table
-          dataSource={count?.data}
-          columns={columns}
+          dataSource={recipeList}
+          columns={columnsRecipe}
           pagination={{
             pageSize: 5,
-            total: count?.data.length,
+            total: menuList.length,
           }}
           bordered={true}
           rowKey={(record) => record.id}
@@ -106,14 +231,14 @@ const Collect = () => {
       </BaseCard>
       <BaseCard marginBottom="24px">
         <h3 style={{ marginBottom: "24px" }}>
-          已收藏笔记（{count?.data.length || 0}）
+          已收藏笔记（{notesList.length || 0}）
         </h3>
         <Table
-          dataSource={count?.data}
-          columns={columns}
+          dataSource={notesList}
+          columns={columnsNotes}
           pagination={{
             pageSize: 5,
-            total: count?.data.length,
+            total: notesList.length,
           }}
           bordered={true}
           rowKey={(record) => record.id}
