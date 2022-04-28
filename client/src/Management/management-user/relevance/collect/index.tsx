@@ -15,10 +15,10 @@ const Collect = () => {
 
   useEffect(() => {
     axios.get("queryCollectRecipe", { params: { id } }).then((res) => {
-      setRecipeList(res.data)
+      setRecipeList(res.data);
     });
     axios.get("queryCollectNotes", { params: { id } }).then((res) => {
-      setNotesList(res.data)
+      setNotesList(res.data);
     });
     axios
       .get("/queryCollectMenu", {
@@ -31,15 +31,31 @@ const Collect = () => {
       });
   }, [id]);
 
-  // 取消关注
-  // const handelCancel = (cancelId: string) => {
-  //   axios.post("cancelFollow", { id, cancelId }).then((res) => {
-  //     message.success(res.data.msg);
-  //     axios.get("queryUserInterest", { params: { id } }).then((res) => {
-  //       setCount(res);
-  //     });
-  //   });
-  // };
+  // 移除操作
+  const handleDelete = (deleteId: string, type: string) => {
+    axios.post("deleteCollect" + type, { id, deleteId }).then((res) => {
+      message.success(res.data.msg);
+      axios
+        .get("/queryCollect" + type, {
+          params: {
+            id,
+          },
+        })
+        .then((res: any) => {
+          switch (type) {
+            case "Menu":
+              setMenuList(res.data);
+              break;
+            case "Recipe":
+              setRecipeList(res.data);
+              break;
+            case "Notes":
+              setNotesList(res.data);
+              break;
+          }
+        });
+    });
+  };
 
   //   表格标题数据
   const columnsNotes = [
@@ -51,12 +67,10 @@ const Collect = () => {
     {
       title: "作者",
       dataIndex: "username",
-     
     },
     {
       title: "账号",
       dataIndex: "account",
-     
     },
     {
       title: "内容",
@@ -71,7 +85,7 @@ const Collect = () => {
           <img
             src={record.userpic}
             alt=""
-            style={{width: "50px", height: "50px"}}
+            style={{ width: "50px", height: "50px" }}
           />
         );
       },
@@ -82,7 +96,18 @@ const Collect = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{padding:"0"}}>移除收藏</Button>
+            <Popconfirm
+              title="是否移除该笔记？"
+              okText="确认"
+              cancelText="取消"
+              onConfirm={() => {
+                handleDelete(record.id, "Notes");
+              }}
+            >
+              <Button type="link" style={{ padding: "0" }}>
+                移除收藏
+              </Button>
+            </Popconfirm>
           </Space>
         );
       },
@@ -90,7 +115,7 @@ const Collect = () => {
   ];
 
   //   表格标题数据
-  const columns2 = [
+  const columnsMenu = [
     {
       title: "菜单名",
       dataIndex: "menuname",
@@ -129,11 +154,11 @@ const Collect = () => {
         return (
           <Space split={<Divider type="vertical" />}>
             <Popconfirm
-              title="是否确认删除该菜单"
+              title="是否移除该菜单？"
               okText="确认"
               cancelText="取消"
               onConfirm={() => {
-                // deleteMenu(record.menuid);
+                handleDelete(record.menuid, "Menu");
               }}
             >
               <Button type="link" style={{ padding: "0" }}>
@@ -146,11 +171,12 @@ const Collect = () => {
     },
   ];
 
+  // 表格标题数据
   const columnsRecipe = [
     {
       title: "id",
       dataIndex: "id",
-      width:50,
+      width: 50,
     },
     {
       title: "菜谱名",
@@ -168,8 +194,8 @@ const Collect = () => {
     {
       title: "简介",
       dataIndex: "introduce",
-      ellipsis:true,
-      width:300,
+      ellipsis: true,
+      width: 300,
     },
     {
       title: "封面图",
@@ -179,7 +205,7 @@ const Collect = () => {
           <img
             src={record.img}
             alt=""
-            style={{width: "80px", height: "50px"}}
+            style={{ width: "80px", height: "50px" }}
           />
         );
       },
@@ -190,7 +216,18 @@ const Collect = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{padding:"0"}}>移除收藏</Button>
+            <Popconfirm
+              title="是否移除该菜单？"
+              okText="确认"
+              cancelText="取消"
+              onConfirm={() => {
+                handleDelete(record.id, "Recipe");
+              }}
+            >
+              <Button type="link" style={{ padding: "0" }}>
+                移除收藏
+              </Button>
+            </Popconfirm>
           </Space>
         );
       },
@@ -205,7 +242,7 @@ const Collect = () => {
         </h3>
         <Table
           dataSource={menuList}
-          columns={columns2}
+          columns={columnsMenu}
           pagination={{
             pageSize: 5,
             total: menuList.length,

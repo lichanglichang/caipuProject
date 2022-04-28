@@ -69,9 +69,19 @@ module.exports = (app) => {
   // 12、获取收藏菜单
   router.get("/queryCollectMenu", controller.administrator.queryCollectMenu);
   // 13、获取收藏菜谱
-  router.get("/queryCollectRecipe", controller.administrator.queryCollectRecipe);
+  router.get(
+    "/queryCollectRecipe",
+    controller.administrator.queryCollectRecipe
+  );
   // 14、获取收藏笔记
   router.get("/queryCollectNotes", controller.administrator.queryCollectNotes);
+
+  // 15、移除收藏菜单
+  router.post("/deleteCollectMenu", controller.administrator.deleteCollectMenu);
+  // 16、移除收藏菜谱
+  router.post("/deleteCollectRecipe", controller.administrator.deleteCollectRecipe);
+  // 17、移除收藏笔记
+  router.post("/deleteCollectNotes", controller.administrator.deleteCollectNotes);
 
   //管理员接口
   //*************菜单****************

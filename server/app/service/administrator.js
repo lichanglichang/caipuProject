@@ -171,7 +171,9 @@ class UserService extends Service {
     let collectArr = [];
     for (let i = 0; i < JSON.parse(result[0].collectMenu).length; i++) {
       let collect = await this.app.mysql.query(
-        `SELECT * FROM menu WHERE menuid = "${JSON.parse(result[0].collectMenu)[i]}"`
+        `SELECT * FROM menu WHERE menuid = "${
+          JSON.parse(result[0].collectMenu)[i]
+        }"`
       );
       collectArr = collectArr.concat(collect);
     }
@@ -185,9 +187,10 @@ class UserService extends Service {
     );
     let collectArr = [];
     for (let i = 0; i < JSON.parse(result[0].collectRecipe).length; i++) {
-      console.log(JSON.parse(result[0].collectRecipe)[i],"结果");
       let collect = await this.app.mysql.query(
-        `SELECT * FROM recipe WHERE id = "${JSON.parse(result[0].collectRecipe)[i]}"`
+        `SELECT * FROM recipe WHERE id = "${
+          JSON.parse(result[0].collectRecipe)[i]
+        }"`
       );
       collectArr = collectArr.concat(collect);
     }
@@ -202,11 +205,67 @@ class UserService extends Service {
     let collectArr = [];
     for (let i = 0; i < JSON.parse(result[0].collectNotes).length; i++) {
       let collect = await this.app.mysql.query(
-        `SELECT * FROM notes WHERE id = "${JSON.parse(result[0].collectNotes)[i]}"`
+        `SELECT * FROM notes WHERE id = "${
+          JSON.parse(result[0].collectNotes)[i]
+        }"`
       );
       collectArr = collectArr.concat(collect);
     }
     return collectArr;
+  }
+
+  // 15、移除收藏菜单
+  async deleteCollectMenu(id, deleteId) {
+    const userInfo = await this.app.mysql.query(
+      `SELECT collectMenu FROM user WHERE id = "${id}"`
+    );
+    let Arr = JSON.parse(userInfo[0].collectMenu);
+    const value = Arr.indexOf(deleteId);
+    if (value > -1) {
+      Arr.splice(value, 1);
+      await this.app.mysql.query(
+        `update user set collectMenu='${JSON.stringify(Arr)}' where id=${id}`
+      );
+    } else {
+      return { msg: "未查询到相关菜单" };
+    }
+    return { msg: "移除菜单成功！" };
+  }
+
+  // 15、移除收藏菜谱
+  async deleteCollectRecipe(id, deleteId) {
+    const userInfo = await this.app.mysql.query(
+      `SELECT collectRecipe FROM user WHERE id = "${id}"`
+    );
+    let Arr = JSON.parse(userInfo[0].collectRecipe);
+    const value = Arr.indexOf(deleteId);
+    if (value > -1) {
+      Arr.splice(value, 1);
+      await this.app.mysql.query(
+        `update user set collectRecipe='${JSON.stringify(Arr)}' where id=${id}`
+      );
+    } else {
+      return { msg: "未查询到相关菜谱" };
+    }
+    return { msg: "移除菜谱成功！" };
+  }
+
+  // 15、移除收藏笔记
+  async deleteCollectNotes(id, deleteId) {
+    const userInfo = await this.app.mysql.query(
+      `SELECT collectNotes FROM user WHERE id = "${id}"`
+    );
+    let Arr = JSON.parse(userInfo[0].collectNotes);
+    const value = Arr.indexOf(deleteId);
+    if (value > -1) {
+      Arr.splice(value, 1);
+      await this.app.mysql.query(
+        `update user set collectNotes='${JSON.stringify(Arr)}' where id=${id}`
+      );
+    } else {
+      return { msg: "未查询到相关笔记" };
+    }
+    return { msg: "移除笔记成功！" };
   }
 
   //*************菜单****************

@@ -149,7 +149,7 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-  //13、获取用户收藏
+  //13、获取用户收藏菜谱
   async queryCollectRecipe() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.queryCollectRecipe(
@@ -158,11 +158,41 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
-  //14、获取用户收藏
+  //14、获取用户收藏笔记
   async queryCollectNotes() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.queryCollectNotes(
       ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  //15、移除收藏菜单
+  async deleteCollectMenu() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.deleteCollectMenu(
+      ctx.request.body.id,
+      ctx.request.body.deleteId
+    );
+    ctx.response.body = result;
+  }
+
+  //16、移除收藏菜谱
+  async deleteCollectRecipe() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.deleteCollectRecipe(
+      ctx.request.body.id,
+      ctx.request.body.deleteId
+    );
+    ctx.response.body = result;
+  }
+
+  //17、移除收藏笔记
+  async deleteCollectNotes() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.deleteCollectNotes(
+      ctx.request.body.id,
+      ctx.request.body.deleteId
     );
     ctx.response.body = result;
   }
