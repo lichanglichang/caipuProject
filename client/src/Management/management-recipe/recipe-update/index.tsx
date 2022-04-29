@@ -1,5 +1,14 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Form, Input, Upload, Card, Button, message } from "antd";
+import {
+  Form,
+  Input,
+  Upload,
+  Card,
+  Button,
+  message,
+  Select,
+  Space,
+} from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,27 +22,28 @@ import axios from "axios";
 const RecipeUpdate: React.FC = () => {
   const [form] = useForm();
   const [fileList, setFileList] = useState<any>([]);
+  const [step, setStep] = useState<any>([]);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get("queryMenu", { params: { id } }).then((res) => {
+    axios.get("queryRecipe", { params: { id } }).then((res) => {
       form.setFieldsValue({
         ...res.data[0],
-        recipeid: JSON.parse(res.data[0].recipeid),
+        steps: JSON.parse(res.data[0].steps),
       });
-      console.log(res.data[0]);
-
       setFileList([
         {
           uid: id,
           name: "image.png",
           status: "done",
-          url: res.data[0].background,
+          url: res.data[0].img,
         },
       ]);
+      setStep(JSON.parse(res.data[0].steps));
     });
-  }, []);
+  }, [form, id]);
+
   // 上传头像样式
   const uploadButton = (
     <div>
@@ -67,6 +77,16 @@ const RecipeUpdate: React.FC = () => {
     });
   };
 
+  // 菜谱类型
+  const tasteOption = [
+    { value: "肉食", label: "肉食" },
+    { value: "素菜", label: "素菜" },
+    { value: "鱼类", label: "鱼类" },
+    { value: "早餐", label: "早餐" },
+    { value: "面食", label: "面食" },
+    { value: "水果", label: "水果" },
+  ];
+
   return (
     <>
       <Form
@@ -77,12 +97,12 @@ const RecipeUpdate: React.FC = () => {
         // onFinish={onFinish}
       >
         <BaseCard paddingBottom="60px">
-          <Form.Item name="menuid" hidden initialValue={{ menuid: id }} />
-          <Form.Item label="菜单名称" name="menuname">
-            <Input placeholder="请输入菜单名称" />
+          <Form.Item name="id" hidden initialValue={{ id: id }} />
+          <Form.Item label="菜谱名" name="menu_name">
+            <Input.TextArea rows={2} placeholder="请输入菜谱名" />
           </Form.Item>
 
-          <Form.Item label="封面图" name="background">
+          <Form.Item label="封面图" name="img">
             <Upload
               action="http://localhost:8200/uploadimg"
               listType="picture-card"
@@ -96,67 +116,60 @@ const RecipeUpdate: React.FC = () => {
             </Upload>
           </Form.Item>
           <Form.Item label="作者账号" name="username">
-            <Input placeholder="请输入发布者账号" />
+            <Input disabled />
           </Form.Item>
-          <Form.Item label="简介" name="introduction">
-            <Input.TextArea rows={6} placeholder="请输入菜单简介" />
+          <Form.Item label="口味" name="type">
+            <Select showArrow options={tasteOption} />
           </Form.Item>
-          <Form.List name="recipeid">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field, index) => {
-                  return (
-                    <Form.Item
-                      // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                      label={`菜谱${index + 1}`}
-                      required={false}
-                      key={field.key}
-                    >
-                      <Form.Item
-                        {...field}
-                        // validateTrigger={["onChange", "onBlur"]}
-                        rules={[
-                          {
-                            required: true,
-                            // whitespace: true,
-                            message:
-                              "Please input passenger's name or delete this field.",
-                          },
-                        ]}
-                        noStyle
-                      >
-                        <Input
-                          placeholder="输入对应的菜谱id"
-                          style={{ width: "90%" }}
-                        />
-                      </Form.Item>
-                      <MinusCircleOutlined
-                        className="dynamic-delete-button"
-                        onClick={() => remove(field.name)}
-                      />
-                    </Form.Item>
-                  );
-                })}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    style={{ width: "100%" }}
-                    icon={<PlusOutlined />}
-                  >
-                    添加菜谱
-                  </Button>
+          <Form.Item label="简介" name="introduce">
+            <Input.TextArea rows={6} placeholder="请输入菜谱简介" />
+          </Form.Item>
+          {step.map((item: any) => {
+            return (
+              <div style={{margin:"20px"}}>
+                <h4>{item.step}：</h4>
+                <p>{item.des}</p>
+                <img src={`${item.url}`} alt="" />
+              </div>
+            );
+          })}
+          {/* <Form.List name="steps">
+          {(fields, { add, remove }) => (
+          <>
+            {fields.map(({ key, name, ...restField }) => (
+              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <Form.Item
+                  {...restField}
+                  name={[name, 'first']}
+                  rules={[{ required: true, message: 'Missing first name' }]}
+                >
+                  <Input placeholder="First Name" />
                 </Form.Item>
-              </>
-            )}
-          </Form.List>
+                <Form.Item
+                  {...restField}
+                  name={[name, 'last']}
+                  rules={[{ required: true, message: 'Missing last name' }]}
+                >
+                  <Input placeholder="Last Name" />
+                </Form.Item>
+                <MinusCircleOutlined onClick={() => remove(name)} />
+              </Space>
+            ))}
+            <Form.Item>
+              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                Add field
+              </Button>
+            </Form.Item>
+          </>
+               )}
+          </Form.List> */}
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>
             <Button
               type="primary"
               onClick={() => {
-                navigate("/Management/menu");
+                navigate("/Management/recipe");
               }}
             >
               返回

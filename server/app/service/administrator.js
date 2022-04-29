@@ -232,7 +232,7 @@ class UserService extends Service {
     return { msg: "移除菜单成功！" };
   }
 
-  // 15、移除收藏菜谱
+  // 16、移除收藏菜谱
   async deleteCollectRecipe(id, deleteId) {
     const userInfo = await this.app.mysql.query(
       `SELECT collectRecipe FROM user WHERE id = "${id}"`
@@ -250,7 +250,7 @@ class UserService extends Service {
     return { msg: "移除菜谱成功！" };
   }
 
-  // 15、移除收藏笔记
+  // 17、移除收藏笔记
   async deleteCollectNotes(id, deleteId) {
     const userInfo = await this.app.mysql.query(
       `SELECT collectNotes FROM user WHERE id = "${id}"`
@@ -266,6 +266,48 @@ class UserService extends Service {
       return { msg: "未查询到相关笔记" };
     }
     return { msg: "移除笔记成功！" };
+  }
+
+  // 18、获取用户发布菜单
+  async queryPublishMenu(username) {
+    const result = await this.app.mysql.query(
+      `SELECT * FROM menu WHERE username = "${username}"`
+    );
+    return result;
+  }
+
+  // 19、获取用户发布菜谱
+  async queryPublishRecipe(username) {
+    const result = await this.app.mysql.query(
+      `SELECT * FROM recipe WHERE username = "${username}"`
+    );
+    return result;
+  }
+
+  // 20、获取用户发布笔记
+  async queryPublishNotes(username) {
+    const result = await this.app.mysql.query(
+      `SELECT * FROM notes WHERE username = "${username}"`
+    );
+    return result;
+  }
+
+  // 21、移除用户发布
+  async deleteUserPublish(deleteId, type) {
+    console.log(type,"类型");
+    const result = await this.app.mysql.query(
+      `DELETE FROM ${type.toLowerCase()} WHERE id='${deleteId}'`
+    );
+
+    if (result.affectedRows === 1) {
+      return {
+        msg: "移除成功！",
+      };
+    } else {
+      return {
+        msg: "移除失败！",
+      };
+    }
   }
 
   //*************菜单****************
@@ -366,7 +408,7 @@ class UserService extends Service {
     }
   }
 
-  //删除菜谱
+  //2、删除菜谱
   async delRecipe(id) {
     if (id.length !== 0) {
       let delResult = await this.app.mysql.query(
@@ -377,6 +419,14 @@ class UserService extends Service {
         message: "删除成功",
       };
     }
+  }
+
+  // 3、获取某项菜谱
+  async queryRecipe(id) {
+      const result = await this.app.mysql.query(
+        ` SELECT * FROM recipe where id='${id}'`
+      );
+      return result;
   }
 
   //*************笔记****************

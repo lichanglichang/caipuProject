@@ -7,7 +7,7 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Breadcrumb, Button } from "antd";
+import { Layout, Menu, Breadcrumb } from "antd";
 import { Header, Content } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -21,7 +21,7 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-const MainLayout: React.FC<IProps> = ({ children }) => {
+const MainLayout: React.FC<IProps> = () => {
   // 路由跳转方法
   const navigate = useNavigate();
   //  获取路由
@@ -122,7 +122,21 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
         { name: "用户管理" },
         { name: "用户关联", route: "/Management/user/relevance" },
       ];
-    } else if (location.pathname.indexOf("/Management/node") !== -1) {
+    }else if (
+      location.pathname.indexOf("/Management/recipe/recipeAdd") !== -1
+    ) {
+      return [
+        { name: "菜谱管理", route: "/Management/recipe" },
+        { name: "新增" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/recipe/recipeUpdate") !== -1
+    ) {
+      return [
+        { name: "菜谱管理", route: "/Management/recipe" },
+        { name: "编辑" },
+      ];
+    }  else if (location.pathname.indexOf("/Management/node") !== -1) {
       return [{ name: "笔记管理", route: "/Management/node" }];
     } else if (location.pathname.indexOf("/Management/commodity") !== -1) {
       return [{ name: "商品管理", route: "/Management/commodity" }];
@@ -218,7 +232,9 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
             </Menu.SubMenu>
 
             <Menu.Item
-              key="/Management/menu"
+              key={ location.pathname.indexOf("/Management/menu") !== -1
+              ? location.pathname
+              : "/Management/menu"}
               icon={<ProfileOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
@@ -226,7 +242,9 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
               <Link to="/Management/menu">菜单管理</Link>
             </Menu.Item>
             <Menu.Item
-              key="/Management/recipe"
+               key={ location.pathname.indexOf("/Management/recipe") !== -1
+               ? location.pathname
+               : "/Management/recipe"}
               icon={<ProjectOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
@@ -234,7 +252,9 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
               <Link to="/Management/recipe">菜谱管理</Link>
             </Menu.Item>
             <Menu.Item
-              key="/Management/node"
+             key={ location.pathname.indexOf("/Management/node") !== -1
+             ? location.pathname
+             : "/Management/node"}
               icon={<ScheduleOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}

@@ -65,7 +65,7 @@ const UserRelevance: React.FC = () => {
             <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/collect/${record.id}`)}}>
               收藏
             </Button>
-            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/publish/${record.id}`)}}>
+            <Button type="link" style={{ padding: "0" }} onClick={()=>{navigate(`/Management/user/relevance/publish/${record.username}`)}}>
               发布
             </Button>
           </Space>

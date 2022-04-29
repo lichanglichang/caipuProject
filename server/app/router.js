@@ -79,9 +79,26 @@ module.exports = (app) => {
   // 15、移除收藏菜单
   router.post("/deleteCollectMenu", controller.administrator.deleteCollectMenu);
   // 16、移除收藏菜谱
-  router.post("/deleteCollectRecipe", controller.administrator.deleteCollectRecipe);
+  router.post(
+    "/deleteCollectRecipe",
+    controller.administrator.deleteCollectRecipe
+  );
   // 17、移除收藏笔记
-  router.post("/deleteCollectNotes", controller.administrator.deleteCollectNotes);
+  router.post(
+    "/deleteCollectNotes",
+    controller.administrator.deleteCollectNotes
+  );
+  // 18、获取用户发布菜单
+  router.get("/queryPublishMenu", controller.administrator.queryPublishMenu);
+  // 19、获取用户发布菜谱
+  router.get(
+    "/queryPublishRecipe",
+    controller.administrator.queryPublishRecipe
+  );
+  // 20、获取用户发布笔记
+  router.get("/queryPublishNotes", controller.administrator.queryPublishNotes);
+  // 21、移除用户发布菜单
+  router.post("/deleteUserPublish", controller.administrator.deleteUserPublish);
 
   //管理员接口
   //*************菜单****************
@@ -96,6 +113,7 @@ module.exports = (app) => {
   // 5、修改菜单信息
   router.post("/updateMenu", controller.administrator.updateMenu);
 
+
   //管理员接口
   //*************菜谱****************
 
@@ -105,6 +123,9 @@ module.exports = (app) => {
   // router.post("/addRecipe", controller.administrator.addRecipe);
   // 3、删除菜谱
   router.get("/delRecipe", controller.administrator.delRecipe);
+  // 4、获取某项菜谱信息
+  router.get("/queryRecipe", controller.administrator.queryRecipe);
+
 
   //管理员接口
   //*************商品****************

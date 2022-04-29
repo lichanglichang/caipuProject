@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "./img/menu.jpeg";
 import repiceimg1 from "./img/repicenav1.jpg";
 import repiceimg2 from "./img/repicenav2.jpg";
@@ -9,9 +9,9 @@ import zhanshi2 from "./img/zhanshi1.jpeg";
 import zhanshi3 from "./img/zhanshi1.jpeg";
 import zhanshi4 from "./img/zhanshi1.jpeg";
 import rightimg3 from "./img/right3.png";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import {Carousel} from "antd";
+import { Carousel } from "antd";
 import Header from "../zyh/header";
 import Footer from "../zyh/footer";
 import Commen from "../zjy/Commen";
@@ -22,33 +22,31 @@ function Recipedes() {
   const [list, setlist] = useState<any>(null);
   const [step, setstep] = useState<any>(null);
   const [ingredient, setingredient] = useState<any>(null);
-  let obj = useParams();
-  let repiceid = obj.showsid;
-  // let nickname=obj.showsnickname;
-  // console.log(nickname,1111)
+  let { showsid: repiceid } = useParams();
+
+  console.log(step, "步骤");
+
   useEffect(() => {
-    showrecipe();
-  }, []);
+    axios
+      .post("http://localhost:8200/showrepicedes", {
+        repiceid,
+      })
+      .then((r: any) => {
+
+        console.log(r.data.data[0].steps,step,"结果拉拉");
+        setstep(JSON.parse(r.data.data[0].steps));
+       
+        setlist(r.data.data);
+        setingredient(JSON.parse(r.data.data[0].describ));
+      });
+  }, [repiceid]);
+
   useEffect(() => {
     showstep();
   }, []);
   useEffect(() => {
     showingredients();
   }, []);
-
-  function showrecipe() {
-    axios
-      .post("http://localhost:8200/showrepicedes", {
-        repiceid: repiceid,
-      })
-      .then(function (r: any) {
-        setlist(r.data.data);
-        // console.log(JSON.parse(r.data.data[0].steps));
-        setstep(JSON.parse(r.data.data[0].steps));
-        // console.log(JSON.parse(r.data.data[0].describe));
-        setingredient(JSON.parse(r.data.data[0].describ));
-      });
-  }
 
   function showingredients() {
     if (ingredient !== null) {
@@ -66,7 +64,6 @@ function Recipedes() {
 
   function showstep() {
     if (step !== null) {
-      // console.log(step,2222);
       return step.map(function (stepany: any, index: any) {
         return (
           <div key={index} className="cmystyle">

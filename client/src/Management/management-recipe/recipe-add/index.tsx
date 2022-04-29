@@ -56,8 +56,8 @@ if(res.data.code===1){
         onFinish={onFinish}
       >
         <BaseCard paddingBottom="60px">
-          <Form.Item label="菜单名称" name="menuname">
-            <Input placeholder="请输入菜单名称" />
+          <Form.Item label="菜谱名" name="menuname">
+            <Input placeholder="请输入菜谱名" />
           </Form.Item>
 
           <Form.Item label="封面图" name="background">
@@ -77,55 +77,8 @@ if(res.data.code===1){
             <Input placeholder="请输入发布者账号" />
           </Form.Item>
           <Form.Item label="简介" name="introduction">
-            <Input.TextArea rows={4} placeholder="请输入菜单简介" />
+            <Input.TextArea rows={4} placeholder="请输入菜谱简介" />
           </Form.Item>
-          <Form.List name="recipeid">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field, index) => (
-                  <Form.Item
-                    // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                    label={`菜谱${index + 1}`}
-                    required={false}
-                    key={field.key}
-                  >
-                    <Form.Item
-                      {...field}
-                      validateTrigger={["onChange", "onBlur"]}
-                      rules={[
-                        {
-                          required: true,
-                          whitespace: true,
-                          message:
-                            "Please input passenger's name or delete this field.",
-                        },
-                      ]}
-                      noStyle
-                    >
-                      <Input
-                        placeholder="输入对应的菜谱id"
-                        style={{ width: "90%" }}
-                      />
-                    </Form.Item>
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      onClick={() => remove(field.name)}
-                    />
-                  </Form.Item>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    style={{ width: "100%" }}
-                    icon={<PlusOutlined />}
-                  >
-                    添加菜谱
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>

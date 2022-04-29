@@ -34,7 +34,7 @@ const routes = [
       { path: "interest/:id", element: <Interest /> },
       { path: "collect/:id", element: <Collect /> },
       { path: "shoppingCart/:username", element: <ShoppingCart /> },
-      { path: "publish/:id", element: <Publish /> },
+      { path: "publish/:username", element: <Publish /> },
     ],
   },
   {

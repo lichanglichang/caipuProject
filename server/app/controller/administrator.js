@@ -197,6 +197,43 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
+  //18、获取用户发布菜单
+  async queryPublishMenu() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryPublishMenu(
+      ctx.request.query.username
+    );
+    ctx.response.body = result;
+  }
+
+  //19、获取用户发布菜谱
+  async queryPublishRecipe() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryPublishRecipe(
+      ctx.request.query.username
+    );
+    ctx.response.body = result;
+  }
+
+  //20、获取用户发布笔记
+  async queryPublishNotes() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryPublishNotes(
+      ctx.request.body.username
+    );
+    ctx.response.body = result;
+  }
+
+  //21、移除用户发布
+  async deleteUserPublish() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.deleteUserPublish(
+      ctx.request.body.deleteId,
+      ctx.request.body.type
+    );
+    ctx.response.body = result;
+  }
+
   //*************菜单****************
 
   //1、获取菜单
@@ -264,7 +301,7 @@ class UserController extends Controller {
 
   //*************菜谱****************
 
-  //获取所有菜谱
+  //1、获取所有菜谱
   async getAllRecipe() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.getAllRecipe(
@@ -275,7 +312,7 @@ class UserController extends Controller {
       data: result,
     };
   }
-  //删除菜谱
+  //2、删除菜谱
   async delRecipe() {
     const { ctx } = this;
     ctx.session.userId = 1;
@@ -291,6 +328,17 @@ class UserController extends Controller {
       };
     }
   }
+
+  // 3、获取某项菜谱
+  async queryRecipe() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryRecipe(
+      ctx.request.query.id
+    );
+    ctx.response.body = result
+  }
+
+
 
   //*************笔记****************
 
