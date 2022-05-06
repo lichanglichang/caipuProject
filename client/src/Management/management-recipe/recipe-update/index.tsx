@@ -1,14 +1,5 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  Form,
-  Input,
-  Upload,
-  Card,
-  Button,
-  message,
-  Select,
-  Space,
-} from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Upload, Card, Button, message, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +10,7 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid";
 import axios from "axios";
+import { tasteOption } from "../data";
 const RecipeUpdate: React.FC = () => {
   const [form] = useForm();
   const [fileList, setFileList] = useState<any>([]);
@@ -77,16 +69,6 @@ const RecipeUpdate: React.FC = () => {
     });
   };
 
-  // 菜谱类型
-  const tasteOption = [
-    { value: "肉食", label: "肉食" },
-    { value: "素菜", label: "素菜" },
-    { value: "鱼类", label: "鱼类" },
-    { value: "早餐", label: "早餐" },
-    { value: "面食", label: "面食" },
-    { value: "水果", label: "水果" },
-  ];
-
   return (
     <>
       <Form
@@ -126,7 +108,7 @@ const RecipeUpdate: React.FC = () => {
           </Form.Item>
           {step.map((item: any) => {
             return (
-              <div style={{margin:"20px"}}>
+              <div style={{ margin: "20px" }}>
                 <h4>{item.step}：</h4>
                 <p>{item.des}</p>
                 <img src={`${item.url}`} alt="" />

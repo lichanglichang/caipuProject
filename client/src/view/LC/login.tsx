@@ -192,10 +192,10 @@ function LoginDome() {
                                 </div>
 
                                 <div> <LockOutlined style={{ fontSize: "18px" }} />：<input className="tel_input" value={password} ref={pwd} onChange={(e: any) => { setPassword(e.target.value) }} type="password" placeholder="请输入密码" /></div>
-                                <p className="xieyi" ref={xieyi1}>请先同意豆果美食使用协议</p>
+                                <p className="xieyi" ref={xieyi1}>请先同意美食使用协议</p>
                                 <button onClick={handelLogin}>登陆</button>
 
-                                <p><input type="checkbox" ref={isSelect1} />我已阅读并且同意<a href="#">豆果美食协议</a></p>
+                                <p><input type="checkbox" ref={isSelect1} />我已阅读并且同意<a href="#">美食协议</a></p>
                             </div >
 
                             <div className="loginBottom">
@@ -211,18 +211,18 @@ function LoginDome() {
                                 <div> <UserOutlined style={{ fontSize: "18px" }} />：<input ref={loginUser} className="tel_input" type="text" placeholder="输入注册的账号" value={username1} onChange={(e: any) => { setUserName1(e.target.value) }} /></div>
                                 <div> <LockOutlined style={{ fontSize: "18px" }} />：<input ref={pwd1} className="tel_input" type="password" placeholder="请输入密码" value={password1} onChange={(e: any) => { setPassword1(e.target.value) }} /></div>
                                 <div> <LockOutlined style={{ fontSize: "18px" }} />：<input ref={pwd2} className="tel_input" type="password" placeholder="再次确认密码" value={password2} onChange={(e: any) => { setPassword2(e.target.value) }} /></div>
-                                <p className="xieyi" ref={xieyi2}>请先同意豆果美食使用协议</p>
+                                <p className="xieyi" ref={xieyi2}>请先同意美食使用协议</p>
                                 <button onClick={handelRegister}>注册</button>
 
-                                <p><input type="checkbox" ref={isSelect2} />我已阅读并且同意<a href="#">豆果美食协议</a></p>
+                                <p><input type="checkbox" ref={isSelect2} />我已阅读并且同意<a href="#">美食协议</a></p>
                             </div >
                         </div>
                     </div>
                 </div>
                 <div className="buttomcontent">
                     <div>
-                        <p>关于豆果 · 在豆果工作 · 意见反馈 · 友情链接 · 菜谱大全 · 品牌馆</p>
-                        <p>©2009-2015 北京豆果信息技术有限公司 京ICP证111032号 京公网安备11010102001133号 京网文[2014]0774-174号</p>
+                        <p>关于网站 · 意见反馈 · 友情链接 · 菜谱大全 · 品牌馆</p>
+                        <p>©2009-2015 北京信息技术有限公司 京ICP证111032号 京公网安备11010102001133号 京网文[2014]0774-174号</p>
                     </div>
                 </div>
             </div>

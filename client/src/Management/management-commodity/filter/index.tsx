@@ -1,4 +1,4 @@
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, InputNumber, Space} from "antd";
 import React from "react";
 import {
   SearchFormRow,
@@ -30,11 +30,14 @@ const Filter: React.FC = () => {
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
-        <SearchFormCol>
-          <Form.Item label="价格区间">
-            <Input placeholder="请输入查询账号" />
+        {/* <SearchFormCol> */}
+         <Form.Item label="价格区间">
+          <InputNumber min={0}defaultValue={3}  formatter={value => `${value}元`}/>
+          </Form.Item>至
+          <Form.Item >
+          <InputNumber min={1}defaultValue={3} formatter={value => `${value}元`}/>
           </Form.Item>
-        </SearchFormCol>
+        {/* </SearchFormCol> */}
 
         <SearchFormCol>
           <Form.Item>

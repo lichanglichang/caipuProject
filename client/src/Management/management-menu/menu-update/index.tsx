@@ -96,7 +96,7 @@ const MenuUpdate: React.FC = () => {
             </Upload>
           </Form.Item>
           <Form.Item label="作者账号" name="username">
-            <Input placeholder="请输入发布者账号" />
+            <Input disabled />
           </Form.Item>
           <Form.Item label="简介" name="introduction">
             <Input.TextArea rows={6} placeholder="请输入菜单简介" />

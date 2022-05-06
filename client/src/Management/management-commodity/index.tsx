@@ -53,7 +53,7 @@ const ManagementCommodity: React.FC = () => {
           <img
             src={`http://localhost:8200/public/shopping/${record.picture}`}
             alt=""
-            style={{ width: "50px", height: "50px" }}
+            style={{ width: "80px", height: "80px" }}
           />
         );
       },

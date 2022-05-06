@@ -43,6 +43,7 @@ const ManagementRecipe: React.FC = () => {
       title: "菜谱名",
       dataIndex: "menu_name",
       ellipsis: true,
+      with:100,
     },
     {
       title: "作者",
@@ -51,12 +52,6 @@ const ManagementRecipe: React.FC = () => {
     {
       title: "账号",
       dataIndex: "username",
-    },
-    {
-      title: "简介",
-      dataIndex: "introduce",
-      ellipsis:true,
-      width:300,
     },
     {
       title: "封面图",
@@ -78,7 +73,8 @@ const ManagementRecipe: React.FC = () => {
         return (
           <Space split={<Divider type="vertical" />}>
             <Button type="link" style={{padding:"0"}} onClick={()=>{navigate(`recipeUpdate/${record.id}`);}}>编辑</Button>
-            <Button type="link" style={{padding:"0"}}>删除</Button>
+            <Button type="link" style={{padding:"0"}}>评论</Button>
+            <Button type="link" danger style={{padding:"0"}}>删除</Button>
           </Space>
         );
       },

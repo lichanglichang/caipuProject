@@ -118,7 +118,7 @@ const ManagementMenu: React.FC = () => {
                 deleteMenu(record.menuid);
               }}
             >
-              <Button type="link" style={{ padding: "0" }}>
+              <Button type="link" danger style={{ padding: "0" }}>
                 删除
               </Button>
             </Popconfirm>
