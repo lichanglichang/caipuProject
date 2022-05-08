@@ -5,12 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from "../img/logo3.png";
 import getCookieByKey from "../getCookie"
 import "./css/header.css";
-import axios from 'axios';
-import TeContext from '../LC/content';
+import axios from "axios";
 import {
     DownOutlined,
     SearchOutlined,
-    UserOutlined
 } from '@ant-design/icons';
 
 
@@ -64,8 +62,7 @@ export default function Main() {
         if (!(getCookieByKey("nickname") == null)) {
             loginbox.current.style.display = "none";
             userbox.current.style.display = "block";
-            axios
-                .get("http://localhost:8200/getuser", {
+            axios.get("http://localhost:8200/getuser", {
                     params: {
                         username: getCookieByKey("username")
                     }

@@ -6,33 +6,42 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid/index";
 
-const Filter: React.FC = () => {
+export type recipeType={
+  username:string,
+  menu_name:string,
+  nickname:string,
+}
+interface IProps{
+  getRecipe:(value:recipeType)=>void
+}
+
+const Filter: React.FC<IProps> = ({getRecipe}) => {
   const [form] = Form.useForm();
   return (
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{username:"",menu_name:"",nickname:""}}
       onFinish={() => {
         form.validateFields().then(res => {
-          console.log(res);
+          getRecipe(res)
         });
       }}
     >
       <SearchFormRow>
-        <SearchFormCol>
-          <Form.Item label="昵称" name="kw">
-            <Input placeholder="请输入查询昵称" />
+      <SearchFormCol>
+          <Form.Item label="作者" name="nickname">
+            <Input placeholder="请输入查询作者" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="账号">
+          <Form.Item label="账号" name="username">
             <Input placeholder="请输入查询账号" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="状态">
-            <Input placeholder="请输入查询账号" />
+          <Form.Item label="菜谱名"  name="menu_name">
+            <Input placeholder="请输入查询菜谱名" />
           </Form.Item>
         </SearchFormCol>
 
@@ -45,7 +54,8 @@ const Filter: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
+                  form.setFieldsValue({username:"",menu_name:"",nickname:""});
+                  getRecipe({username:"",menu_name:"",nickname:""})
                 }}
               >
                 重置

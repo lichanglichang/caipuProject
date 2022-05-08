@@ -31,6 +31,35 @@ export const SearchFormCol: React.FC<ColProps> = props => {
 /**
  * 搜索表单 按钮的间距
  */
-export const SearchFormSpace: React.FC<SpaceProps> = props => {
+ export const SearchFormSpace: React.FC<SpaceProps> = props => {
   return <Space size={16} {...props} />;
 };
+
+// 单列表单配置
+export const formSingleLayoutProps = {
+  labelCol: {
+    xxl: {
+      span: 0,
+    },
+    md: {
+      span: 0,
+    },
+    xs: {
+      span: 0,
+    },
+  },
+  wrapperCol: {
+    xxl: {
+      span: 6,
+    },
+    xl: {
+      span: 8,
+    },
+    md: {
+      span: 12,
+    },
+    xs: {
+      span: 24,
+    },
+  },
+}
