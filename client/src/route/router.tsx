@@ -1,32 +1,52 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Main from "../view/zyh/main";
-import Laboratory from "../view/zyh/laboratory";
-import Textjf from "../view/zyh/testjf";
-import Texthc from "../view/zyh/testhc";
-import Cesijf from "../view/zyh/cesijf";
-import Search from "../view/zyh/search";
-import Shopping from "../view/Qing/shopping";
-import Detail from "../view/Qing/detail";
+import HomePage from "../view/zestful/zestful";//首页
+import GoodsLists from "../view/shopModule/goodsLists";//商城
+import GoodsDetail from "../view/shopModule/goodsDetail";//商城-商品详情
+import NoteLists from "../view/notesModule/noteLists";//笔记
+import NotesDetails from "../view/notesModule/NotesDetails";//笔记-笔记详情
+import Comic from "../view/cartoonModule/comic";//漫画
+import Comicdetails from "../view/cartoonModule/comicdetails";//漫画-漫画详情
+import Laboratory from "../view/gameModule/laboratory";//互动问答
+import GameBegin from "../view/gameModule/gameBegin";//互动问答-游戏开始
+import Tests from "../view/gameModule/tests";//互动问答-游戏开始-测试题
+import Menu from "../view/recipeMenuModule/menuTotal";//菜谱菜单
+import Recipedetails from "../view/recipeMenuModule/recipedetails";//菜谱菜单-菜谱详情
+import MenuDetails from "../view/recipeMenuModule/menuDetails";//菜谱菜单-菜单详情
+import Search from "../view/searchModule/search";//搜索
+import ReleaseMenu from "../view/releaseModule/releaseMenu";//发布-发布菜单
+import ReleaseRecipe from "../view/releaseModule/releaseRecipe";//发布-发布菜谱
+import ReleaseNote from "../view/releaseModule/releaseNote";//发布-发布笔记
+import Login from "../view/loginModule/login";//登录
+import Updatainfo from "../view/personalModule/Updatainfo";//修改个人信息
+import CollectDemo from "../view/personalModule/collect";//个人中心
+import PersonalNote from "../view/personalModule/PersonalNote";//个人中心-笔记
+
+
+// import Main from "../view/zyh/main";
+// import Shopping from "../view/Qing/shopping";
+// import Detail from "../view/Qing/detail";
+// import Notes from "../view/bx/Notes";
+// import NotesDetails from "../view/bx/NotesDetails";
+// import Laboratory from "../view/zyh/laboratory";
+// import Textjf from "../view/zyh/testjf";
+// import Texthc from "../view/zyh/testhc";
+// import Cesijf from "../view/zyh/cesijf";
+// import Menusdes from "../view/cxj/menusdes";
+// import Comic from "../view/zyh/comic";
+// import Comicdetails from "../view/zyh/comicdetails";
+// import Menu from "../view/cxj/menu_container";
+// import Recipedes from "../view/cxj/recipedes";
+// import Search from "../view/zyh/search";
+// import Releaser from "../view/cxj/releaser";
+// import Uploadcaidan from "../view/zyh/uploadcaidan";
+// import CreateNote from "../view/bx/CreateNote";
+// import LoginDome from "../view/LC/login";
+// import Updatainfo from "../view/LC/Updatainfo";
+// import CollectDemo from "../view/LC/collect";
+// import PersonalNote from "../view/bx/PersonalNote";
+
 import Zjy from "../view/zjy/Zjy";
-import Menu from "../view/cxj/menu_container";
-import Recipedes from "../view/cxj/recipedes";
-import Releaser from "../view/cxj/releaser";
-import Menusdes from "../view/cxj/menusdes";
-import Comic from "../view/zyh/comic";
-import Comicdetails from "../view/zyh/comicdetails";
-import Uploadcaidan from "../view/zyh/uploadcaidan";
-import Notes from "../view/bx/Notes";
-import NotesDetails from "../view/bx/NotesDetails";
-import CreateNote from "../view/bx/CreateNote";
-
-import LoginDome from "../view/LC/login";
-import Updatainfo from "../view/LC/Updatainfo";
-import CollectDemo from "../view/LC/collect";
-
-// 管理员路由
-
-import PersonalNote from "../view/bx/PersonalNote";
 
 
 export default function Rte() {
@@ -34,37 +54,31 @@ export default function Rte() {
     <>
       {/* <Router> */}
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<GoodsLists />} />
+          <Route path="/detail/:id" element={<GoodsDetail />} />
+          <Route path="/Notes" element={<NoteLists />}></Route>
+          <Route path="/Notes/Details/:id" element={<NotesDetails />}></Route>
+          <Route path="/Laboratory/textjf" element={<GameBegin />} />
+          <Route path="/Laboratory/textjf/cesijf" element={<Tests />} />
+          <Route path="/Laboratory" element={<Laboratory />} />
           <Route path="/comic" element={<Comic />} />
           <Route path="/comic/comicdetails/:cid" element={<Comicdetails />} />
-          <Route path="/search/:kw" element={<Search />} />
-          <Route path="/uploadcaidan" element={<Uploadcaidan />} />
-          <Route path="/shop" element={<Shopping />} />
-          <Route path="/Laboratory" element={<Laboratory />} />
-          <Route path="/Laboratory/textjf" element={<Textjf />} />
-          <Route path="/Laboratory/texthc" element={<Texthc />} />
-          <Route path="/Laboratory/textjf/cesijf" element={<Cesijf />} />
-          <Route path="/detail/:id" element={<Detail />} />
-          {/* 修改个人信息 */}
-          <Route path="/updatainfo" element={<Updatainfo />} />
-          {/* 登录注册界面 */}
-          <Route path="/Login" element={<LoginDome />} />
-          {/* 我的收藏 */}
-          <Route path="/collect" element={<CollectDemo />} />
-          <Route path="/Zjy" element={<Zjy />} />
           <Route path="/Menu" element={<Menu />} />
-          <Route path="/Recipedes/:showsid" element={<Recipedes />} />
-          <Route path="/Releaser" element={<Releaser />} />
-          <Route path="/Menusdes/:menusid" element={<Menusdes />} />
-
-          {/* 笔记界面 */}
-          <Route path="/Notes" element={<Notes />}></Route>
-          <Route path="/Notes/Details/:id" element={<NotesDetails />}></Route>
-          <Route path="/Create/Note" element={<CreateNote />}></Route>
-          <Route
-            path="/collect/PersonalNote"
-            element={<PersonalNote />}
-          ></Route>
+          <Route path="/Recipedes/:showsid" element={<Recipedetails />} />
+          <Route path="/Menusdes/:menusid" element={<MenuDetails />} />
+          <Route path="/search/:kw" element={<Search />} />
+          <Route path="/Releaser" element={<ReleaseRecipe />} />
+          <Route path="/Create/Note" element={<ReleaseNote />}></Route>
+          <Route path="/uploadcaidan" element={<ReleaseMenu />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/collect/PersonalNote" element={<PersonalNote />}></Route>
+          <Route path="/updatainfo" element={<Updatainfo />} />
+          <Route path="/collect" element={<CollectDemo />} />
+        
+          <Route path="/Zjy" element={<Zjy />} />
+          
+        
         </Routes>
       {/* </Router> */}
     </>
