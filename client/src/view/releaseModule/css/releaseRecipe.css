@@ -1,0 +1,301 @@
+.creleaser {
+    width: 1050px;
+    min-height: 400px;
+    margin: 0 auto;
+    /* background-color: pink; */
+}
+.cmreleaser{
+    width: 68%;
+    min-height: 700px;
+    margin-top: 30px;
+    /* background-color: powderblue; */
+}
+.creleaser_img {
+    width: 100%;
+    height: 410px;
+    background-color: #EEEEEE;
+    border-radius: 3%;
+}
+.csubmit1{
+    width: 42%;
+    height: 410PX;
+    position: absolute;
+    background-color: violet;
+    opacity: 0;
+
+}
+.creleaser_img>img {
+    width: 100%;
+    height: 100%;
+    display: none;
+    border-radius: 3%;
+}
+.caddimg {
+    position: relative;
+}
+
+.caddimg>.cadd {
+    font-size: 100px;
+    font-weight: 200;
+    color: #999999;
+    position: absolute;
+    left: 300px;
+    top: 100px;
+}
+.caddimg>.caddtext{
+    position: absolute;
+    left: 110px;
+    top: 240px;
+}
+.caddtext>p{
+    text-align: center;
+    color: #999999;
+}
+.crecipename{
+    margin-top: 20px;
+}
+.crecipename>input {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    background: #FFF;
+    border: 1px solid #E5E3DF;
+    border-radius: 4px;
+    color: #ccc;
+    font-size: 16px;
+    padding: 0 12px;
+}
+.crecipename>input:focus {
+    outline: none;
+    border: 1px solid #E5E3DF;
+}
+
+
+.cintroduce{
+    width: 100%;
+}
+.cstrtext {
+    display: block;
+    width: 100%;
+    height: 200px;
+    margin: 20px 0;
+    padding: 12px;
+    font-size: 15px;
+    color: #CCC;
+    border: 1px solid #E5E3DF;
+    border-radius: 4px;
+    
+}
+.cstrtext:focus {
+    outline: none;
+    border: 1px solid #E5E3DF;
+}
+
+.cline{
+    width: 100%;
+    height: 20px;
+    border-bottom: 1px solid #E5E3DF;
+}
+.caddingredient {
+    margin-top: 30px;
+}
+.caddingredient>p {
+    font-size: 25px;
+    color: #333;
+    font-weight: bold;
+    line-height: 24px;
+}
+.cadding {
+    width: 100%;
+    min-height: 150px;
+    background-color: #F1F7FA;
+    /* margin-top: 30px; */
+    border-radius: 3%;
+    padding: 30px 0;
+}
+.cadding>.ctype {
+    width: 100%;
+    height: 50px;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding: 0 22px;
+}
+.ctype>.cfood{
+    width: 36%;
+    font-size: 16px;
+    /* background-color: pink; */
+}
+
+.ctype>.chow {
+    width: 38%;
+    font-size: 16px;
+    /* background-color: pink; */
+}
+.ctype>div:nth-of-type(3){
+    width: 20%;
+    height: 20px;
+
+}
+.cinput {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+
+}
+.cinput_l{
+    width: 32%;
+    height: 50px;
+    border: 1px solid #ccc;
+ 
+}
+.cinput_l:focus{
+    outline: none;
+    border: 1px solid #ccc;
+
+}
+
+.cinput_r {
+    width: 32%;
+    border: 1px solid #ccc;
+}
+.cinput_r:focus{
+    outline: none;
+    border: 1px solid #ccc;
+
+}
+.cinput input:focus {
+    outline: none;
+    border: 1px solid #ccc;
+
+}
+.cbtn{
+    width: 20%;
+    height: 30px;
+    margin-top: 10px;
+    /* background-color: powderblue; */
+    display: flex;
+    justify-content: space-around;
+    
+}
+.cbtn>div{
+    width: 25px;
+    height: 25px;
+    color: white;
+    font-size: 16px;
+    background-color: orange;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 50%;
+}
+.cbtn>div:nth-of-type(4){
+    background-color: #FF4C44;
+}
+
+.caddone{
+    margin-top: 10px;
+    font-size: 16px;
+    color: #256DC6; 
+}
+.cddstep {
+    margin-top: 20px;
+}
+.cddstep>p {
+    font-size: 25px;
+    color: #333;
+    font-weight: bold;
+    line-height: 24px;
+    display: inline-block;
+
+}
+
+.cstepdes {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    /* justify-content: space-between; */
+}
+.cstepdes_img {
+    width: 200px;
+    height: 200px;
+    background-color: #EEEEEE;
+    border-radius: 5%;
+    position: relative;
+
+}
+.csubmit2 {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    border: none;
+    /* background-color: violet; */
+
+}
+
+.csteptext {
+    width: 200px;
+    height: 100px;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    
+}
+
+
+
+.csteptext:focus {
+    outline: none;
+    border: 1px solid #ccc;
+    
+}
+.cmenudetail{
+    width: 200px;
+    height: 400px;
+    border: 1px solid #ccc;
+    margin: 0 10px;
+}
+.cmenudetail:focus {
+    outline: none;
+    border: 1px solid #ccc;
+    
+}
+.cstepbtn {
+    width: 50px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 0;
+}
+
+.cstepbtn>div {
+    width: 25px;
+    height: 25px;
+    color: white;
+    background-color: orange;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+}
+.cstepbtn>div:nth-of-type(4){
+    background-color:  #FF4C44;
+} 
+.cbtnupload {
+    width: 150px;
+    height: 45px;
+    background-color: orange;
+    color: white;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 3px;
+    margin: 20px 0;
+
+}
+
+
+
+
+

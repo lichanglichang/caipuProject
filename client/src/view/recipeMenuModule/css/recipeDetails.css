@@ -1,0 +1,237 @@
+.crecipedes{
+    width: 1050px;
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.crecipedes_left {
+    width: 68%;
+    min-height: 700px;
+    /* background-color: azure; */
+}
+
+.cleftimg {
+    width: 100%;
+}
+
+.cleftimg>img {
+    width: 100%;
+    height: 420px;
+    border-radius: 2%;
+}
+
+.cleftcontent {
+    width: 100%;
+    height: 200px;
+    /* background-color: burlywood; */
+    margin-top: 40px;
+
+}
+.cleftmenuname {
+    font-size: 25px;
+    color: #333;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+.qualitygoods {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 7%;
+    background-color: #FFB31A;
+    color: white;
+    font-size: 16px;
+
+}
+
+.exclusive {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 7%;
+    background-color: #FF4C44;
+    margin-left: 20px;
+    color: white;
+    font-size: 16px;
+}
+.cleftlike {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+   
+}
+.cleftlikel {
+    width: 20%;
+}
+.clikenum {
+   color: #FFB31A;
+    font-size: 24px;
+    margin-right: 10px;
+}
+.cleftliker {
+    width: 10%;
+   
+}
+.cimformation {
+    width: 250px;
+    margin-top: 20px;
+}
+.cuserhead {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 50%;
+}
+.cuserhead>img{
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 50%;
+    
+}
+.cleftname {
+    width: 80px;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.cingredients {
+    width: 100%;
+    min-height: 200px;
+    margin-top: 55px;
+    /* background-color: tomato; */
+
+}
+.repiceingredients {
+    font-size: 22px;
+    color: #333;
+    line-height: 18px;
+    font-weight: bold;
+    margin: 30px 0 20px;
+}
+.cmytable {
+    min-width: 100%;
+    min-height: 50px;
+    background-color: #F1F7FA;
+    border-radius: 5%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.conedetails {
+    width: 50%;
+    min-height: 50px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 10px;
+    /* background-color: blue; */
+    display: flex;
+    justify-content: space-between;
+}
+.conedetails>span {
+    min-height: 50px;
+    line-height: 50px;
+}
+
+.cstepsonce {
+    width: 100%;
+    height: 250px;
+    /* background-color: pink; */
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.cstepimg {
+    width: 250px;
+    height: 250px;
+    /* background-color: burlywood; */
+}
+.cstepimg>img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4%;
+}
+.cstepsonce>.csteptextone {
+    width: 457px;
+    height: 100%;
+    /* background-color: coral; */
+}
+.csteptextone>.zsstep{
+    font-size: 18px;
+    font-weight: bold;
+}
+.csteptextone>.zsdes{
+    font-size: 16px;
+}
+
+/* 右边样式 */
+
+.crecipedes_right {
+    width: 28.5%;
+    min-height: 700px;
+    /* background-color: skyblue; */
+}
+.crecipedes_right1 {
+    width: 100%;
+    height: 280px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* align-items: space-around; */
+}
+
+.cright1_img {
+    width: 48%;
+    height: 120px;
+    /* background-color: cornflowerblue; */
+}
+.cright1_img>img{
+    width: 100%;
+    height: 100%;
+}
+.cright1_img>p {
+    text-align: center;
+}
+.cright1_img:hover {
+    border: 1px solid red;
+}
+.crecipedes_right2 {
+    margin-top: 50px;
+}
+.crecipedes_right2>p{
+    font-size: 25px;
+    font-weight: 600;
+}
+.crecipedes_right3 {
+    margin-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
