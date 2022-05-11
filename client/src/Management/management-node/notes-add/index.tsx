@@ -74,17 +74,6 @@ const NotesAdd: React.FC = () => {
             >
               {fileList.length < 3 && "+ 上传图片"}
             </Upload>
-            {/* <Upload
-              action="http://localhost:8200/uploadimg"
-              listType="picture-card"
-              fileList={fileList}
-              // onPreview={this.handlePreview}
-              onChange={handleChange}
-              maxCount={1}
-              className={styles.upload}
-            >
-              {fileList.length ? null : uploadButton}
-            </Upload> */}
           </Form.Item>
           <Form.Item label="作者账号" name="account">
             <Input placeholder="请输入发布者账号" />

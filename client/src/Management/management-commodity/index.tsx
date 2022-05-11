@@ -87,7 +87,7 @@ const ManagementCommodity: React.FC = () => {
               编辑
             </Button>
             <Popconfirm
-              title="是否确认删除该菜单"
+              title="是否确认删除该商品"
               okText="确认"
               cancelText="取消"
               onConfirm={() => {

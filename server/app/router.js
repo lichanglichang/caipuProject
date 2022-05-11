@@ -124,6 +124,8 @@ module.exports = (app) => {
   router.get("/queryRecipe", controller.administrator.queryRecipe);
   // 4、新增菜谱
   router.post("/addRecipe", controller.administrator.addRecipe);
+  // 5、修改菜谱
+  router.post("/updateRecipe", controller.administrator.updateRecipe);
 
   //管理员接口
   //*************商品****************
@@ -134,6 +136,9 @@ module.exports = (app) => {
   router.post("/delGoods", controller.administrator.delGoods);
   //2、新增商品
   router.post("/addGoods", controller.administrator.addGoods);
+  // 3、获取某条商品信息
+  router.get("/queryGoods", controller.administrator.queryGoods);
+
 
   //管理员接口
   //*************笔记****************
@@ -148,7 +153,6 @@ module.exports = (app) => {
   router.get("/getNote", controller.administrator.getNote);
   // 5、修改菜单信息
   router.post("/updateNotes", controller.administrator.updateNotes);
-
 
   //菜单
   router.get("/showmenu", controller.user.showmenu);

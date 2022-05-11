@@ -464,6 +464,19 @@ class UserService extends Service {
     }
   }
 
+  // 5、修改菜谱信息
+  async updateRecipe(id, img, introduce, username, type, steps, menu_name) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${username}'`
+    );
+    await this.app.mysql.query(
+      `update recipe set img='${img}',introduce='${introduce}',username='${username}',type='${type}',menu_name='${menu_name}',steps='${JSON.stringify(
+        steps
+      )}',nickname='${userResult[0].nickname}' where id=${id}`
+    );
+    return { code: 1, msg: "修改成功！" };
+  }
+
   //*************笔记****************
 
   //1、获取笔记
@@ -584,6 +597,14 @@ class UserService extends Service {
       code: 1,
       msg: "新增成功！",
     };
+  }
+
+  // 4、获取某项商品信息
+  async queryGoods(id) {
+    let result = await this.app.mysql.query(
+      `SELECT * FROM goods WHere  id in(${id.toString()})`
+    );
+    return result;
   }
 }
 

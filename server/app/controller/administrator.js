@@ -349,6 +349,26 @@ class UserController extends Controller {
     ctx.response.body = result;
   }
 
+    // 5、修改菜谱信息
+    async updateRecipe() {
+      const { ctx } = this;
+      const { id, img, introduce, username, type, steps,menu_name } =
+        ctx.request.body;
+      let result = await this.ctx.service.administrator.updateRecipe(
+        id, img, introduce, username, type, steps,menu_name
+      );
+      ctx.response.body = result;
+    }
+
+      // 4、获取某项商品信息
+  async queryGoods() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryGoods(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
   //*************笔记****************
 
   //获取所有笔记
