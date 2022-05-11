@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Card, Form, Input, message, Select, Space, Upload } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Select,
+  Space,
+  Upload,
+} from "antd";
 import { useForm } from "antd/lib/form/Form";
 import styles from "./index.module.less";
 import {
@@ -28,27 +37,26 @@ const RecipeAdd: React.FC = () => {
   const handleChange = ({ fileList, file }: any) => {
     form.setFields([
       {
-        name: "background",
+        name: "img",
         value: file.response,
       },
     ]);
     setFileList(fileList);
   };
 
-  // 添加菜单
+  // 添加菜谱
   const onFinish = (values: any) => {
-    axios.post("addMenu", { ...values }).then((res) => {
+    console.log(values, "菜谱值",{ ...values,discrib:JSON.stringify(values.discrib),steps:JSON.stringify(values.steps)});
+
+    axios.post("addRecipe", { ...values,discrib:JSON.stringify(values.discrib),steps:JSON.stringify(values.steps),img:"/public/upload/menuPic.png"}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
-        navigate("/Management/menu");
+        navigate("/Management/recipe");
       } else {
         message.error(res.data.msg);
       }
     });
   };
-
- 
-
 
   return (
     <>
@@ -57,15 +65,23 @@ const RecipeAdd: React.FC = () => {
         autoComplete="off"
         layout="vertical"
         {...formSingleLayoutProps}
-        initialValues={{users:[{first:"盐",last:"3g"}]}}
+        // initialValues={{
+        //   discrib: [{ name: "盐", how: "3g" }],
+        //   steps: [
+        //     {
+        //       des: "首先加入5g菜油，然后加入煎蛋",
+        //       url: "http://localhost:8200/public/menuimg/img1/zhuti.jpg",
+        //     },
+        //   ],
+        // }}
         onFinish={onFinish}
       >
         <BaseCard paddingBottom="60px">
-          <Form.Item label="菜谱名" name="menuname">
+          <Form.Item label="菜谱名" name="menu_name">
             <Input placeholder="请输入菜谱名" />
           </Form.Item>
 
-          <Form.Item label="封面图" name="background">
+          <Form.Item label="封面图" name="img">
             <Upload
               action="http://localhost:8200/uploadimg"
               listType="picture-card"
@@ -78,49 +94,108 @@ const RecipeAdd: React.FC = () => {
               {fileList.length ? null : uploadButton}
             </Upload>
           </Form.Item>
-          <Form.Item label="作者账号" name="username">
+          <Form.Item label="账号" name="username">
             <Input placeholder="请输入发布者账号" />
           </Form.Item>
-          <Form.Item label="口味" name="type">
-            <Select showArrow options={tasteOption} />
+          <Form.Item label="类型" name="type">
+            <Select showArrow options={tasteOption} placeholder="请选择类型" />
           </Form.Item>
-          <Form.Item label="简介" name="introduction">
+          <Form.Item label="简介" name="introduce">
             <Input.TextArea rows={4} placeholder="请输入菜谱简介" />
           </Form.Item>
-          <Form.List name="users">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item
-                  {...restField}
-                  label="作料名称"
-                  name={[name, 'first']}
-                  wrapperCol={{span:24}}
-                  rules={[{ required: true, message: 'Missing first name' }]}
-                >
-                  <Input placeholder="First Name" />
+          <Form.List name="discrib">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{ display: "flex", marginBottom: 8 }}
+                    align="baseline"
+                  >
+                    <Form.Item
+                      {...restField}
+                      label="用料"
+                      name={[name, "name"]}
+                      wrapperCol={{ span: 24 }}
+                    >
+                      <Input placeholder="First Name" />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      label="用量"
+                      wrapperCol={{ span: 24 }}
+                      name={[name, "how"]}
+                    >
+                      <Input placeholder="Last Name" />
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    新增作料
+                  </Button>
                 </Form.Item>
-                <Form.Item
-                  {...restField}
-                  label="用量"
-                  wrapperCol={{span:24}}
-                  name={[name, 'last']}
-                  rules={[{ required: true, message: 'Missing last name' }]}
-                >
-                  <Input placeholder="Last Name" />
+              </>
+            )}
+          </Form.List>
+          <Form.List name="steps">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }, index) => (
+                  <Space
+                    key={key}
+                    style={{ display: "flex", marginBottom: 8 }}
+                    align="baseline"
+                  >
+                    <Form.Item
+                      {...restField}
+                      label={`第${index + 1}步`}
+                      name={[name, "des"]}
+                      wrapperCol={{ span: 24 }}
+                    >
+                      <Input.TextArea rows={8} placeholder="请输入制作描述" />
+                    </Form.Item>
+                    {/* <Form.Item
+                      {...restField}
+                      label="图片"
+                      name={[name, "url"]}
+                      // rules={[{ required: true, message: 'Missing last name' }]}
+                    >
+                      <Upload
+                        action="http://localhost:8200/uploadimg"
+                        listType="picture-card"
+                        fileList={fileList}
+                        // onPreview={this.handlePreview}
+                        onChange={handleChange}
+                        maxCount={1}
+                        className={styles.uploadImg}
+                      >
+                        {fileList.length ? null : uploadButton}
+                      </Upload>
+                    </Form.Item> */}
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                    style={{ width: "100%" }}
+                  >
+                    新增步骤
+                  </Button>
                 </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-               新增作料
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
+              </>
+            )}
+          </Form.List>
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>

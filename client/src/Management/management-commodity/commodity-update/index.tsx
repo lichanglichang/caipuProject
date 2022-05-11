@@ -10,7 +10,7 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid";
 import axios from "axios";
-const NotesUpdate: React.FC = () => {
+const CommodityUpdate: React.FC = () => {
   const [form] = useForm();
   const [fileList, setFileList] = useState<any>([]);
   const navigate = useNavigate();
@@ -112,7 +112,7 @@ const NotesUpdate: React.FC = () => {
             <Button
               type="primary"
               onClick={() => {
-                navigate("/Management/notes");
+                navigate("/Management/commodity");
               }}
             >
               返回
@@ -127,4 +127,4 @@ const NotesUpdate: React.FC = () => {
   );
 };
 
-export default NotesUpdate;
+export default CommodityUpdate;

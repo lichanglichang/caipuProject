@@ -1,5 +1,5 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Form, Input, Upload, Card, Button, message, Select } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Upload, Card, Button, message, Select, Space, Avatar } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,7 +14,6 @@ import { tasteOption } from "../data";
 const RecipeUpdate: React.FC = () => {
   const [form] = useForm();
   const [fileList, setFileList] = useState<any>([]);
-  const [step, setStep] = useState<any>([]);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -27,12 +26,11 @@ const RecipeUpdate: React.FC = () => {
       setFileList([
         {
           uid: id,
-          name: "image.png",
+          name: "img",
           status: "done",
           url: res.data[0].img,
-        },
+        }
       ]);
-      setStep(JSON.parse(res.data[0].steps));
     });
   }, [form, id]);
 
@@ -48,7 +46,7 @@ const RecipeUpdate: React.FC = () => {
   const handleChange = ({ fileList, file }: any) => {
     form.setFields([
       {
-        name: "background",
+        name: "img",
         value: file.response,
       },
     ]);
@@ -106,45 +104,59 @@ const RecipeUpdate: React.FC = () => {
           <Form.Item label="简介" name="introduce">
             <Input.TextArea rows={6} placeholder="请输入菜谱简介" />
           </Form.Item>
-          {step.map((item: any) => {
-            return (
-              <div style={{ margin: "20px" }}>
-                <h4>{item.step}：</h4>
-                <p>{item.des}</p>
-                <img src={`${item.url}`} alt="" />
-              </div>
-            );
-          })}
-          {/* <Form.List name="steps">
-          {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item
-                  {...restField}
-                  name={[name, 'first']}
-                  rules={[{ required: true, message: 'Missing first name' }]}
-                >
-                  <Input placeholder="First Name" />
+             <Form.List name="steps">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }, index) => (
+                  <Space
+                    key={key}
+                    style={{ display: "flex", marginBottom: 8 }}
+                    align="baseline"
+                  >
+                    <Form.Item
+                      {...restField}
+                      label={`第${index + 1}步`}
+                      name={[name, "des"]}
+                      wrapperCol={{ span: 24 }}
+                    >
+                      <Input.TextArea rows={8} placeholder="请输入制作描述" />
+                    </Form.Item>
+                    {/* <Form.Item
+                      {...restField}
+                      label="图片"
+                      name={[name, "url"]}
+                      wrapperCol={{ span: 24 }}
+                      // rules={[{ required: true, message: 'Missing last name' }]}
+                    >
+                      <Upload
+                        action="http://localhost:8200/uploadimg"
+                        listType="picture-card"
+                        fileList={fileList}
+                        // onPreview={this.handlePreview}
+                        onChange={handleChange}
+                        maxCount={1}
+                        className={styles.uploadImg}
+                      >
+                        {fileList.length ? null : uploadButton}
+                      </Upload>
+                    </Form.Item> */}
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                    style={{ width: "100%" }}
+                  >
+                    新增步骤
+                  </Button>
                 </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, 'last']}
-                  rules={[{ required: true, message: 'Missing last name' }]}
-                >
-                  <Input placeholder="Last Name" />
-                </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add field
-              </Button>
-            </Form.Item>
-          </>
-               )}
-          </Form.List> */}
+              </>
+            )}
+          </Form.List>
         </BaseCard>
         <Card className={styles.wrapControl}>
           <SearchFormSpace>

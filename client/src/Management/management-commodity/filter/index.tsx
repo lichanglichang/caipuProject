@@ -1,4 +1,4 @@
-import {Button, Form, Input, InputNumber, Space} from "antd";
+import {Button, Form, Input, InputNumber} from "antd";
 import React from "react";
 import {
   SearchFormRow,
@@ -6,39 +6,40 @@ import {
   SearchFormSpace,
 } from "../../components/search-form-grid/index";
 
-const Filter: React.FC = () => {
+interface IProps {
+  getCommodity:(params:any)=>void
+}
+const Filter: React.FC<IProps> = ({getCommodity}) => {
   const [form] = Form.useForm();
   return (
     <Form
       form={form}
       autoComplete="off"
-      initialValues={{num: 1}}
+      initialValues={{goodsname: "",address:""}}
       onFinish={() => {
         form.validateFields().then(res => {
           console.log(res);
+          getCommodity(res)
         });
       }}
     >
       <SearchFormRow>
         <SearchFormCol>
-          <Form.Item label="商品名称" name="kw">
+          <Form.Item label="商品名称" name="goodsname">
             <Input placeholder="请输入查询商品名称" />
           </Form.Item>
         </SearchFormCol>
         <SearchFormCol>
-          <Form.Item label="发货地">
-            <Input placeholder="请输入查询账号" />
+          <Form.Item label="发货地" name="address">
+            <Input placeholder="请输入发货地址" />
           </Form.Item>
         </SearchFormCol>
-        {/* <SearchFormCol> */}
-         <Form.Item label="价格区间">
-          <InputNumber min={0}defaultValue={3}  formatter={value => `${value}元`}/>
-          </Form.Item>至
-          <Form.Item >
-          <InputNumber min={1}defaultValue={3} formatter={value => `${value}元`}/>
+         <Form.Item label="价格区间" name="lowerPrice" initialValue="0">
+          <InputNumber min={0}  placeholder="最低"/>
+          </Form.Item><span style={{marginTop:"5px"}}>至</span>
+          <Form.Item name="highPrice" initialValue="">
+          <InputNumber min={0} placeholder="最高" />
           </Form.Item>
-        {/* </SearchFormCol> */}
-
         <SearchFormCol>
           <Form.Item>
             <SearchFormSpace>
@@ -48,7 +49,8 @@ const Filter: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  form.setFieldsValue({kw: ""});
+                  form.setFieldsValue({goodsname: "",address:"",lowerPrice:0,highPrice:""});
+                  getCommodity({goodsname: "",address:"",lowerPrice:0,highPrice:""})
                 }}
               >
                 重置
@@ -57,7 +59,6 @@ const Filter: React.FC = () => {
           </Form.Item>
         </SearchFormCol>
       </SearchFormRow>
-      <Form.Item name="num" hidden></Form.Item>
     </Form>
   );
 };

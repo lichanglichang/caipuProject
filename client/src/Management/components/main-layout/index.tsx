@@ -122,7 +122,7 @@ const MainLayout: React.FC<IProps> = () => {
         { name: "用户管理" },
         { name: "用户关联", route: "/Management/user/relevance" },
       ];
-    }else if (
+    } else if (
       location.pathname.indexOf("/Management/recipe/recipeAdd") !== -1
     ) {
       return [
@@ -136,8 +136,34 @@ const MainLayout: React.FC<IProps> = () => {
         { name: "菜谱管理", route: "/Management/recipe" },
         { name: "编辑" },
       ];
-    }  else if (location.pathname.indexOf("/Management/node") !== -1) {
-      return [{ name: "笔记管理", route: "/Management/node" }];
+    } else if (location.pathname.indexOf("/Management/notes/notesAdd") !== -1) {
+      return [
+        { name: "笔记管理", route: "/Management/notes" },
+        { name: "新增" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/notes/notesUpdate") !== -1
+    ) {
+      return [
+        { name: "笔记管理", route: "/Management/notes" },
+        { name: "编辑" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/commodity/commodityAdd") !== -1
+    ) {
+      return [
+        { name: "商品管理", route: "/Management/commodity" },
+        { name: "新增" },
+      ];
+    } else if (
+      location.pathname.indexOf("/Management/commodity/commodityUpdate") !== -1
+    ) {
+      return [
+        { name: "商品管理", route: "/Management/commodity" },
+        { name: "编辑" },
+      ];
+    } else if (location.pathname.indexOf("/Management/notes") !== -1) {
+      return [{ name: "笔记管理", route: "/Management/notes" }];
     } else if (location.pathname.indexOf("/Management/commodity") !== -1) {
       return [{ name: "商品管理", route: "/Management/commodity" }];
     } else if (location.pathname.indexOf("/Management/recipe") !== -1) {
@@ -184,7 +210,7 @@ const MainLayout: React.FC<IProps> = () => {
               <div
                 className="exit"
                 onClick={() => {
-                  navigate({ pathname: "/Login" }); 
+                  navigate({ pathname: "/Login" });
                 }}
               >
                 前往登录
@@ -232,9 +258,11 @@ const MainLayout: React.FC<IProps> = () => {
             </Menu.SubMenu>
 
             <Menu.Item
-              key={ location.pathname.indexOf("/Management/menu") !== -1
-              ? location.pathname
-              : "/Management/menu"}
+              key={
+                location.pathname.indexOf("/Management/menu") !== -1
+                  ? location.pathname
+                  : "/Management/menu"
+              }
               icon={<ProfileOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
@@ -242,9 +270,11 @@ const MainLayout: React.FC<IProps> = () => {
               <Link to="/Management/menu">菜单管理</Link>
             </Menu.Item>
             <Menu.Item
-               key={ location.pathname.indexOf("/Management/recipe") !== -1
-               ? location.pathname
-               : "/Management/recipe"}
+              key={
+                location.pathname.indexOf("/Management/recipe") !== -1
+                  ? location.pathname
+                  : "/Management/recipe"
+              }
               icon={<ProjectOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
@@ -252,17 +282,23 @@ const MainLayout: React.FC<IProps> = () => {
               <Link to="/Management/recipe">菜谱管理</Link>
             </Menu.Item>
             <Menu.Item
-             key={ location.pathname.indexOf("/Management/node") !== -1
-             ? location.pathname
-             : "/Management/node"}
+              key={
+                location.pathname.indexOf("/Management/notes") !== -1
+                  ? location.pathname
+                  : "/Management/notes"
+              }
               icon={<ScheduleOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}
             >
-              <Link to="/Management/node">笔记管理</Link>
+              <Link to="/Management/notes">笔记管理</Link>
             </Menu.Item>
             <Menu.Item
-              key="/Management/commodity"
+              key={
+                location.pathname.indexOf("/Management/commodity") !== -1
+                  ? location.pathname
+                  : "/Management/commodity"
+              }
               icon={<ShopOutlined />}
               className={collapsedState ? "menuItem" : ""}
               style={{ paddingLeft: collapsedState ? "34px" : "" }}

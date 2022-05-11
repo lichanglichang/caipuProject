@@ -315,18 +315,11 @@ class UserController extends Controller {
   //2、删除菜谱
   async delRecipe() {
     const { ctx } = this;
-    ctx.session.userId = 1;
-    if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delRecipe(
-        ctx.request.query.id
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    const result = await this.ctx.service.administrator.delRecipe(
+      ctx.request.body.id
+    );
+    console.log(ctx.request.body.id, "哈哈哈哈");
+    ctx.response.body = result;
   }
 
   // 3、获取某项菜谱
@@ -335,10 +328,26 @@ class UserController extends Controller {
     let result = await this.ctx.service.administrator.queryRecipe(
       ctx.request.query.id
     );
-    ctx.response.body = result
+    ctx.response.body = result;
   }
 
-
+  // 4、新增菜谱
+  async addRecipe() {
+    const { ctx } = this;
+    const { menu_name, img, username, type, introduce, discrib, steps } =
+      ctx.request.body;
+      console.log(menu_name, img, username, type, introduce, discrib, steps);
+    let result = await this.ctx.service.administrator.addRecipe(
+      menu_name,
+      img,
+      username,
+      type,
+      introduce,
+      discrib,
+      steps,
+    );
+    ctx.response.body = result;
+  }
 
   //*************笔记****************
 
@@ -354,20 +363,48 @@ class UserController extends Controller {
   //删除笔记
   async delNotes() {
     const { ctx } = this;
-    ctx.session.userId = 1;
-    if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delNotes(
-        ctx.request.query.id
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    const result = await this.ctx.service.administrator.delNotes(
+      ctx.request.body.id
+    );
+    ctx.response.body = result;
   }
 
+  // 3、新增笔记
+  async addNotes() {
+    const { ctx } = this;
+    const { account, title, content, picture } = ctx.request.body;
+
+    let result = await this.ctx.service.administrator.addNotes(
+      account,
+      title,
+      content,
+      picture
+    );
+    ctx.response.body = result;
+  }
+
+  //4、获取某一笔记详情信息
+  async getNote() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.getNote(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  // 5、修改笔记
+  async updateNotes() {
+    const { ctx } = this;
+    const { id, title, account, content, picture } = ctx.request.body;
+    let result = await this.ctx.service.administrator.updateNotes(
+      id,
+      title,
+      account,
+      content,
+      picture
+    );
+    ctx.response.body = result;
+  }
   //*************商品****************
 
   //获取所有商品
@@ -382,18 +419,20 @@ class UserController extends Controller {
   //删除
   async delGoods() {
     const { ctx } = this;
-    ctx.session.userId = 1;
-    if (this.ctx.session.userId == 1) {
-      let result = await this.ctx.service.administrator.delGoods(
-        ctx.request.query.id
-      );
-      ctx.response.body = result;
-    } else {
-      ctx.response.body = {
-        code: 3,
-        data: "未登录，请先登录",
-      };
-    }
+    let result = await this.ctx.service.administrator.delGoods(
+      ctx.request.body.id
+    );
+    ctx.response.body = result;
+  }
+
+  // 3、新增笔记
+  async addGoods() {
+    const { ctx } = this;
+    const { goodsname, address, price, picture, detailimg,introduction } = ctx.request.body;
+    let result = await this.ctx.service.administrator.addGoods(
+     goodsname, address, price, picture, detailimg,introduction
+    );
+    ctx.response.body = result;
   }
 }
 

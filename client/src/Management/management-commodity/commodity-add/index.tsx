@@ -10,44 +10,41 @@ import BaseCard from "../../components/base-card";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const NotesAdd: React.FC = () => {
+const CommodityAdd: React.FC = () => {
   const [form] = useForm();
-  // const [fileList, setFileList] = useState<any>([]);
   const navigate = useNavigate();
-
-  // 上传图片得到图片地址
-  const handleChange = ({ fileList, file }: any) => {
-    form.setFields([
-      {
-        name: "background",
-        value: file.response,
-      },
-    ]);
-    setFileList(fileList);
-  };
 
   // 添加菜单
   const onFinish = (values: any) => {
     // 处理图片地址
-    const arr = values.picture?.fileList.map((item: any) => {
+    const picture = values.picture?.fileList[0].response
+    const detailimg = values.detailimg?.fileList.map((item: any) => {
       return item.response;
     });
-    // 新增笔记请求
+    console.log({ ...values, picture: JSON.stringify(picture),detailimg:JSON.stringify(detailimg) });
+    
+    // 新增商品请求
     axios
-      .post("addNotes", { ...values, picture: JSON.stringify(arr) })
+      .post("addGoods", { ...values, picture: JSON.stringify(picture),detailimg:JSON.stringify(detailimg) })
       .then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          navigate("/Management/notes");
-        } else {
-          message.error(res.data.msg);
-        }
+          navigate("/Management/commodity");
+        } 
       });
   };
 
   const [fileList, setFileList] = useState<any>([]);
+  const [fileListTow, setFileListTow] = useState<any>([]);
+
+  // 商品图片
   const onChange = ({ fileList: newFileList }: any) => {
     setFileList(newFileList);
+  };
+
+  // 商品详情图片
+  const handleChange = ({ fileList, file }: any) => {
+    setFileListTow(fileList);
   };
 
   return (
@@ -60,37 +57,37 @@ const NotesAdd: React.FC = () => {
         onFinish={onFinish}
       >
         <BaseCard paddingBottom="60px">
-          <Form.Item label="笔记名称" name="title">
+          <Form.Item label="商品名称" name="goodsname">
             <Input placeholder="请输入笔记名称" />
           </Form.Item>
-
-          <Form.Item label="展示图片" name="picture">
+          <Form.Item label="商品图片" name="picture">
             <Upload
               action="http://localhost:8200/uploadimg"
               listType="picture-card"
               fileList={fileList}
               onChange={onChange}
-              // onPreview={onPreview}
             >
-              {fileList.length < 3 && "+ 上传图片"}
+              {fileList.length < 1 && "+ 上传图片"}
             </Upload>
-            {/* <Upload
-              action="http://localhost:8200/uploadimg"
-              listType="picture-card"
-              fileList={fileList}
-              // onPreview={this.handlePreview}
-              onChange={handleChange}
-              maxCount={1}
-              className={styles.upload}
-            >
-              {fileList.length ? null : uploadButton}
-            </Upload> */}
           </Form.Item>
-          <Form.Item label="作者账号" name="account">
+          <Form.Item label="发货地" name="address">
             <Input placeholder="请输入发布者账号" />
           </Form.Item>
-          <Form.Item label="内容" name="content">
+          <Form.Item label="价格" name="price">
+            <Input placeholder="请输入商品价格" />
+          </Form.Item>
+          <Form.Item label="商品介绍" name="introduction">
             <Input.TextArea rows={4} placeholder="请输入笔记内容" />
+          </Form.Item>
+          <Form.Item label="商品详情图" name="detailimg">
+            <Upload
+              action="http://localhost:8200/uploadimg"
+              listType="picture-card"
+              fileList={fileListTow}
+              onChange={handleChange}
+            >
+              {fileList.length < 6 && "+ 上传图片"}
+            </Upload>
           </Form.Item>
         </BaseCard>
         <Card className={styles.wrapControl}>
@@ -98,7 +95,7 @@ const NotesAdd: React.FC = () => {
             <Button
               type="primary"
               onClick={() => {
-                navigate("/Management/notes");
+                navigate("/Management/commodity");
               }}
             >
               返回
@@ -113,4 +110,4 @@ const NotesAdd: React.FC = () => {
   );
 };
 
-export default NotesAdd;
+export default CommodityAdd;
