@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "@/view/img/logo3.png";
+import logo from "../img/logo3.png";
 import getCookieByKey from "../getCookie";
 import "./css/header.css";
 import axios from "axios";
@@ -125,7 +125,7 @@ export default function Main() {
         <div className="w" ref={daohanglan} >
             <header>
                 <div>
-                    <Link to={{ pathname: '/' }}><img className="lg" src={logo} alt="" /></Link>
+                    <Link to={{ pathname: '/' }}><img className="lg"  alt="" src={logo}/></Link>
                 </div>
                 <div>
                     <Link to={{ pathname: '/' }}>首页</Link>
