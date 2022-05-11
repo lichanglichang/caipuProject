@@ -118,7 +118,7 @@ const RecipeAdd: React.FC = () => {
                       name={[name, "name"]}
                       wrapperCol={{ span: 24 }}
                     >
-                      <Input placeholder="First Name" />
+                      <Input placeholder="请输入用料名称" />
                     </Form.Item>
                     <Form.Item
                       {...restField}
@@ -126,7 +126,7 @@ const RecipeAdd: React.FC = () => {
                       wrapperCol={{ span: 24 }}
                       name={[name, "how"]}
                     >
-                      <Input placeholder="Last Name" />
+                      <Input placeholder="请输入用料千克数" />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(name)} />
                   </Space>

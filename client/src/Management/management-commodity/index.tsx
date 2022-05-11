@@ -11,6 +11,8 @@ const ManagementCommodity: React.FC = () => {
   const [userList, setuserList] = useState<any>([]);
   useEffect(() => {
     axios.get("getAllGoods").then((res: any) => {
+      console.log(res.data);
+      
       setuserList(res.data);
     });
   }, []);
@@ -50,7 +52,7 @@ const ManagementCommodity: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <img
-            src={`http://localhost:8200/public/shopping/${record.picture}`}
+            src={record.picture}
             alt=""
             style={{ width: "80px", height: "80px" }}
           />

@@ -58,22 +58,15 @@ const deleteRecipe=(id:string|number)=>{
       dataIndex: "account",
      
     },
-    // {
-    //   title: "内容",
-    //   dataIndex: "content",
-    //   ellipsis: true,
-    // },
     {
       title: "封面图",
       dataIndex: "picture",
       render: (_: any, record: any) => {
-        console.log(record);
-        
         return (
           <img
             src={JSON.parse(record.picture)[0]}
             alt=""
-            style={{width: "50px", height: "50px"}}
+            style={{width: "60px", height: "50px"}}
           />
         );
       },

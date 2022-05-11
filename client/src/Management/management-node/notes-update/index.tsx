@@ -1,4 +1,3 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Upload, Card, Button, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
@@ -42,9 +41,6 @@ const NotesUpdate: React.FC = () => {
     const data = values.picture.fileList.map((item: any) => {
       return item.url;
     });
-    console.log(data);
-
-    // form.validateFields().then((res) => {
     axios
       .post("updateNotes", { ...values, picture: JSON.stringify(data) })
       .then((res) => {
@@ -55,7 +51,6 @@ const NotesUpdate: React.FC = () => {
           message.error(res.data.msg);
         }
       });
-    // });
   };
 
   // 图片改变
@@ -84,21 +79,9 @@ const NotesUpdate: React.FC = () => {
               listType="picture-card"
               fileList={fileList}
               onChange={onChange}
-              // onPreview={onPreview}
             >
               {fileList.length < 3 && "+ 上传图片"}
             </Upload>
-            {/* <Upload
-              action="http://localhost:8200/uploadimg"
-              listType="picture-card"
-              fileList={fileList}
-              // onPreview={this.handlePreview}
-              onChange={handleChange}
-              maxCount={1}
-              className={styles.upload}
-            >
-              {fileList.length ? null : uploadButton}
-            </Upload> */}
           </Form.Item>
           <Form.Item label="作者账号" name="account">
             <Input disabled />

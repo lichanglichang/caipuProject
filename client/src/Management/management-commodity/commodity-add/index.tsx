@@ -21,11 +21,10 @@ const CommodityAdd: React.FC = () => {
     const detailimg = values.detailimg?.fileList.map((item: any) => {
       return item.response;
     });
-    console.log({ ...values, picture: JSON.stringify(picture),detailimg:JSON.stringify(detailimg) });
     
     // 新增商品请求
     axios
-      .post("addGoods", { ...values, picture: JSON.stringify(picture),detailimg:JSON.stringify(detailimg) })
+      .post("addGoods", { ...values, picture: picture,detailimg:JSON.stringify(detailimg) })
       .then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);

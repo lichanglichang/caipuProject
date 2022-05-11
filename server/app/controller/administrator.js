@@ -219,7 +219,7 @@ class UserController extends Controller {
   async queryPublishNotes() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.queryPublishNotes(
-      ctx.request.body.username
+      ctx.request.query.username
     );
     ctx.response.body = result;
   }

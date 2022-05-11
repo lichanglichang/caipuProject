@@ -287,26 +287,39 @@ class UserService extends Service {
   // 20、获取用户发布笔记
   async queryPublishNotes(username) {
     const result = await this.app.mysql.query(
-      `SELECT * FROM notes WHERE username = "${username}"`
+      `SELECT * FROM notes WHERE account = "${username}"`
     );
     return result;
   }
 
   // 21、移除用户发布
   async deleteUserPublish(deleteId, type) {
-    console.log(type, "类型");
-    const result = await this.app.mysql.query(
-      `DELETE FROM ${type.toLowerCase()} WHERE id='${deleteId}'`
-    );
-
-    if (result.affectedRows === 1) {
-      return {
-        msg: "移除成功！",
-      };
+    if (type === "Menu") {
+      const result = await this.app.mysql.query(
+        `DELETE FROM ${type.toLowerCase()} WHERE menuid='${deleteId}'`
+      );
+      if (result.affectedRows === 1) {
+        return {
+          msg: "移除成功！",
+        };
+      } else {
+        return {
+          msg: "移除失败！",
+        };
+      }
     } else {
-      return {
-        msg: "移除失败！",
-      };
+      const result = await this.app.mysql.query(
+        `DELETE FROM ${type.toLowerCase()} WHERE id='${deleteId}'`
+      );
+      if (result.affectedRows === 1) {
+        return {
+          msg: "移除成功！",
+        };
+      } else {
+        return {
+          msg: "移除失败！",
+        };
+      }
     }
   }
 
@@ -555,7 +568,7 @@ class UserService extends Service {
     let result = await this.app.mysql.query(
       `delete from goods where id in(${id.toString()})`
     );
-    console.log(result,id,"结果");
+    console.log(result, id, "结果");
     return {
       code: 0,
       message: "删除成功",
