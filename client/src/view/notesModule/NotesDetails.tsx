@@ -11,6 +11,7 @@ import "./css/noteDetails.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Commen from "../zjy/Commen";
+import Cominput from "../zjy/Cominput";
 
 function NotesDetails() {
     let notesId = useParams();
@@ -127,7 +128,7 @@ function NotesDetails() {
                         </div>
                     </div>
                     <div className="noteDeBottom">评论
-                    <Commen/>
+                    <Cominput params={{articel_id:id,type:"1"}} />
                     </div>
                 </div>
             })

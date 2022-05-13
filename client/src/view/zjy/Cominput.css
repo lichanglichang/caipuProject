@@ -1,0 +1,17 @@
+.item{
+    border-bottom: 1px solid grey;
+    padding: 10px;
+}
+.item>span{
+    font-size: 12px;
+    margin-left: 10px;
+}
+.item p{
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.itemImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}

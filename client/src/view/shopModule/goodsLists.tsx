@@ -32,7 +32,7 @@ function Shopping() {
             
             return list.map(function (shop: any) {
                 return <div key={shop.id} className="innerdiv" onClick={gojump.bind(null,shop.id)} >
-                    <div className="picq"><img src={"http://localhost:8200/public/shopping/"+shop.picture} alt="" /></div>
+                    <div className="picq"><img src={shop.picture} alt="" /></div>
                     <div className="titleq"><h3>{shop.goodsname}</h3></div>
                     <div className="priceq"><span className="jiageq">￥{shop.price}</span>
                         <span className="volumeq">月售{shop.sales}</span>

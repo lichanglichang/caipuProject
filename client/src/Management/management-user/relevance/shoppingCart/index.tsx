@@ -93,31 +93,31 @@ const ShoppingCart = () => {
       },
     },
 
-    {
-      title: "操作",
-      dataIndex: "",
-      render: (_: any, record: any) => {
-        return (
-          <Space split={<Divider type="vertical" />}>
-            <Popconfirm
-              title="是否移除该商品？"
-              okText="确认"
-              cancelText="取消"
-              onConfirm={() => {
-                handleDelete(record.id);
-              }}
-            >
-              <Button type="link" style={{ padding: "0" }}>
-                移除
-              </Button>
-            </Popconfirm>
-            <Button type="link" style={{ padding: "0" }} onClick={()=>{showModal(record)}}>
-              修改数量
-            </Button>
-          </Space>
-        );
-      },
-    },
+    // {
+    //   title: "操作",
+    //   dataIndex: "",
+    //   render: (_: any, record: any) => {
+    //     return (
+    //       <Space split={<Divider type="vertical" />}>
+    //         <Popconfirm
+    //           title="是否移除该商品？"
+    //           okText="确认"
+    //           cancelText="取消"
+    //           onConfirm={() => {
+    //             handleDelete(record.id);
+    //           }}
+    //         >
+    //           <Button type="link" style={{ padding: "0" }}>
+    //             移除
+    //           </Button>
+    //         </Popconfirm>
+    //         <Button type="link" style={{ padding: "0" }} onClick={()=>{showModal(record)}}>
+    //           修改数量
+    //         </Button>
+    //       </Space>
+    //     );
+    //   },
+    // },
   ];
 
   return (

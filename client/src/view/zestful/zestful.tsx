@@ -106,7 +106,7 @@ export default function Main() {
             <div>
               <img
                 className={ma.sptp}
-                src={"http://localhost:8200/public/shopping/" + item.picture}
+                src={ item.picture}
                 alt={item.id}
               />
             </div>

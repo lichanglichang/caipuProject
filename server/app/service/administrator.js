@@ -287,26 +287,39 @@ class UserService extends Service {
   // 20、获取用户发布笔记
   async queryPublishNotes(username) {
     const result = await this.app.mysql.query(
-      `SELECT * FROM notes WHERE username = "${username}"`
+      `SELECT * FROM notes WHERE account = "${username}"`
     );
     return result;
   }
 
   // 21、移除用户发布
   async deleteUserPublish(deleteId, type) {
-    console.log(type,"类型");
-    const result = await this.app.mysql.query(
-      `DELETE FROM ${type.toLowerCase()} WHERE id='${deleteId}'`
-    );
-
-    if (result.affectedRows === 1) {
-      return {
-        msg: "移除成功！",
-      };
+    if (type === "Menu") {
+      const result = await this.app.mysql.query(
+        `DELETE FROM ${type.toLowerCase()} WHERE menuid='${deleteId}'`
+      );
+      if (result.affectedRows === 1) {
+        return {
+          msg: "移除成功！",
+        };
+      } else {
+        return {
+          msg: "移除失败！",
+        };
+      }
     } else {
-      return {
-        msg: "移除失败！",
-      };
+      const result = await this.app.mysql.query(
+        `DELETE FROM ${type.toLowerCase()} WHERE id='${deleteId}'`
+      );
+      if (result.affectedRows === 1) {
+        return {
+          msg: "移除成功！",
+        };
+      } else {
+        return {
+          msg: "移除失败！",
+        };
+      }
     }
   }
 
@@ -410,23 +423,58 @@ class UserService extends Service {
 
   //2、删除菜谱
   async delRecipe(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from recipe where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
-      };
-    }
+    await this.app.mysql.query(
+      `delete from recipe where id in(${id.toString()})`
+    );
+    return {
+      code: 0,
+      msg: "删除成功",
+    };
   }
 
   // 3、获取某项菜谱
   async queryRecipe(id) {
-      const result = await this.app.mysql.query(
-        ` SELECT * FROM recipe where id='${id}'`
-      );
-      return result;
+    const result = await this.app.mysql.query(
+      ` SELECT * FROM recipe where id='${id}'`
+    );
+    return result;
+  }
+
+  // 4、新增菜谱
+  async addRecipe(menu_name, img, username, type, introduce, discrib, steps) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${username}'`
+    );
+    // 判断用户是否存在
+    if (userResult.length !== 0) {
+      const result = await this.app.mysql
+        .query(`insert into recipe(menu_name, img, username,type, introduce,nickname,describ,steps)
+      values('${menu_name}','${img}','${username}','${type}','${introduce}','${userResult[0].nickname}','${discrib}','${steps}')`);
+      if (result.affectedRows === 1) {
+        return {
+          code: 1,
+          msg: "新增成功！",
+        };
+      }
+    } else {
+      return {
+        code: 0,
+        msg: "用户不存在！",
+      };
+    }
+  }
+
+  // 5、修改菜谱信息
+  async updateRecipe(id, img, introduce, username, type, steps, menu_name) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${username}'`
+    );
+    await this.app.mysql.query(
+      `update recipe set img='${img}',introduce='${introduce}',username='${username}',type='${type}',menu_name='${menu_name}',steps='${JSON.stringify(
+        steps
+      )}',nickname='${userResult[0].nickname}' where id=${id}`
+    );
+    return { code: 1, msg: "修改成功！" };
   }
 
   //*************笔记****************
@@ -443,20 +491,69 @@ class UserService extends Service {
       return result;
     }
   }
-  //删除笔记
+  //2、删除笔记
   async delNotes(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from notes where id in(${id.toString()})`
-      );
+    await this.app.mysql.query(
+      `delete from notes where id in(${id.toString()})`
+    );
+    return {
+      code: 0,
+      message: "删除成功",
+    };
+  }
+
+  // 3、新增笔记
+  async addNotes(account, title, content, picture) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${account}'`
+    );
+    // 判断用户是否存在
+    if (userResult.length !== 0) {
+      const result = await this.app.mysql
+        .query(`insert into notes(title, picture, account,content, username)
+      values('${title}','${picture}','${account}','${content}','${userResult[0].nickname}')`);
+      if (result.affectedRows === 1) {
+        return {
+          code: 1,
+          msg: "新增成功！",
+        };
+      }
+    } else {
       return {
         code: 0,
-        message: "删除成功",
+        msg: "用户不存在！",
       };
     }
   }
 
-  //*************笔记****************
+  // 4、获取某项笔记详情
+  async getNote(id) {
+    const result = await this.app.mysql.query(
+      ` SELECT * FROM notes where id='${id}'`
+    );
+    return result;
+  }
+
+  // 5、修改笔记信息
+  async updateNotes(id, title, account, content, picture) {
+    const userResult = await this.app.mysql.query(
+      `SELECT * FROM user WHere  username='${account}'`
+    );
+    // 判断用户是否存在
+    if (userResult.length !== 0) {
+      await this.app.mysql.query(
+        `update notes set title='${title}',content='${content}',account='${account}',picture='${picture}',username='${userResult[0].nickname}' where id=${id}`
+      );
+      return { code: 1, msg: "修改成功！" };
+    } else {
+      return {
+        code: 0,
+        msg: "用户不存在！",
+      };
+    }
+  }
+
+  //*************商品****************
 
   //得到所有商品
   async getAllGoods(value) {
@@ -464,30 +561,58 @@ class UserService extends Service {
       const result = await this.app.mysql.query(`SELECT * FROM goods`);
       return result;
     } else {
-      const result = await this.app.mysql.query(
-        ` SELECT * FROM notes where username  like '%${value.username}%' and account like '%${value.account}%' and title like '%${value.title}%'`
-      );
-      return result;
+      console.log(value, "value值");
+      if (value.highPrice) {
+        const result = await this.app.mysql.query(
+          `select * from goods where  goodsname like '%${value.goodsname}%' and address like '%${value.address}%' and price between ${value.lowerPrice} and ${value.highPrice}`
+        );
+        return result;
+      } else {
+        const result = await this.app.mysql.query(
+          `select * from goods where  goodsname like '%${value.goodsname}%' and address like '%${value.address}%' and price>${value.lowerPrice}`
+        );
+        return result;
+      }
     }
   }
 
   //管理员删除商品
   async delGoods(id) {
-    if (id.length !== 0) {
-      let delResult = await this.app.mysql.query(
-        `delete from goods where id in(${id.toString()})`
-      );
-      return {
-        code: 0,
-        message: "删除成功",
-      };
-    } else {
-      return {
-        code: 1,
-        message: "请先选中要删除的数据",
-      };
-    }
+    let result = await this.app.mysql.query(
+      `delete from goods where id in(${id.toString()})`
+    );
+    console.log(result, id, "结果");
+    return {
+      code: 0,
+      message: "删除成功",
+    };
   }
+
+  // 3、新增商品
+  async addGoods(goodsname, address, price, picture, detailimg, introduction) {
+    const result = await this.app.mysql
+      .query(`insert into goods(goodsname, address, price,picture, detailimg,introduction)
+    values('${goodsname}','${address}','${price}','${picture}','${detailimg}','${introduction}')`);
+    return {
+      code: 1,
+      msg: "新增成功！",
+    };
+  }
+
+  // 4、获取某项商品信息
+  async queryGoods(id) {
+    let result = await this.app.mysql.query(
+      `SELECT * FROM goods WHere  id in(${id.toString()})`
+    );
+    return result;
+  }
+    // 5、获取评论
+    async queryComment(id) {
+      let result = await this.app.mysql.query(
+        `SELECT * FROM goods WHere  id in(${id.toString()})`
+      );
+      return result;
+    }
 }
 
 module.exports = UserService;

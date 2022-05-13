@@ -16,6 +16,7 @@ import Footer from "../components/footer";
 import Commen from "../zjy/Commen";
 import "./css/recipeDetails.css";
 import axios from "axios";
+import Cominput from "../zjy/Cominput";
 
 function Recipedes() {
   const [list, setlist] = useState<any>(null);
@@ -23,18 +24,14 @@ function Recipedes() {
   const [ingredient, setingredient] = useState<any>(null);
   let { showsid: repiceid } = useParams();
 
-  console.log(step, "步骤");
-
   useEffect(() => {
     axios
       .post("http://localhost:8200/showrepicedes", {
         repiceid,
       })
       .then((r: any) => {
-
-        console.log(r.data.data[0].steps,step,"结果拉拉");
         setstep(JSON.parse(r.data.data[0].steps));
-       
+
         setlist(r.data.data);
         setingredient(JSON.parse(r.data.data[0].describ));
       });
@@ -49,7 +46,6 @@ function Recipedes() {
 
   function showingredients() {
     if (ingredient !== null) {
-      // console.log(ingredient);
       return ingredient.map(function (ingredientany: any, index: any) {
         return (
           <div key={index} className="conedetails">
@@ -133,7 +129,7 @@ function Recipedes() {
       <div className="crecipedes">
         <div className="crecipedes_left">
           {showrecipedes()}
-          <Commen />
+          <Cominput params={{articel_id:repiceid,type:"0"}} />
         </div>
 
         <div className="crecipedes_right">

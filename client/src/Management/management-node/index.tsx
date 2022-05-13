@@ -1,4 +1,4 @@
-import {Space, Button, Table, Divider} from "antd";
+import {Space, Button, Table, Divider, Popconfirm, message} from "antd";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,17 +7,28 @@ import Filter, { notesType } from "./filter";
 
 const ManagementNode: React.FC = () => {
   const navigate = useNavigate();
+
   //获取用户信息
-  const [userList, setuserList] = useState<any>([]);
+  const [userList, setUserList] = useState<any>([]);
   useEffect(() => {
     axios
       .get("/getAllNotes")
       .then((res: any) => {
-        console.log(res.data);
-
-        setuserList(res.data);
+        setUserList(res.data);
       });
   }, []);
+
+  // 删除笔记
+const deleteRecipe=(id:string|number)=>{
+  axios.post("delNotes",{id}).then(res=>{
+    message.success(res.data.message)
+    axios
+    .get("/getAllNotes")
+    .then((res: any) => {
+      setUserList(res.data);
+    });
+  })
+}
 
   function getNotes(params: notesType) {
     axios
@@ -25,7 +36,7 @@ const ManagementNode: React.FC = () => {
         params,
       })
       .then((res: any) => {
-        setuserList(res.data);
+        setUserList(res.data);
       });
   }
 
@@ -35,7 +46,7 @@ const ManagementNode: React.FC = () => {
     {
       title: "笔记名",
       dataIndex: "title",
-      ellipsis: true,
+      // ellipsis: true,
     },
     {
       title: "作者",
@@ -48,19 +59,14 @@ const ManagementNode: React.FC = () => {
      
     },
     {
-      title: "内容",
-      dataIndex: "content",
-      ellipsis: true,
-    },
-    {
       title: "封面图",
-      dataIndex: "userpic",
+      dataIndex: "picture",
       render: (_: any, record: any) => {
         return (
           <img
-            src={record.userpic}
+            src={JSON.parse(record.picture)[0]}
             alt=""
-            style={{width: "50px", height: "50px"}}
+            style={{width: "60px", height: "50px"}}
           />
         );
       },
@@ -72,7 +78,19 @@ const ManagementNode: React.FC = () => {
         return (
           <Space split={<Divider type="vertical" />}>
             <Button type="link" style={{padding:"0"}} onClick={()=>{  navigate(`notesUpdate/${record.id}`);}}>编辑</Button>
-            <Button type="link" style={{padding:"0"}}>删除</Button>
+            <Button type="link" style={{padding:"0"}} onClick={()=>{  navigate(`notesComment/${record.id}`);}}>评论</Button>
+            <Popconfirm
+              title="是否确认删除该笔记"
+              okText="确认"
+              cancelText="取消"
+              onConfirm={() => {
+                deleteRecipe(record.id);
+              }}
+            >
+              <Button type="link" danger style={{ padding: "0" }}>
+                删除
+              </Button>
+            </Popconfirm>
           </Space>
         );
       },
@@ -85,7 +103,7 @@ const ManagementNode: React.FC = () => {
         <Filter getNotes={getNotes} />
       </BaseCard>
       <BaseCard>
-      <Button type="primary" style={{marginBottom:"20px"}} onClick={()=>{  navigate("notesAdd");}}>新增</Button>
+      <Button type="primary" style={{marginBottom:"20px"}} onClick={()=>{navigate("notesAdd")}}>新增</Button>
         <Table
           dataSource={userList}
           columns={columns}
@@ -94,6 +112,7 @@ const ManagementNode: React.FC = () => {
             total: userList.length,
           }}
           bordered={true}
+          rowKey={(record) => record.id}
         />
       </BaseCard>
     </>
