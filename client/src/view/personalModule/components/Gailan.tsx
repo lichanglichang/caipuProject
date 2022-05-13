@@ -14,11 +14,11 @@ function About() {
     }, [])
     function showdata() {
         axios.get("/getRecipe").then((res) => {
-            // console.log(res.data);
+            console.log(res.data,'菜谱');
             Setrec(res.data)
         })
         axios.get("/getNotes").then((res) => {
-            // console.log(res.data);
+            console.log(res.data,'笔记');
             Setnot(res.data)
         })
     }

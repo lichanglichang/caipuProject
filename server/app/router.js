@@ -29,6 +29,8 @@ module.exports = (app) => {
   router.get("/getuser", controller.user.getuser);
   // 获取用户关注
   router.get("/getguanzu", controller.user.getguanzu);
+  // 获取用户粉丝
+  router.get("/getFans", controller.user.getFans);
   // 获取用户发布的菜单
   router.get("/getcaidan", controller.user.getcaidan);
 

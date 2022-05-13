@@ -133,7 +133,7 @@ export default function Cesijf() {
         </div>
         <div ref={cjandzy} className={cesijf.xx}>
           <div>
-            <div>经过@豆果美食 #减肥食材大考验#，</div>
+            <div>经过@有滋味美食 #减肥食材大考验#，</div>
             <div>您的成绩是{localStorage.getItem("cj")}，希望您再接再厉</div>
           </div>
           <button className={cesijf.fhsy} onClick={cxcs}>

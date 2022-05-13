@@ -38,7 +38,7 @@ export default function Laboratory() {
                 </div>
                 <div className="tp" style={xianshi}>
                     <Link to={{ pathname: '/Laboratory/textjf' }}><img style={{ marginRight: '5px' }} src={test_jf} alt="" /></Link>
-                    <Link to={{ pathname: '/Laboratory/texthc' }}><img src={test_hc} alt="" /></Link>
+                    <img src="#" alt="" />
                 </div>
             </div>
 

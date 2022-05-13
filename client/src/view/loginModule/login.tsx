@@ -198,12 +198,7 @@ function LoginDome() {
                                 <p><input type="checkbox" ref={isSelect1} />我已阅读并且同意<a href="#">美食协议</a></p>
                             </div >
 
-                            <div className="loginBottom">
-                                <p>社交账号登陆</p>
-                                <p><img src={wxImg} alt="" />微信</p>
-                                <p><img src={qqImg} alt="" />QQ</p>
-                                <p><img src={wbImg} alt="" />微博</p>
-                            </div>
+                            
                         </div>
                         {/* 注册 */}
                         <div className="registbox" ref={regist}>
@@ -222,7 +217,6 @@ function LoginDome() {
                 <div className="buttomcontent">
                     <div>
                         <p>关于网站 · 意见反馈 · 友情链接 · 菜谱大全 · 品牌馆</p>
-                        <p>©2009-2015 北京信息技术有限公司 京ICP证111032号 京公网安备11010102001133号 京网文[2014]0774-174号</p>
                     </div>
                 </div>
             </div>

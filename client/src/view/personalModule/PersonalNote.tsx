@@ -20,10 +20,10 @@ function PersonalNote() {
 		})
 			.then(function (r: any) {
 				setPersonalN(r.data);
-				console.log( r.data );
+				// console.log( r.data );
 				
 			}).catch(function (r: any) {
-				console.log(personalN);
+				// console.log(personalN);
 			})
 	}
 
@@ -41,12 +41,12 @@ function PersonalNote() {
 	}
 
 	function mapPersonal() {
-		console.log(personalN.length);
+		// console.log(personalN.length);
 		if (personalN.length != 0) {
-			console.log(222);
+			// console.log(222);
 			return personalN.map(function (personalN: any) {
 				var picture1 = personalN.picture.substring(1,personalN.picture.length-1);
-				console.log( picture1 );
+				// console.log( picture1 );
 				var picture2 = picture1.split(",");			
 				return <div className="perNote1" key={personalN.id} >
 					<div className="perNoteLeft">
@@ -65,7 +65,7 @@ function PersonalNote() {
 			})
 		}
 		else {
-			console.log(111);
+			// console.log(111);
 			return <div style={{ lineHeight: "300px", width: "700px", height: '300px', color: "green", textAlign: "center" }}>
 				暂无笔记！！！
 			</div>

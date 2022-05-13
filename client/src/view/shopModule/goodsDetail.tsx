@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 
 import "./css/goodsDetails.css"
 import getCookieByKey from "../getCookie"
-import img1 from "../img/all.png"
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -78,7 +77,6 @@ function Detail() {
                     </div>
                     <div className='goodsimgq'>
                         <h3>商品详情</h3>
-                        {/* <img src={img1} alt="" /> */}
                         <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[0]} alt="" />
                         <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[1]} alt="" />
                         <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[2]} alt="" />
