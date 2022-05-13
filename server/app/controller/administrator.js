@@ -336,7 +336,7 @@ class UserController extends Controller {
     const { ctx } = this;
     const { menu_name, img, username, type, introduce, discrib, steps } =
       ctx.request.body;
-      console.log(menu_name, img, username, type, introduce, discrib, steps);
+    console.log(menu_name, img, username, type, introduce, discrib, steps);
     let result = await this.ctx.service.administrator.addRecipe(
       menu_name,
       img,
@@ -344,26 +344,41 @@ class UserController extends Controller {
       type,
       introduce,
       discrib,
-      steps,
+      steps
     );
     ctx.response.body = result;
   }
 
-    // 5、修改菜谱信息
-    async updateRecipe() {
-      const { ctx } = this;
-      const { id, img, introduce, username, type, steps,menu_name } =
-        ctx.request.body;
-      let result = await this.ctx.service.administrator.updateRecipe(
-        id, img, introduce, username, type, steps,menu_name
-      );
-      ctx.response.body = result;
-    }
+  // 5、修改菜谱信息
+  async updateRecipe() {
+    const { ctx } = this;
+    const { id, img, introduce, username, type, steps, menu_name } =
+      ctx.request.body;
+    let result = await this.ctx.service.administrator.updateRecipe(
+      id,
+      img,
+      introduce,
+      username,
+      type,
+      steps,
+      menu_name
+    );
+    ctx.response.body = result;
+  }
 
-      // 4、获取某项商品信息
+  // 4、获取某项商品信息
   async queryGoods() {
     const { ctx } = this;
     let result = await this.ctx.service.administrator.queryGoods(
+      ctx.request.query.id
+    );
+    ctx.response.body = result;
+  }
+
+  // 5、获取评论
+  async queryComment() {
+    const { ctx } = this;
+    let result = await this.ctx.service.administrator.queryComment(
       ctx.request.query.id
     );
     ctx.response.body = result;
@@ -448,9 +463,15 @@ class UserController extends Controller {
   // 3、新增笔记
   async addGoods() {
     const { ctx } = this;
-    const { goodsname, address, price, picture, detailimg,introduction } = ctx.request.body;
+    const { goodsname, address, price, picture, detailimg, introduction } =
+      ctx.request.body;
     let result = await this.ctx.service.administrator.addGoods(
-     goodsname, address, price, picture, detailimg,introduction
+      goodsname,
+      address,
+      price,
+      picture,
+      detailimg,
+      introduction
     );
     ctx.response.body = result;
   }

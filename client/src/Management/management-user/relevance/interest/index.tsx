@@ -47,29 +47,6 @@ const Interest = () => {
         );
       },
     },
-
-    // {
-    //   title: "操作",
-    //   dataIndex: "",
-    //   render: (_: any, record: any) => {
-    //     return (
-    //       <Space split={<Divider type="vertical" />}>
-    //         <Popconfirm
-    //           title="是否取消关注该用户？"
-    //           okText="确认"
-    //           cancelText="取消"
-    //           onConfirm={() => {
-    //             handelCancel(record.id);
-    //           }}
-    //         >
-    //           <Button type="link" style={{ padding: "0" }}>
-    //             取消关注
-    //           </Button>
-    //         </Popconfirm>
-    //       </Space>
-    //     );
-    //   },
-    // },
   ];
 
   return (

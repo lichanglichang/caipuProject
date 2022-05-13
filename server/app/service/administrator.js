@@ -606,6 +606,13 @@ class UserService extends Service {
     );
     return result;
   }
+    // 5、获取评论
+    async queryComment(id) {
+      let result = await this.app.mysql.query(
+        `SELECT * FROM goods WHere  id in(${id.toString()})`
+      );
+      return result;
+    }
 }
 
 module.exports = UserService;

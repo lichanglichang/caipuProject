@@ -14,6 +14,7 @@ const ManagementRecipe: React.FC = () => {
   useEffect(() => {
     axios.get("/getAllRecipe").then((res: any) => {
       setRecipeList(res.data.data);
+
     });
   }, []);
 
@@ -31,12 +32,14 @@ const ManagementRecipe: React.FC = () => {
   // 删除菜谱
   const deleteRecipe = (id: string | number) => {
     axios.post("delRecipe", { id }).then((res) => {
-     message.success(res.data.msg)
-     axios.get("/getAllRecipe").then((res: any) => {
-      setRecipeList(res.data.data);
-    });
+      message.success(res.data.msg);
+      axios.get("/getAllRecipe").then((res: any) => {
+        setRecipeList(res.data.data);
+      });
     });
   };
+
+ 
 
   //   表格标题数据
   const columns = [
@@ -87,7 +90,13 @@ const ManagementRecipe: React.FC = () => {
             >
               编辑
             </Button>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button
+              type="link"
+              style={{ padding: "0" }}
+              onClick={() => {
+                navigate(`recipeComment/${record.id}`);
+              }}
+            >
               评论
             </Button>
             <Popconfirm

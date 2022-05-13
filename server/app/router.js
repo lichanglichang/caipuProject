@@ -126,6 +126,8 @@ module.exports = (app) => {
   router.post("/addRecipe", controller.administrator.addRecipe);
   // 5、修改菜谱
   router.post("/updateRecipe", controller.administrator.updateRecipe);
+  // 6、获取评论信息
+  router.get("/queryComment", controller.administrator.queryComment);
 
   //管理员接口
   //*************商品****************
@@ -190,7 +192,7 @@ module.exports = (app) => {
 
   router.get("/getShop", controller.zyh.getShop);
 
-  //获取评论
+  //发表评论
   router.get("/getComment", controller.comment.getComment);
   //展示评论
   router.get("/showCom", controller.comment.showCom);

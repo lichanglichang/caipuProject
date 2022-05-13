@@ -18,6 +18,8 @@ import Collect from "../Management/management-user/relevance/collect";
 import Interest from "../Management/management-user/relevance/interest";
 import Publish from "../Management/management-user/relevance/publish";
 import ShoppingCart from "../Management/management-user/relevance/shoppingCart";
+import Comment from "../Management/management-recipe/comment/index"
+import CommentTow from "../Management/management-node/comment";
 
 const routes = [
   {
@@ -64,6 +66,7 @@ const routes = [
       { index: true, element: <ManagementNode /> },
       { path: "notesAdd", element: <NotesAdd /> },
       { path: "notesUpdate/:id", element: <NotesUpdate /> },
+      { path: "notesComment/:id", element: <CommentTow /> },
     ],
   },
   {
@@ -73,6 +76,7 @@ const routes = [
       { index: true, element: <ManagementRecipe /> },
       { path: "recipeAdd", element: <RecipeAdd /> },
       { path: "recipeUpdate/:id", element: <RecipeUpdate /> },
+      { path: "recipeComment/:id", element: <Comment /> },
     ],
   },
 ];

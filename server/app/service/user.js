@@ -64,6 +64,12 @@ class UserService extends Service {
           msg: "账号不存在",
         };
         return result;
+      }else if (message[0].userStatus == 0) {
+        let result = {
+          code: 5,
+          msg: "该用户已被禁用！",
+        };
+        return result;
       } else if (message[0].status == 1) {
         let result = {
           code: 4,

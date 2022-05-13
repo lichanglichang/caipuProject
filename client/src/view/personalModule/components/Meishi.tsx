@@ -81,7 +81,7 @@ function Propose() {
 				// const nums=goods.number
 				return <div className="cartinnerq" key={goods.id}>
 
-					<div className='goodsurlq'><img src={"http://localhost:8200/public/shopping/" + goods.img} alt="" /></div>
+					<div className='goodsurlq'><img src={"http://localhost:8200/public/shopping/picture/huashengjiang1.jpg"} alt="" /></div>
 					<div className='goodsq'>
 						<h3 className='goodsnmq'>商品名:{goods.goodsname}</h3>
 						<div className='sellinfoq'>

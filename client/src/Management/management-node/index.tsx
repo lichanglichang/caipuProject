@@ -78,7 +78,7 @@ const deleteRecipe=(id:string|number)=>{
         return (
           <Space split={<Divider type="vertical" />}>
             <Button type="link" style={{padding:"0"}} onClick={()=>{  navigate(`notesUpdate/${record.id}`);}}>编辑</Button>
-            <Button type="link" style={{padding:"0"}}>评论</Button>
+            <Button type="link" style={{padding:"0"}} onClick={()=>{  navigate(`notesComment/${record.id}`);}}>评论</Button>
             <Popconfirm
               title="是否确认删除该笔记"
               okText="确认"

@@ -44,6 +44,8 @@ const RecipeUpdate: React.FC = () => {
           url: item.url,
         }
       });
+      console.log(arr,"图片");
+      
       setFileListTow(arr);
       setFileList([
         {
