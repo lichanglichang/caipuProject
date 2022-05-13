@@ -48,12 +48,12 @@ class NotesService extends Service {
         await fs.unlinkSync(file2.filepath);
         const url2 = "http://localhost:8200" + toFileName2;
 
+        console.log(url0,url1,url2,"图片地址");
         let r = await this.ctx.app.mysql.query(`select username from user where username='${username}'`);
         let r1 = r[0].username;
-        console.log( r1 );
 
         let picture1 = [file0.filename, file1.filename, file2.filename];
-        let picture = `[${picture1}]`;
+        let picture = JSON.stringify([url0,url1,url2])
         console.log(picture);
 
         const sql = `insert into notes(username,title,content,picture) values(?,?,?,?)`;

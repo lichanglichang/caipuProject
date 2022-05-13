@@ -48,7 +48,6 @@ function CreateNote() {
             axios
                 .post("http://localhost:8200/upload", formData, config)
                 .then(function (res) {
-                    console.log(res.data)
                     alert("添加笔记成功");
                     window.location.reload();
 
