@@ -156,7 +156,7 @@ function LoginDome() {
         } else if (isSelect2.current.checked === true) {
             xieyi2.current.style.visibility = "hidden";
             axios.post("http://127.0.0.1:8200/regist",{
-                username1,password1
+                username1,password1,
             }).then(res=>{
                 console.log(res.data);
                 xieyi2.current.style.visibility = "inherit";

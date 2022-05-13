@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import "./css/personalNote.css";
 import getNoteCookie from './getNoteCookie';
+import { useNavigate } from 'react-router-dom';
 
 function PersonalNote() {
 	const [personalN, setPersonalN] = useState<any>([]);
@@ -40,6 +41,7 @@ function PersonalNote() {
 		})
 	}
 
+	let navigate = useNavigate();
 	function mapPersonal() {
 		// console.log(personalN.length);
 		if (personalN.length != 0) {
@@ -47,17 +49,19 @@ function PersonalNote() {
 			return personalN.map(function (personalN: any) {
 				var picture1 = personalN.picture.substring(1,personalN.picture.length-1);
 				// console.log( picture1 );
-				var picture2 = picture1.split(",");			
-				return <div className="perNote1" key={personalN.id} >
+				var picture2 = picture1.split(",");	
+				// console.log(JSON.parse(picture2[0]),"hhh");
+				
+				return <div className="perNote1" key={personalN.id} onClick={()=>{ navigate({pathname:`/Notes/Details/${personalN.id}`})}}>
 					<div className="perNoteLeft">
-						<img src={"http://localhost:8200/public/bximg/"+picture2[0]} />
+						<img src={`${JSON.parse(picture2[0])}`} alt="" />
 						<div className="perLeftIntr">
 							<span>{personalN.title}</span>
 							<p>{personalN.content}</p>
 						</div>
 					</div>
 					<div className="perNoteRight">
-						<div className="perR1">编辑</div>
+						{/* <div className="perR1">编辑</div> */}
 						<div className="perR2" onClick={deleteNote.bind(null, personalN.id)} >删除</div>
 					</div>
 				</div>

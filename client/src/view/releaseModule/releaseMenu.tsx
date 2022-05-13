@@ -136,7 +136,7 @@ export default function Uploadcaidan() {
   function shangchuancaipu() {
     let menuname = cdmc.current.value.trim();
     let introduction = cdjs.current.value.trim();
-    let arr = JSON.parse(JSON.stringify(cpu));
+    let arr = cpu||[{id:"42"},{id:"43"}];
     let idbox = [];
     for (let i = 0; i < arr.length; i++) {
       idbox.push(arr[i].id);
@@ -151,7 +151,6 @@ export default function Uploadcaidan() {
       formData.append("uploadFile", file);
       formData.append("username", username);
       axios.post("/shangChuancaipu", formData).then(res => {
-        console.log(res.data);
         if (res.data) {
           navigate("/collect");
         }

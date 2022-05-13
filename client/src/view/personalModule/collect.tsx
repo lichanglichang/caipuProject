@@ -23,8 +23,8 @@ function CollectDemo() {
   const [sex, setsex] = useState<any>();
   const [taste, settaste] = useState<any>();
   const [intro, setintro] = useState<any>();
-  const [cliStatue, setcliStatue] = useState<any>("gailan");
-  const [statue1, setstatue1] = useState<any>("gailan");
+  const [cliStatue, setcliStatue] = useState<any>("meishi");
+  const [statue1, setstatue1] = useState<any>("meishi");
   const [guabzuuser, setguabzuuser] = useState<any>();//关注
   const [myFans, setmyFans] = useState<any>();//粉丝
   const col_imgbox = useRef<any>();
@@ -159,18 +159,18 @@ function CollectDemo() {
                   <div className="col_selectitem">
                     <div><p>{ guabzuuser? guabzuuser.length: 'null' }</p><p onClick={() => { setcurrent1("fan1"); setstatue1("guanzu"); setcliStatue("guanzu"); setcurrent("guanzu")}}>关注</p></div>
                     <div><p>{ myFans? myFans.length: 'null' }</p><p onClick={() => { setcurrent1("fan2"); setstatue1("guanzu"); setcliStatue("guanzu"); setcurrent("guanzu"); }}>粉丝</p></div>
-                    <div><p onClick={() => { setstatue1("gailan"); setcliStatue("gailan"); setcurrent("gailan"); }} style={{margin: '10px 0 0 10px'}}>返回<RollbackOutlined /></p></div>
+                    <div><p onClick={() => { setstatue1("meishi"); setcliStatue("meishi"); setcurrent("meishi"); }} style={{margin: '10px 0 0 10px'}}>返回<RollbackOutlined /></p></div>
                   </div>
                 </div>
               </div>
-              <div className="statue1" style={{ display: (statue1 === 'gailan' ? 'block' : 'none') }}>
-                <Menu onClick={handleClick} selectedKeys={current} mode="horizontal" defaultSelectedKeys={["gailan"]}>
-                  <Menu.Item key="gailan"> 概览 </Menu.Item>
+              <div className="statue1" style={{ display: (statue1 === 'meishi' ? 'block' : 'none') }}>
+                <Menu onClick={handleClick} selectedKeys={current} mode="horizontal" defaultSelectedKeys={["meishi"]}>
+                  {/* <Menu.Item key="gailan"> 概览 </Menu.Item> */}
+                  <Menu.Item key="meishi"> 我的购物车 </Menu.Item>
                   <Menu.Item key="caipu"> 菜谱 </Menu.Item>
                   <Menu.Item key="caidan"> 菜单 </Menu.Item>
                   <Menu.Item key="biji"> 笔记 </Menu.Item>
-                  <Menu.Item key="shouc"> 收藏 </Menu.Item>
-                  <Menu.Item key="meishi"> 我的购物车 </Menu.Item>
+                  {/* <Menu.Item key="shouc"> 收藏 </Menu.Item> */}
                 </Menu>
                 <div className="col_itembox">
                   <Gailan />

@@ -170,6 +170,7 @@ function Releaser() {
     let menu_name = recipename.current.value.trim();
     let introduce = recipedes.current.value;
     let nickname: any = getCookieByKey("nickname");
+    let username: any = getCookieByKey("username");
     let arr = [];
     for (let i = 0; i < allbox.current.children.length; i++) {
       if (
@@ -197,6 +198,7 @@ function Releaser() {
     formData.append("steps", JSON.stringify(bzbox));
     formData.append("img", img);
     formData.append("nickname", nickname);
+    formData.append("username", username);
     // console.log(menu_name);
     // console.log(introduce);
     // console.log(JSON.stringify(arr));

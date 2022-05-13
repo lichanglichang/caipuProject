@@ -3,26 +3,26 @@ import ThemeContext from './MyContext';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import ma from "../../zestful/css/main.module.css";
+import GetC from '../../zjy/GetC';
 function Goods() {
 	// obj--->{who:'goods', dispatch:f}
 	const [rec, Setrec] = useState<any>();
+    const cookie0 = document.cookie.split(";");
+    const cookie1 = GetC(cookie0);
 	let navigate=useNavigate();
     useEffect(() => {
         showdata()
     }, [])
     function showdata() {
-        axios.get("/getRecipe").then((res) => {
-		let newarr =	res.data.filter((item:any)=>{
-			return	item.nickname=="张宇浩";
-			})
-            Setrec(newarr)
-            console.log(newarr);
+        axios.get("/queryPublishRecipe",{params:{username:cookie1}}).then((res) => {
+            Setrec(res.data)
             
         })
     }
     //展示菜谱
     function zccp() {
         if (rec) {
+            
             return rec.map((item: any) => {
                 return (
                     <div key={item.id} onClick={tzcp}>
@@ -32,6 +32,10 @@ function Goods() {
                     </div>
                 )
             })
+        } else {
+            return <div style={{ lineHeight: "300px", width: "700px", height: '300px', color: "green", textAlign: "center" }}>
+				暂无菜谱！！！
+			</div>
         }
     }
     //跳转菜谱详情

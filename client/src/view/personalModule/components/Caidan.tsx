@@ -41,6 +41,10 @@ function Propose() {
                 );
 
             })
+        } else {
+            return <div style={{ lineHeight: "300px", width: "700px", height: '300px', color: "green", textAlign: "center" }}>
+				暂无菜单！！！
+			</div>
         }
     }
 	return(

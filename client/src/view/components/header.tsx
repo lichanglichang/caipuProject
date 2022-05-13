@@ -162,7 +162,7 @@ export default function Main() {
                     <div ref={userbox} className="personbox"><Link to={{ pathname: '/collect' }}><div className="touxiang" ref={touX}></div>{nickname2}</Link>
                         <div className="UserBox">
                             <ul>
-                                <li><Link to={{ pathname: '/collect' }}>我的收藏</Link></li>
+                                <li><Link to={{ pathname: '/collect' }}>个人中心</Link></li>
                                 <li><Link to={{ pathname: '/Updatainfo' }}>修改信息</Link></li>
                                 <li onClick={exitlogin}>退出登陆</li>
                             </ul>
