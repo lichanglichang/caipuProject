@@ -55,11 +55,11 @@ function Releaser() {
     let formData = new FormData();
     formData.append("uploadFile", file);
     if (file) {
-      console.log(formData);
-      console.log(file);
+      // console.log(formData);
+      // console.log(file);
 
       axios.post("/uploadfiles", formData).then(function (r: any) {
-        console.log(r.data);
+        // console.log(r.data);
         e.target.parentElement.dataset.url = r.data;
       });
     }
@@ -69,7 +69,7 @@ function Releaser() {
     let newnum1: number[] = num1;
     newnum1.push(0);
     setNum1([...newnum1]);
-    console.log(num1);
+    // console.log(num1);
   }
   function deletes1() {
     let newnum1: number[] = num1;
@@ -88,7 +88,7 @@ function Releaser() {
     newnum2.pop();
     setNum2([...newnum2]);
   }
-
+  // 食材
   function show1() {
     return num1.map(function (v, i) {
       return (
@@ -113,7 +113,7 @@ function Releaser() {
       );
     });
   }
-
+  // 步骤
   function show2() {
     return num2.map(function (a, i) {
       return (
@@ -164,7 +164,8 @@ function Releaser() {
       );
     });
   }
-  function scdn() {
+  // 点击发布
+  function clickRelease() {
     let img = submitImg1.current.files[0];
     let menu_name = recipename.current.value.trim();
     let introduce = recipedes.current.value;
@@ -196,17 +197,17 @@ function Releaser() {
     formData.append("steps", JSON.stringify(bzbox));
     formData.append("img", img);
     formData.append("nickname", nickname);
-    console.log(menu_name);
-    console.log(introduce);
-    console.log(JSON.stringify(arr));
-    console.log(JSON.stringify(bzbox));
-    console.log(img);
-    console.log(nickname);
+    // console.log(menu_name);
+    // console.log(introduce);
+    // console.log(JSON.stringify(arr));
+    // console.log(JSON.stringify(bzbox));
+    // console.log(img);
+    // console.log(nickname);
 
     axios
       .post("/uploadCaipu", formData)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .then(function (r: any) {
         alert("发布成功");
@@ -218,6 +219,7 @@ function Releaser() {
     <>
       <Header />
       <div className="creleaser">
+        <div style={{fontSize: "20px", fontWeight: "bold", margin: "20px 0"}}>发布菜谱</div>
         <div className="cmreleaser">
           <div className="creleaser_img">
             <input
@@ -283,7 +285,7 @@ function Releaser() {
           </div>
         </div>
         <div className="cline"></div>
-        <button className="cbtnupload" onClick={scdn}>
+        <button className="cbtnupload" onClick={clickRelease}>
           发布
         </button>
       </div>

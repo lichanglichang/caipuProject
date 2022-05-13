@@ -8,7 +8,6 @@ import zhanshi1 from "../img/zhanshi1.jpeg";
 import zhanshi2 from "../img/zhanshi1.jpeg";
 import zhanshi3 from "../img/zhanshi1.jpeg";
 import zhanshi4 from "../img/zhanshi1.jpeg";
-import rightimg3 from "../img/right3.png";
 import { useParams } from "react-router-dom";
 
 import { Carousel } from "antd";
@@ -172,7 +171,6 @@ function Recipedes() {
           </div>
 
           <div className="crecipedes_right3">
-            <img src={rightimg3} alt="" />
           </div>
         </div>
       </div>

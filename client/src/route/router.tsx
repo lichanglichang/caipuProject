@@ -22,32 +22,7 @@ import Updatainfo from "../view/personalModule/Updatainfo";//修改个人信息
 import CollectDemo from "../view/personalModule/collect";//个人中心
 import PersonalNote from "../view/personalModule/PersonalNote";//个人中心-笔记
 
-
-// import Main from "../view/zyh/main";
-// import Shopping from "../view/Qing/shopping";
-// import Detail from "../view/Qing/detail";
-// import Notes from "../view/bx/Notes";
-// import NotesDetails from "../view/bx/NotesDetails";
-// import Laboratory from "../view/zyh/laboratory";
-// import Textjf from "../view/zyh/testjf";
-// import Texthc from "../view/zyh/testhc";
-// import Cesijf from "../view/zyh/cesijf";
-// import Menusdes from "../view/cxj/menusdes";
-// import Comic from "../view/zyh/comic";
-// import Comicdetails from "../view/zyh/comicdetails";
-// import Menu from "../view/cxj/menu_container";
-// import Recipedes from "../view/cxj/recipedes";
-// import Search from "../view/zyh/search";
-// import Releaser from "../view/cxj/releaser";
-// import Uploadcaidan from "../view/zyh/uploadcaidan";
-// import CreateNote from "../view/bx/CreateNote";
-// import LoginDome from "../view/LC/login";
-// import Updatainfo from "../view/LC/Updatainfo";
-// import CollectDemo from "../view/LC/collect";
-// import PersonalNote from "../view/bx/PersonalNote";
-
 import Zjy from "../view/zjy/Zjy";
-
 
 export default function Rte() {
   return (

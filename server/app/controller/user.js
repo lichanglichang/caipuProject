@@ -19,11 +19,19 @@ class UserController extends Controller {
         let resoult = await this.ctx.service.user.getuser(username);
         ctx.response.body = resoult;
     }
-// 获取关注用户
+    // 获取关注用户
     async getguanzu() {
         const { ctx } = this;
         let username = ctx.request.query.username;
         let resoult = await this.ctx.service.user.getguanzu(username);
+        ctx.response.body = resoult;
+    }
+
+    // 获取粉丝
+    async getFans() {
+        const { ctx } = this;
+        let username = ctx.request.query.username;
+        let resoult = await this.ctx.service.user.getFans(username);
         ctx.response.body = resoult;
     }
 

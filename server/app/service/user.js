@@ -151,14 +151,31 @@ class UserService extends Service {
       `SELECT guanzu FROM user WHERE username = "${username}"`
     );
     let arr = [];
-    for (let i = 0; i < guanzuid[0].guanzu.length; i++) {
-      let user = await this.app.mysql.query(
-        `SELECT * FROM user WHERE id = "${guanzuid[0].guanzu[i]}"`
-      );
-      arr = arr.concat(user);
+    if (guanzuid[0].guanzu) {
+      for (let i = 0; i < guanzuid[0].guanzu.length; i++) {
+        let user = await this.app.mysql.query(
+          `SELECT * FROM user WHERE id = "${guanzuid[0].guanzu[i]}"`
+        );
+        arr = arr.concat(user);
+      }
+      return arr;
+    } else {
+      return []
     }
-    return arr;
   }
+
+  // 获取粉丝用户
+  async getFans (username) {
+    let userId = await this.app.mysql.query(
+      `SELECT id FROM user WHERE  username = "${username}"`
+    );
+    let fans = await this.app.mysql.query(
+      `SELECT * FROM user WHERE  guanzu like '%${userId[0].id}%'`
+    );
+    return fans;
+  }
+
+
 
   // 获取用户发布的菜单
   async getcaidan(username) {

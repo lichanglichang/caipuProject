@@ -6,7 +6,7 @@ export default function getNoteCookie(key:any) {
 			str = key[i];
 			
 			str2 = str.trim().substring(9);
-			console.log( str2 );
+			// console.log( str2 );
 			return str2;
 		}
 	}
