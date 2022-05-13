@@ -115,19 +115,19 @@ module.exports = (app) => {
   // 5、修改菜单信息
   router.post("/updateMenu", controller.administrator.updateMenu);
 
-
   //管理员接口
   //*************菜谱****************
 
   // 1、获取菜谱表格信息
   router.get("/getAllRecipe", controller.administrator.getAllRecipe);
-  // 2、新增菜谱
-  // router.post("/addRecipe", controller.administrator.addRecipe);
-  // 3、删除菜谱
-  router.get("/delRecipe", controller.administrator.delRecipe);
-  // 4、获取某项菜谱信息
+  // 2、删除菜谱
+  router.post("/delRecipe", controller.administrator.delRecipe);
+  // 3、获取某项菜谱信息
   router.get("/queryRecipe", controller.administrator.queryRecipe);
-
+  // 4、新增菜谱
+  router.post("/addRecipe", controller.administrator.addRecipe);
+  // 5、修改菜谱
+  router.post("/updateRecipe", controller.administrator.updateRecipe);
 
   //管理员接口
   //*************商品****************
@@ -135,7 +135,12 @@ module.exports = (app) => {
   //1、获取全部商品
   router.get("/getAllGoods", controller.administrator.getAllGoods);
   //2、删除商品
-  router.get("/delGoods", controller.administrator.delGoods);
+  router.post("/delGoods", controller.administrator.delGoods);
+  //2、新增商品
+  router.post("/addGoods", controller.administrator.addGoods);
+  // 3、获取某条商品信息
+  router.get("/queryGoods", controller.administrator.queryGoods);
+
 
   //管理员接口
   //*************笔记****************
@@ -143,7 +148,13 @@ module.exports = (app) => {
   //1、获取笔记
   router.get("/getAllNotes", controller.administrator.getAllNotes);
   //2、删除笔记
-  router.get("/delNotes", controller.administrator.delNotes);
+  router.post("/delNotes", controller.administrator.delNotes);
+  //3、新增笔记
+  router.post("/addNotes", controller.administrator.addNotes);
+  // 4、获取某一笔记详情信息
+  router.get("/getNote", controller.administrator.getNote);
+  // 5、修改菜单信息
+  router.post("/updateNotes", controller.administrator.updateNotes);
 
   //菜单
   router.get("/showmenu", controller.user.showmenu);

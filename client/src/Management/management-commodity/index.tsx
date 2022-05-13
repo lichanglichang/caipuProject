@@ -1,42 +1,43 @@
-import { Space, Button, Table, Divider, Modal } from "antd";
+import { Space, Button, Table, Divider, Modal, Popconfirm, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Params } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BaseCard from "../components/base-card";
 import Filter from "./filter";
 
 const ManagementCommodity: React.FC = () => {
+  const navigate = useNavigate();
   //获取用户信息
   const [userList, setuserList] = useState<any>([]);
   useEffect(() => {
     axios.get("getAllGoods").then((res: any) => {
+      console.log(res.data);
+      
       setuserList(res.data);
     });
   }, []);
 
-  function getAllUser(params: Params) {
+  const getCommodity = (params: any) => {
     axios
-      .get("/getAllUser", {
+      .get("/getAllGoods", {
         params,
       })
       .then((res: any) => {
         setuserList(res.data);
       });
-  }
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+    // 删除商品
+    const deleteCommodity =(id:number|string)=>{
+      axios.post("delGoods",{id}).then(res=>{
+        message.success(res.data.message)
+        axios
+        .get("/getAllGoods")
+        .then((res: any) => {
+          setuserList(res.data);
+        });
+      })
+    }
 
   //   表格标题数据
   const columns = [
@@ -51,7 +52,7 @@ const ManagementCommodity: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <img
-            src={`http://localhost:8200/public/shopping/${record.picture}`}
+            src={record.picture}
             alt=""
             style={{ width: "80px", height: "80px" }}
           />
@@ -65,7 +66,6 @@ const ManagementCommodity: React.FC = () => {
     {
       title: "简介",
       dataIndex: "introduction",
-      
     },
     {
       title: "价格",
@@ -77,28 +77,47 @@ const ManagementCommodity: React.FC = () => {
       render: (_: any, record: any) => {
         return (
           <Space split={<Divider type="vertical" />}>
-            <Button type="link" style={{ padding: "0" }}>
+            <Button
+              type="link"
+              style={{ padding: "0" }}
+              onClick={() => {
+                navigate(`commodityUpdate/${record.id}`);
+              }}
+            >
               编辑
             </Button>
-            <Button type="link" style={{ padding: "0" }}>
-              删除
-            </Button>
+            <Popconfirm
+              title="是否确认删除该商品"
+              okText="确认"
+              cancelText="取消"
+              onConfirm={() => {
+                deleteCommodity(record.id);
+              }}
+            >
+              <Button type="link" danger style={{ padding: "0" }}>
+                删除
+              </Button>
+            </Popconfirm>
           </Space>
         );
       },
     },
   ];
 
+
+
   return (
     <>
       <BaseCard marginBottom={"16px"}>
-        <Filter />
+        <Filter getCommodity={getCommodity}/>
       </BaseCard>
       <BaseCard>
         <Button
           type="primary"
           style={{ marginBottom: "20px" }}
-          onClick={showModal}
+          onClick={() => {
+            navigate("commodityAdd");
+          }}
         >
           新增
         </Button>
@@ -112,16 +131,6 @@ const ManagementCommodity: React.FC = () => {
           bordered={true}
         />
       </BaseCard>
-      <Modal
-        title="Basic Modal"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
     </>
   );
 };

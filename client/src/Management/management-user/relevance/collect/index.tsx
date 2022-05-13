@@ -90,28 +90,28 @@ const Collect = () => {
         );
       },
     },
-    {
-      title: "操作",
-      dataIndex: "url",
-      render: (_: any, record: any) => {
-        return (
-          <Space split={<Divider type="vertical" />}>
-            <Popconfirm
-              title="是否移除该笔记？"
-              okText="确认"
-              cancelText="取消"
-              onConfirm={() => {
-                handleDelete(record.id, "Notes");
-              }}
-            >
-              <Button type="link" style={{ padding: "0" }}>
-                移除收藏
-              </Button>
-            </Popconfirm>
-          </Space>
-        );
-      },
-    },
+    // {
+    //   title: "操作",
+    //   dataIndex: "url",
+    //   render: (_: any, record: any) => {
+    //     return (
+    //       <Space split={<Divider type="vertical" />}>
+    //         <Popconfirm
+    //           title="是否移除该笔记？"
+    //           okText="确认"
+    //           cancelText="取消"
+    //           onConfirm={() => {
+    //             handleDelete(record.id, "Notes");
+    //           }}
+    //         >
+    //           <Button type="link" style={{ padding: "0" }}>
+    //             移除收藏
+    //           </Button>
+    //         </Popconfirm>
+    //       </Space>
+    //     );
+    //   },
+    // },
   ];
 
   //   表格标题数据
@@ -147,28 +147,28 @@ const Collect = () => {
         );
       },
     },
-    {
-      title: "操作",
-      dataIndex: "url",
-      render: (_: any, record: any) => {
-        return (
-          <Space split={<Divider type="vertical" />}>
-            <Popconfirm
-              title="是否移除该菜单？"
-              okText="确认"
-              cancelText="取消"
-              onConfirm={() => {
-                handleDelete(record.menuid, "Menu");
-              }}
-            >
-              <Button type="link" style={{ padding: "0" }}>
-                移除收藏
-              </Button>
-            </Popconfirm>
-          </Space>
-        );
-      },
-    },
+    // {
+    //   title: "操作",
+    //   dataIndex: "url",
+    //   render: (_: any, record: any) => {
+    //     return (
+    //       <Space split={<Divider type="vertical" />}>
+    //         <Popconfirm
+    //           title="是否移除该菜单？"
+    //           okText="确认"
+    //           cancelText="取消"
+    //           onConfirm={() => {
+    //             handleDelete(record.menuid, "Menu");
+    //           }}
+    //         >
+    //           <Button type="link" style={{ padding: "0" }}>
+    //             移除收藏
+    //           </Button>
+    //         </Popconfirm>
+    //       </Space>
+    //     );
+    //   },
+    // },
   ];
 
   // 表格标题数据
@@ -210,28 +210,28 @@ const Collect = () => {
         );
       },
     },
-    {
-      title: "操作",
-      dataIndex: "url",
-      render: (_: any, record: any) => {
-        return (
-          <Space split={<Divider type="vertical" />}>
-            <Popconfirm
-              title="是否移除该菜单？"
-              okText="确认"
-              cancelText="取消"
-              onConfirm={() => {
-                handleDelete(record.id, "Recipe");
-              }}
-            >
-              <Button type="link" style={{ padding: "0" }}>
-                移除收藏
-              </Button>
-            </Popconfirm>
-          </Space>
-        );
-      },
-    },
+    // {
+    //   title: "操作",
+    //   dataIndex: "url",
+    //   render: (_: any, record: any) => {
+    //     return (
+    //       <Space split={<Divider type="vertical" />}>
+    //         <Popconfirm
+    //           title="是否移除该菜单？"
+    //           okText="确认"
+    //           cancelText="取消"
+    //           onConfirm={() => {
+    //             handleDelete(record.id, "Recipe");
+    //           }}
+    //         >
+    //           <Button type="link" style={{ padding: "0" }}>
+    //             移除收藏
+    //           </Button>
+    //         </Popconfirm>
+    //       </Space>
+    //     );
+    //   },
+    // },
   ];
 
   return (

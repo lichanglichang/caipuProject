@@ -80,11 +80,11 @@ const Collect = () => {
     },
     {
       title: "封面图",
-      dataIndex: "userpic",
+      dataIndex: "picture",
       render: (_: any, record: any) => {
         return (
           <img
-            src={record.userpic}
+            src={JSON.parse(record.picture)[0]}
             alt=""
             style={{ width: "50px", height: "50px" }}
           />

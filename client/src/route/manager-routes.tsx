@@ -1,5 +1,7 @@
 import MainLayout from "../Management/components/main-layout";
 import ManagementCommodity from "../Management/management-commodity";
+import CommodityAdd from "../Management/management-commodity/commodity-add";
+import CommodityUpdate from "../Management/management-commodity/commodity-update";
 import ManagementMenu from "../Management/management-menu";
 import MenuAdd from "../Management/management-menu/menu-add";
 import MenuUpdate from "../Management/management-menu/menu-update";
@@ -40,7 +42,11 @@ const routes = [
   {
     path: "/Management/commodity",
     element: <MainLayout />,
-    children: [{ index: true, element: <ManagementCommodity /> }],
+    children: [
+      { index: true, element: <ManagementCommodity /> },
+      { path: "commodityAdd", element: <CommodityAdd /> },
+      { path: "commodityUpdate/:id", element: <CommodityUpdate /> },
+    ],
   },
   {
     path: "/Management/menu",
@@ -52,7 +58,7 @@ const routes = [
     ],
   },
   {
-    path: "/Management/node",
+    path: "/Management/notes",
     element: <MainLayout />,
     children: [
       { index: true, element: <ManagementNode /> },

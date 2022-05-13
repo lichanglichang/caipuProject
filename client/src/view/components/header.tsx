@@ -125,7 +125,7 @@ export default function Main() {
         <div className="w" ref={daohanglan} >
             <header>
                 <div>
-                    <Link to={{ pathname: '/' }}><img className="lg" src={logo} alt="" /></Link>
+                    <Link to={{ pathname: '/' }}><img className="lg"  alt="" src={logo}/></Link>
                 </div>
                 <div>
                     <Link to={{ pathname: '/' }}>首页</Link>

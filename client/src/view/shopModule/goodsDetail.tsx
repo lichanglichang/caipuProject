@@ -49,9 +49,9 @@ function Detail() {
             return goods.map(function (goods: any) {
                 return <div>
                     <div className='goodsinfoq' key={goods.id}>
-                        <div className='goodssimgq'><img src={"http://localhost:8200/public/shopping/" + goods.picture} alt="" /></div>
+                        <div className='goodssimgq'><img src={ goods.picture} alt="" /></div>
                         <div className='goodsbimgq'>
-                            <img src={"http://localhost:8200/public/shopping/" + goods.picture} alt="" />
+                            <img src={goods.picture} alt="" />
                         </div>
                         <div className='infoq'>
                             <h3 className='goodsnameq'>{goods.goodsname}</h3>
@@ -77,10 +77,9 @@ function Detail() {
                     </div>
                     <div className='goodsimgq'>
                         <h3>商品详情</h3>
-                        <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[0]} alt="" />
-                        <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[1]} alt="" />
-                        <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[2]} alt="" />
-                        <img src={"http://localhost:8200/public/shopping/" + goods.detailimg.split(",")[3]} alt="" />
+                        {JSON.parse(goods.detailimg).map((item:any)=>{
+                            return <img src={item} alt="" />
+                        })}
                     </div>
                 </div>
             })

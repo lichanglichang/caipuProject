@@ -4,7 +4,7 @@ const path = require("path");
 
 class NotesService extends Service {
     async notesInfo() {
-        let sql = `select * from notes limit 0,30`;
+        let sql = `select * from notes`;
         let notesResult = await this.app.mysql.query(sql);
         return notesResult;
     }
