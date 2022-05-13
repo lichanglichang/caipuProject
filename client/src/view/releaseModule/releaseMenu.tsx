@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 
 import Header from "../components/header";
 import Footer from "../components/footer";
-import cd from "./css/releaseMenu.module.css";
+// import cd from "./css/releaseMenu.module.css";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import getCookieByKey from "../getCookie";
@@ -200,7 +200,7 @@ export default function Uploadcaidan() {
             添加菜谱
           </span>
           <span style={{fontSize: "14px", color: "#757575"}}>
-            (填入豆果美食的食谱地址或食谱ID来添加菜谱，如http://localhost:3000/recipedes/1或者1)
+            (填入有滋味美食的食谱地址或食谱ID来添加菜谱，如http://localhost:3000/recipedes/1或者1)
           </span>
         </div>
         <div style={{display: "flex", width: "800px", flexWrap: "wrap"}}>

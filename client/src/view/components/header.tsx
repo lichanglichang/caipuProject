@@ -145,9 +145,9 @@ export default function Main() {
                 <div >
                     <Link to={{ pathname: '/Laboratory' }}>有滋味实验室</Link>
                 </div>
-                <div style={{ lineHeight: "55px" }} onMouseEnter={bxsfb}>
-                    <input className="ss" type="search" onChange={serachvalue} placeholder="搜索菜单、菜谱、用户" />
-                    <span onClick={myserach} style={{ fontSize: '20px', marginBottom: '15px' }}><SearchOutlined /></span>
+                <div onMouseEnter={bxsfb} className="searchBox">
+                    <input className="searchInput" type="search" onChange={serachvalue} placeholder="搜索菜单、菜谱、用户" />
+                    <span onClick={myserach} className="searchIcon"><SearchOutlined /></span>
                 </div>
                 <div className="fb" ref={fb} onMouseEnter={xsfb} >
                     发布
@@ -158,7 +158,7 @@ export default function Main() {
                     </div>
                 </div>
                 <div className="lr" onMouseEnter={bxsfb}>
-                    <div ref={loginbox}><Link to={{ pathname: '/Login' }}><span>登陆|注册</span></Link></div>
+                    <div ref={loginbox}><Link to={{ pathname: '/Login' }}><span>登陆 | 注册</span></Link></div>
                     <div ref={userbox} className="personbox"><Link to={{ pathname: '/collect' }}><div className="touxiang" ref={touX}></div>{nickname2}</Link>
                         <div className="UserBox">
                             <ul>

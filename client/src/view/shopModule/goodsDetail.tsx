@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 
 import "./css/goodsDetails.css"
 import getCookieByKey from "../getCookie"
-import img1 from "../img/all.png"
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -78,9 +77,11 @@ function Detail() {
                     </div>
                     <div className='goodsimgq'>
                         <h3>商品详情</h3>
+
                         {JSON.parse(goods.detailimg).map((item:any)=>{
                             return <img src={item} alt="" />
                         })}
+
                     </div>
                 </div>
             })
